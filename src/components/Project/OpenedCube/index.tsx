@@ -38,7 +38,8 @@ const OpenedCube = ({ canvas }: Props) => {
     canvasRef.current.width = clientWidth;
     canvasRef.current.height = clientHeight;
 
-    const sentence = `${popupData.tech.join("").replaceAll(/([A-Z])/g, " $1")} `;
+    const regExp = /(([A-Z][a-z]*-([A-Z]|[a-z])[a-z]*)|[A-Z][a-z]*)/g;
+    const sentence = `${popupData.tech.join("").replaceAll(regExp, " $1")} `;
     const fontSize = clientHeight / 1.333333333;
 
     ctx.clearRect(0, 0, clientWidth, clientHeight);

@@ -60,10 +60,10 @@ const Container = () => {
         if (top > 0 && left > 0 && left + width + width / 2 < innerWidth && top + height < innerHeight) {
           const currentHexagon = hexagonListRef.current[nextIndex];
           currentHexagon.classList.add("selected");
-          currentHexagon.style.setProperty("--time", `0.2s`);
+          currentHexagon.style.setProperty("--time", `0.1s`);
           currentHexagon.style.setProperty("--color", curColor);
           visited.current[nextIndex] = 0;
-          queue.push({ index: nextIndex, time: 0.2, color: curColor });
+          queue.push({ index: nextIndex, time: 0.1, color: curColor });
         }
       }
     }
@@ -101,10 +101,10 @@ const Container = () => {
         const currentHexagon = hexagonListRef.current[selectOneIndex];
 
         currentHexagon.classList.add("selected");
-        currentHexagon.style.setProperty("--time", `${time + 0.2}s`);
+        currentHexagon.style.setProperty("--time", `${time + 0.1}s`);
         currentHexagon.style.setProperty("--color", `RGBA(${R},${G},${B},${A - 0.02})`);
         visited.current[selectOneIndex] = 0;
-        queue.push({ index: selectOneIndex, time: time + 0.2, color: `RGBA(${R},${G},${B},${A - 0.02})` });
+        queue.push({ index: selectOneIndex, time: time + 0.1, color: `RGBA(${R},${G},${B},${A - 0.02})` });
       }
     }
   }, []);
@@ -239,7 +239,7 @@ const Container = () => {
 
   // 육각형 transitionend
   useEffect(() => {
-    const debounced = debounce(() => endHexagonTransition(), 1000);
+    const debounced = debounce(() => endHexagonTransition(), 120);
     window.addEventListener("transitionend", debounced);
     return () => {
       window.removeEventListener("transitionend", debounced);
