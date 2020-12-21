@@ -27,9 +27,6 @@ module.exports = () => {
       port: 3000,
       historyApiFallback: true,
       contentBase: path.resolve(__dirname, "dist"),
-      // hot: true,
-      // disableHostCheck: true,
-      // open: true,
       stats: "errors-warnings",
       overlay: true,
     },
@@ -86,9 +83,8 @@ module.exports = () => {
       isEnvProduction && new webpack.LoaderOptionsPlugin({ minimize: true }),
       new webpack.EnvironmentPlugin({ NODE_ENV: isEnvDevelopment ? "development" : "production" }),
       new HtmlWebpackPlugin({
-        // hash: false,
         inject: "body",
-        template: path.join(__dirname, "/index.html"),
+        template: path.join(__dirname, "public", "/index.html"),
       }),
       new ForkTsCheckerWebpackPlugin({
         eslint: {
