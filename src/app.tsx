@@ -1,6 +1,6 @@
 import React from "react";
 import loadable from "@loadable/component";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import StyleReset from "@utils/styles/reset";
 
 const Home = loadable(() => import("@pages/Home"));
@@ -16,6 +16,7 @@ const App = () => {
           <Route path="/" component={Home} exact />
           <Route path="/profile" component={Profile} exact />
           <Route path="/project" component={Project} exact />
+          <Redirect from="*" to="/" />
         </Switch>
       </BrowserRouter>
     </>
