@@ -12,7 +12,7 @@ const projectData = [
         "마크다운 에디터, 게시글 상세 페이지, 메인 페이지를 담당해서 개발했습니다.",
       ],
       tech: ["React", "Redux", "Redux-Saga", "Styled-component", "Remark", "Codemirror"],
-      link: "https://github.com/PickFullStack/velog-clone-front",
+      link: "https://github.com/CharmingCheol/velog-clone-front",
     },
   },
   {
