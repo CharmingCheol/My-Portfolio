@@ -13,14 +13,17 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "downlevelIteration": true,
     "baseUrl": "src",
     "paths": {
-      "@hooks/*": ["hooks/*"],
+      "@apis/*": ["apis/*"],
+      "@common/*": ["common/*"],
       "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
       "@pages/*": ["pages/*"],
-      "@utils/*": ["utils/*"],
-      "@static/*": ["static/*"]
+      "@static/*": ["static/*"],
+      "@store/*": ["store/*"],
+      "@typings/*": ["typings/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": ["./src/**/*"]
