@@ -1,6 +1,11 @@
 const path = require("path");
 
 module.exports = ({ config }) => {
+  config.node = {
+    ...config.node,
+    fs: "empty",
+    net: "empty",
+  };
   config.resolve.alias = {
     ...config.resolve.alias,
     "@apis": path.resolve(__dirname, "../src", "apis"),
