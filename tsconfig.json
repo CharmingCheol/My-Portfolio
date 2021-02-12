@@ -21,7 +21,7 @@
       "@hooks/*": ["hooks/*"],
       "@pages/*": ["pages/*"],
       "@static/*": ["static/*"],
-      "@store/*": ["store/*"],
+      "@reducers/*": ["reducers/*"],
       "@typings/*": ["typings/*"],
       "@utils/*": ["utils/*"]
     }

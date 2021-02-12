@@ -7,7 +7,7 @@ module.exports = {
     "@hooks/(.*)": "<rootDir>/src/hooks/$1",
     "@pages/(.*)": "<rootDir>/src/pages/$1",
     "@static/(.*)": "<rootDir>/src/static/$1",
-    "@store/(.*)": "<rootDir>/src/store/$1",
+    "@reducers/(.*)": "<rootDir>/src/reducers/$1",
     "@typings/(.*)": "<rootDir>/src/typings/$1",
     "@utils/(.*)": "<rootDir>/src/utils/$1",
   },

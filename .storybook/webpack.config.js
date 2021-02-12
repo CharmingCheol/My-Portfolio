@@ -14,7 +14,7 @@ module.exports = ({ config }) => {
     "@hooks": path.resolve(__dirname, "../src", "hooks"),
     "@pages": path.resolve(__dirname, "../src", "pages"),
     "@static": path.resolve(__dirname, "../src", "static"),
-    "@store": path.resolve(__dirname, "../src", "store"),
+    "@reducers": path.resolve(__dirname, "../src", "reducers"),
     "@typings": path.resolve(__dirname, "../src", "typings"),
     "@utils": path.resolve(__dirname, "../src", "utils"),
   };
