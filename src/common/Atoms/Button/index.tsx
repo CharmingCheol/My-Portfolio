@@ -22,11 +22,11 @@ export interface ButtonProps {
 }
 
 const Button = ({
-  buttonColor = palette.green10,
+  buttonColor = palette.green5,
   children,
   className,
   disabled,
-  disabledColor = palette.green5,
+  disabledColor = palette.green3,
   onClick,
   type,
 }: ButtonProps) => {

@@ -1,6 +1,3 @@
 import styled from "styled-components";
 
-export const Input = styled.input`
-  :disabled {
-  }
-`;
+export const Input = styled.input``;
