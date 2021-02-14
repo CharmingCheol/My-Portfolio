@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import * as S from "./style";
 
 export interface TextareaProps {
@@ -41,4 +41,4 @@ const Textarea = ({ onChange, onKeyDown, placeholder, textProps }: TextareaProps
   );
 };
 
-export default Textarea;
+export default memo(Textarea);

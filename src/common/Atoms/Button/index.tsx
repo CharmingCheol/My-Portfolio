@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import palette from "@utils/styles/palette";
 import * as S from "./style";
 
@@ -47,4 +47,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default memo(Button);
