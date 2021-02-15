@@ -4,7 +4,7 @@ import { text } from "@storybook/addon-knobs";
 import Alert, { AlertProps } from "./index";
 
 export default {
-  title: "atoms Alert",
+  title: "atoms/Alert",
   component: Alert,
 } as Meta;
 

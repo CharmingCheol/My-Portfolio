@@ -2,22 +2,19 @@ import styled, { css } from "styled-components";
 import palette from "@utils/styles/palette";
 
 export const Alert = styled.li<{ status: "success" | "error" }>`
-  position: absolute;
-  top: 0;
-  right: 0;
   display: flex;
-  width: 30%;
+  width: 100%;
   padding: 0.75rem 1.25rem;
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
-  cursor: pointer;
   span {
     word-break: keep-all;
     margin-right: 8px;
   }
   svg {
     margin-left: auto;
+    cursor: pointer;
   }
   ${(props) => {
     if (props.status === "success") {
