@@ -19,6 +19,16 @@ const palette = {
   green7: "#23A137",
   green8: "#168130",
   green9: "#0D6B2C",
+  // red
+  red1: "#FEE6D6",
+  red2: "#FDC7AE",
+  red3: "#FBA186",
+  red4: "#F87D67",
+  red5: "#F44336",
+  red6: "#D12729",
+  red7: "#AF1B29",
+  red8: "#8D1127",
+  red9: "#750A26",
   // gray
   gray1: "#FEFEFD",
   gray2: "#FEFDFC",
