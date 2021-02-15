@@ -2,19 +2,26 @@ import { useLayoutEffect, useState } from "react";
 import { decrypt } from "@utils/modules/encryption";
 import CryptoJS from "crypto-js";
 
+interface UseDecryptIPParams {
+  callback?: () => void;
+  encryptIP: CryptoJS.lib.CipherParams;
+}
+
 const { MY_IP } = process.env;
 
-const useDecryptIP = (encryptIP: CryptoJS.lib.CipherParams) => {
+const useDecryptIP = ({ callback, encryptIP }: UseDecryptIPParams) => {
   const [sameIp, setSameIp] = useState(false);
 
   useLayoutEffect(() => {
     try {
+      if (!encryptIP) return setSameIp(false);
       const originalText = decrypt(encryptIP);
       if (MY_IP === originalText) setSameIp(true);
-    } catch {
+      if (callback) callback();
+    } catch (error) {
       setSameIp(false);
     }
-  }, [encryptIP]);
+  }, [callback, encryptIP]);
 
   return sameIp;
 };
