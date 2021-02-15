@@ -1,11 +1,12 @@
 import React from "react";
-import loadable from "@loadable/component";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Switch } from "react-router-dom";
+import dotenv from "dotenv";
+import AlertList from "@common/Molecules/AlertList";
+import AlertListProvider from "@reducers/AlertList";
 import StyleReset from "@utils/styles/reset";
+import Routes from "./routes";
 
-const Home = loadable(() => import("@pages/Home"));
-const Profile = loadable(() => import("@pages/Profile/reducer"));
-const Project = loadable(() => import("@pages/Project/reducer"));
+dotenv.config();
 
 const App = () => {
   return (
@@ -13,9 +14,10 @@ const App = () => {
       <StyleReset />
       <BrowserRouter>
         <Switch>
-          <Route path="/" component={Home} exact />
-          <Route path="/profile" component={Profile} exact />
-          <Route path="/project" component={Project} exact />
+          <AlertListProvider>
+            <AlertList />
+            <Routes />
+          </AlertListProvider>
           <Redirect from="*" to="/" />
         </Switch>
       </BrowserRouter>
