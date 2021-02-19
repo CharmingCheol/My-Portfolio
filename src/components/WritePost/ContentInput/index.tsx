@@ -2,8 +2,8 @@ import React, { memo, useCallback, useContext, useEffect, useRef } from "react";
 import { IconBaseProps } from "react-icons/lib";
 import codemirror, { EditorFromTextArea } from "codemirror";
 import Button from "@common/Atoms/Button";
-import { MarkDownEditorContext } from "@reducers/MarkDownEditor";
-import { changeBody } from "@reducers/MarkDownEditor/action";
+import { WritePostContext } from "@reducers/WritePost";
+import { changeBody } from "@reducers/WritePost/action";
 import toolBarBtnData, { MarkDownToolBar } from "./data";
 import * as S from "./style";
 
@@ -20,7 +20,7 @@ interface MarkDownInputProps {
 }
 
 const MarkDownInput = ({ imageUrl, imageUploadCallBack }: MarkDownInputProps) => {
-  const { dispatch } = useContext(MarkDownEditorContext);
+  const { dispatch } = useContext(WritePostContext);
   const codeMirrorRef = useRef<EditorFromTextArea | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 

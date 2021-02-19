@@ -1,11 +1,11 @@
 import React, { memo, useCallback, useContext } from "react";
 import Textarea from "@common/Atoms/Textarea";
-import { MarkDownEditorContext } from "@reducers/MarkDownEditor";
-import { changeTitleAction } from "@reducers/MarkDownEditor/action";
+import { WritePostContext } from "@reducers/WritePost";
+import { changeTitle as changeTitleAction } from "@reducers/WritePost/action";
 import * as S from "./style";
 
 const TitleInput = () => {
-  const { dispatch } = useContext(MarkDownEditorContext);
+  const { dispatch } = useContext(WritePostContext);
 
   // 제목 변경
   const changeTitle = useCallback(

@@ -1,13 +1,17 @@
 import React, { useContext } from "react";
 import MarkDownRendering from "@common/Organisms/MarkDownRendering";
-import { MarkDownEditorContext } from "@reducers/MarkDownEditor";
+import { WritePostContext } from "@reducers/WritePost";
+import * as S from "./style";
 
 const MarkDownPreview = () => {
-  const { body } = useContext(MarkDownEditorContext);
+  const { body, title } = useContext(WritePostContext);
 
   return (
     <>
-      <MarkDownRendering editorText={body} />
+      <S.Layout>
+        <h1>{title}</h1>
+        <MarkDownRendering editorText={body} />
+      </S.Layout>
     </>
   );
 };

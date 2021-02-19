@@ -6,7 +6,6 @@ import Button from "@common/Atoms/Button";
 import Input from "@common/Atoms/Input";
 import useInput from "@hooks/useInput";
 import { SubmitPostParams } from "@apis/posts";
-import { MarkDownEditorContext } from "@reducers/MarkDownEditor";
 import { WritePostContext } from "@reducers/WritePost";
 import { AlertListContext } from "@reducers/AlertList";
 import { addAlert } from "@reducers/AlertList/action";
@@ -22,8 +21,7 @@ const EditorFooter = ({ categoryList, submitPostAPI }: EditorFooterProps) => {
   const [categoryText, changeCategoryText, setCategoryText] = useInput("");
   const [toggleCategorySpread, setToggleCategorySpread] = useState(false);
   const [disabledBtn, setDisabledBtn] = useState(false);
-  const { body, title } = useContext(MarkDownEditorContext);
-  const { hashtag } = useContext(WritePostContext);
+  const { hashtag, body, title } = useContext(WritePostContext);
   const { dispatch } = useContext(AlertListContext);
 
   // [카테고리 펼치기] 버튼 클릭

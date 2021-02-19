@@ -6,7 +6,8 @@ import HashTagInput from "@components/WritePost/HashTagInput";
 import TitleInput from "@components/WritePost/TitleInput";
 import WritePostFooter from "@components/WritePost/WritePostFooter";
 import MarkDownPreview from "@components/WritePost/MarkDownPreview";
-import Context from "@reducers/MarkDownEditor";
+import WritePostSetting from "@components/WritePost/WritePostSetting";
+import Context from "@reducers/WritePost";
 import * as S from "./style";
 
 export default {
@@ -27,6 +28,7 @@ const Layout = () => {
       <S.Section className="right-section">
         <MarkDownPreview />
       </S.Section>
+      <WritePostSetting />
     </>
   );
 };
