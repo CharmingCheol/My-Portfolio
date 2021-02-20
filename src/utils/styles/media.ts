@@ -8,8 +8,7 @@ const media = {
   large: mediaQuery(1200),
   laptop: mediaQuery(1024),
   tablet: mediaQuery(769),
-  smallTablet: mediaQuery(600),
-  mobile: mediaQuery(480),
+  mobile: mediaQuery(567),
   custom: mediaQuery,
 };
 
