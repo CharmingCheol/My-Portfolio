@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useCallback, useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { BsFillCaretUpFill } from "react-icons/bs";
 import Button from "@common/Atoms/Button";
 import Input from "@common/Atoms/Input";
@@ -18,6 +19,7 @@ interface EditorFooterProps {
 }
 
 const EditorFooter = ({ categoryList, submitPostAPI }: EditorFooterProps) => {
+  const history = useHistory();
   const [categoryText, changeCategoryText, setCategoryText] = useInput("");
   const [toggleCategorySpread, setToggleCategorySpread] = useState(false);
   const [disabledBtn, setDisabledBtn] = useState(false);
@@ -37,6 +39,11 @@ const EditorFooter = ({ categoryList, submitPostAPI }: EditorFooterProps) => {
     },
     [setCategoryText],
   );
+
+  // [뒤로 가기] 버튼 클릭
+  const clickGoBackBtn = useCallback(() => {
+    history.replace("/blog");
+  }, [history]);
 
   // [작성] 버튼 클릭
   const clickSubmitButton = useCallback(() => {
@@ -59,7 +66,7 @@ const EditorFooter = ({ categoryList, submitPostAPI }: EditorFooterProps) => {
     <>
       <S.Layout>
         <S.CategoryInput>
-          <Input onChange={changeCategoryText} placeholder="카테고리를 입력하세요" value={categoryText} />
+          <Input onChange={changeCategoryText} placeholder="카테고리" value={categoryText} />
           <Button buttonColor={palette.blue4} className="category-spread-btn" onClick={clickCategorySpreadBtn}>
             <BsFillCaretUpFill />
           </Button>
@@ -71,14 +78,17 @@ const EditorFooter = ({ categoryList, submitPostAPI }: EditorFooterProps) => {
             ))}
           </S.CategoryList>
         </S.CategoryInput>
-        <Button
-          buttonColor={palette.blue5}
-          disabled={disabledBtn}
-          disabledColor={palette.blue3}
-          onClick={clickSubmitButton}
-        >
-          작성
-        </Button>
+        <S.ButtonWrapper>
+          <Button onClick={clickGoBackBtn}>뒤로가기</Button>
+          <Button
+            buttonColor={palette.blue5}
+            disabled={disabledBtn}
+            disabledColor={palette.blue3}
+            onClick={clickSubmitButton}
+          >
+            작성
+          </Button>
+        </S.ButtonWrapper>
       </S.Layout>
     </>
   );

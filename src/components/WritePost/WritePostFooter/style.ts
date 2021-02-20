@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import media from "@utils/styles/media";
 import palette from "@utils/styles/palette";
 
 export const Layout = styled.article`
@@ -10,17 +11,16 @@ export const CategoryInput = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  width: 240px;
+  width: 160px;
   input {
     flex: 1;
     width: 100%;
   }
   .category-spread-btn {
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     padding: 0;
-    margin-right: 4px;
   }
 `;
 
@@ -43,5 +43,18 @@ export const CategoryList = styled.ul<{ categoryCount: number }>`
     height: 20px;
     margin-bottom: 8px;
     cursor: pointer;
+  }
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  button {
+    margin-left: 4px;
+  }
+  ${media.mobile} {
+    button {
+      padding: 4px 8px;
+      font-size: 0.5rem;
+    }
   }
 `;
