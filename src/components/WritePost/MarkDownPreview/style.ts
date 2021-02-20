@@ -6,3 +6,7 @@ export const Layout = styled.div`
     word-break: break-word;
   }
 `;
+
+export const Title = styled.h1`
+  margin-bottom: 40px;
+`;

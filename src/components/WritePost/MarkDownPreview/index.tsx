@@ -9,7 +9,7 @@ const MarkDownPreview = () => {
   return (
     <>
       <S.Layout>
-        <h1>{title}</h1>
+        <S.Title>{title}</S.Title>
         <MarkDownRendering editorText={body} />
       </S.Layout>
     </>
