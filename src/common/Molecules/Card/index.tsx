@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Date from "@common/Atoms/Date";
 import Image from "@common/Atoms/Image";
+import replaceMarkDownContent from "@utils/modules/replaceMarkDownContent";
 import * as S from "./style";
 
 /**
@@ -34,7 +35,7 @@ export const ImageCard = ({ body, category, className, createdAt, image, postId,
             <S.ContentWrapper>
               <h1>{title}</h1>
               <Date dateText={createdAt} />
-              <p>{body}</p>
+              <p>{replaceMarkDownContent(body)}</p>
             </S.ContentWrapper>
           </S.Container>
         </Link>
