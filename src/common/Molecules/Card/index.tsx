@@ -27,7 +27,7 @@ export const ImageCard = ({ body, category, className, createdAt, image, postId,
   return (
     <>
       <S.ImageCard className={className}>
-        <Link to={`/blog/${postId}`}>
+        <Link to={`/blog/${category}/${postId}`}>
           <S.Container>
             <S.ImageWrapper>
               <Image alt={category} src={image} />

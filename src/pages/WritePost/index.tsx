@@ -23,7 +23,7 @@ const WritePost = () => {
   const submitPostAPI = useCallback(
     async ({ body, category, hashtag, thumbnail, title }: SubmitPostParams) => {
       const { data } = await submitPost({ body, category, hashtag, thumbnail, title });
-      history.replace(`/blog/post?id=${data._id}`);
+      history.replace(`/blog/${data.category}/${data._id}`);
     },
     [history],
   );
