@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import palette from "@utils/styles/palette";
 
 export const ImageCard = styled.li`
   width: 33%;
@@ -10,7 +11,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+  box-shadow: rgb(0 0 0 / 5%) 8px 8px 16px 8px;
 `;
 
 export const ImageWrapper = styled.div`
@@ -22,7 +23,7 @@ export const ContentWrapper = styled.div`
   flex-direction: column;
   height: 60%;
   padding: 12px;
-  background: white;
+  background: ${palette.gray3};
   h1 {
     overflow: hidden;
     text-overflow: ellipsis;

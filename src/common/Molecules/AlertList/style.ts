@@ -5,4 +5,5 @@ export const AlertList = styled.ul`
   top: 8px;
   right: 24px;
   width: 40%;
+  z-index: 2;
 `;
