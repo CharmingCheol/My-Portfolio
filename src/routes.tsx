@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useLayoutEffect, useState } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import loadable from "@loadable/component";
 import CryptoJS from "crypto-js";
 import LoadingBar from "@common/Atoms/LoadingBar";
@@ -9,6 +9,7 @@ import { encrypt } from "@utils/modules/encryption";
 
 const Blog = loadable(() => import("@pages/Blog"));
 const Home = loadable(() => import("@pages/Home"));
+const PostDetail = loadable(() => import("@pages/PostDetail"));
 const Profile = loadable(() => import("@pages/Profile/reducer"));
 const Project = loadable(() => import("@pages/Project/reducer"));
 const WritePost = loadable(() => import("@pages/WritePost"));
@@ -16,11 +17,15 @@ const WritePost = loadable(() => import("@pages/WritePost"));
 const Routes = () => {
   return (
     <>
-      <Route path="/" component={Home} exact />
-      <Route path="/profile" component={Profile} exact />
-      <Route path="/project" component={Project} exact />
-      <Route path="/blog" component={Blog} exact />
-      <PrivateRoute exact component={WritePost} path="/blog/write/post" />
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/profile" component={Profile} exact />
+        <Route path="/project" component={Project} exact />
+        <Route path="/blog" component={Blog} exact />
+        <PrivateRoute exact component={WritePost} path="/blog/write/post" />
+        <Route path="/blog/:category/:id" component={PostDetail} exact />
+        <Redirect from="*" to="/" />
+      </Switch>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import dotenv from "dotenv";
 import AlertList from "@common/Molecules/AlertList";
 import BlogLayout from "@common/Organisms/BlogLayout";
@@ -15,13 +15,10 @@ const App = () => {
       <StyleReset />
       <BrowserRouter>
         <BlogLayout />
-        <Switch>
-          <AlertListProvider>
-            <AlertList />
-            <Routes />
-          </AlertListProvider>
-          <Redirect from="*" to="/" />
-        </Switch>
+        <AlertListProvider>
+          <AlertList />
+          <Routes />
+        </AlertListProvider>
       </BrowserRouter>
     </>
   );
