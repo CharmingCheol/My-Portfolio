@@ -21,8 +21,8 @@ const WritePost = () => {
 
   // 게시글 데이터 submit
   const submitPostAPI = useCallback(
-    async ({ body, category, hashtag, title }: SubmitPostParams) => {
-      const { data } = await submitPost({ body, category, hashtag, title });
+    async ({ body, category, hashtag, thumbnail, title }: SubmitPostParams) => {
+      const { data } = await submitPost({ body, category, hashtag, thumbnail, title });
       history.replace(`/blog/post?id=${data._id}`);
     },
     [history],

@@ -3,7 +3,7 @@ import { IconBaseProps } from "react-icons/lib";
 import codemirror, { EditorFromTextArea } from "codemirror";
 import Button from "@common/Atoms/Button";
 import { WritePostContext } from "@reducers/WritePost";
-import { changeBody } from "@reducers/WritePost/action";
+import { addImageList, changeBody } from "@reducers/WritePost/action";
 import toolBarBtnData, { MarkDownToolBar } from "./data";
 import * as S from "./style";
 
@@ -393,7 +393,8 @@ const MarkDownInput = ({ imageUrl, imageUploadCallBack }: MarkDownInputProps) =>
     if (!imageUrl || !codeMirrorRef.current) return;
     const doc = codeMirrorRef.current.getDoc();
     doc.replaceSelection(`![](${imageUrl})`);
-  }, [imageUrl]);
+    dispatch(addImageList(imageUrl));
+  }, [dispatch, imageUrl]);
 
   return (
     <>

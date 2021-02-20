@@ -21,7 +21,7 @@ const EditorFooter = ({ categoryList, submitPostAPI }: EditorFooterProps) => {
   const [categoryText, changeCategoryText, setCategoryText] = useInput("");
   const [toggleCategorySpread, setToggleCategorySpread] = useState(false);
   const [disabledBtn, setDisabledBtn] = useState(false);
-  const { hashtag, body, title } = useContext(WritePostContext);
+  const { hashtag, body, thumbnail, title } = useContext(WritePostContext);
   const { dispatch } = useContext(AlertListContext);
 
   // [카테고리 펼치기] 버튼 클릭
@@ -46,13 +46,14 @@ const EditorFooter = ({ categoryList, submitPostAPI }: EditorFooterProps) => {
       if (hashtag.length === 0) return dispatch(addAlert({ status: "error", text: "해시태그가 비었습니다" }));
       if (!trim(body)) return dispatch(addAlert({ status: "error", text: "본문이 비었습니다" }));
       if (!trim(categoryText)) return dispatch(addAlert({ status: "error", text: "카테고리가 비었습니다" }));
+      if (!trim(thumbnail)) return dispatch(addAlert({ status: "error", text: "썸네일이 비었습니다" }));
       setDisabledBtn(true);
-      submitPostAPI({ category: categoryText, body, hashtag, title });
+      submitPostAPI({ category: categoryText, body, hashtag, thumbnail, title });
     } catch {
       dispatch(addAlert({ status: "error", text: "서버 에러가 발생했습니다" }));
       setDisabledBtn(false);
     }
-  }, [categoryText, body, dispatch, hashtag, title, submitPostAPI]);
+  }, [categoryText, body, dispatch, hashtag, thumbnail, title, submitPostAPI]);
 
   return (
     <>
