@@ -11,4 +11,5 @@ export interface BoardDetail {
   hashtag: string[];
   thumbnail: string;
   title: string;
+  _id: string;
 }
