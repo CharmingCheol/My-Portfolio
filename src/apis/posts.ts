@@ -17,3 +17,8 @@ export const submitPost = ({ body, category, hashtag, thumbnail, title }: Submit
 export const getTotalPosts = ({ page }: { page: number }) => {
   return instance.get(`/boards?page=${page}`);
 };
+
+// 게시글 상세 불러오기 GET
+export const getPostDetail = ({ category, id }: { category: string; id: string }) => {
+  return instance.get(`/boards/${category}/${id}`);
+};
