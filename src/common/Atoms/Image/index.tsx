@@ -20,7 +20,7 @@ export interface ImageProps {
 
 const Image = ({ alt, className, lazy = false, onClick, src }: ImageProps) => {
   const [imgSrc, setImgSrc] = useState(lazy ? SkeletonImage : src);
-  const ref = useInterSection(() => setImgSrc(src));
+  const ref = useInterSection<HTMLImageElement>(() => setImgSrc(src));
 
   return (
     <>

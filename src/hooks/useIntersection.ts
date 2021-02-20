@@ -6,8 +6,8 @@ interface OptionProps {
   rootMargin?: string;
 }
 
-const useIntersection = (onIntersect: () => void, option?: OptionProps) => {
-  const ref = useRef<HTMLImageElement>(null);
+const useIntersection = <Tag extends HTMLElement>(onIntersect: () => void, option?: OptionProps) => {
+  const ref = useRef<Tag>(null);
 
   const checkIntersection: IntersectionObserverCallback = useCallback(
     ([entry], observer) => {
