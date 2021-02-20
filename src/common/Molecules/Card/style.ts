@@ -1,10 +1,17 @@
 import styled from "styled-components";
 import palette from "@utils/styles/palette";
+import media from "@utils/styles/media";
 
 export const ImageCard = styled.li`
   width: 33%;
   padding: 16px;
   height: 400px;
+  ${media.tablet} {
+    width: 50%;
+  }
+  ${media.mobile} {
+    width: 100%;
+  }
 `;
 
 export const Container = styled.div`
