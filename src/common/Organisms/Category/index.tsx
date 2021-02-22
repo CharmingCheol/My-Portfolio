@@ -141,7 +141,7 @@ const Category = ({ categoryList, ip }: CategoryProps) => {
           ) : (
             <>
               {categoryList.map((category) => (
-                <S.Link key={category} to={`/category/${category}`}>
+                <S.Link key={category} to={`/blog/${category}`}>
                   {category}
                 </S.Link>
               ))}

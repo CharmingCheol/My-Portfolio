@@ -22,3 +22,13 @@ export const getTotalPosts = ({ page }: { page: number }) => {
 export const getPostDetail = ({ category, id }: { category: string; id: string }) => {
   return instance.get(`/boards/${category}/${id}`);
 };
+
+// 카테고리 게시글 리스트 불러오기 GET
+export const getCategoryPosts = ({ category, page = 1 }: { category: string; page: number }) => {
+  return instance.get(`/boards/${category}?page=${page}`);
+};
+
+// 카테고리 게시글 수 불러오기 GET
+export const getCategoryPostCount = ({ category }: { category: string }) => {
+  return instance.get(`/boards/count/${category}`);
+};

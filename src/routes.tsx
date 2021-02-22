@@ -8,6 +8,7 @@ import useDecryptIP from "@hooks/useDecryptIP";
 import { encrypt } from "@utils/modules/encryption";
 
 const Blog = loadable(() => import("@pages/Blog"));
+const CategoryPost = loadable(() => import("@pages/CategoryPost"));
 const Home = loadable(() => import("@pages/Home"));
 const PostDetail = loadable(() => import("@pages/PostDetail"));
 const Profile = loadable(() => import("@pages/Profile/reducer"));
@@ -22,6 +23,7 @@ const Routes = () => {
         <Route path="/profile" component={Profile} exact />
         <Route path="/project" component={Project} exact />
         <Route path="/blog" component={Blog} exact />
+        <Route path="/blog/:category" component={CategoryPost} exact />
         <PrivateRoute exact component={WritePost} path="/blog/write/post" />
         <Route path="/blog/:category/:id" component={PostDetail} exact />
         <Redirect from="*" to="/" />
