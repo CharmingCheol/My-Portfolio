@@ -24,8 +24,8 @@ const Textarea = ({ onChange, onKeyDown, placeholder, textProps }: TextareaProps
   );
 
   useEffect(() => {
-    if (textProps) return;
-    setText("");
+    if (!textProps) return;
+    setText(textProps);
   }, [textProps]);
 
   return (

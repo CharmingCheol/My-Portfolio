@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { BsFillCaretUpFill } from "react-icons/bs";
 import Button from "@common/Atoms/Button";
@@ -23,7 +23,8 @@ const EditorFooter = ({ categoryList, submitPostAPI }: EditorFooterProps) => {
   const [categoryText, changeCategoryText, setCategoryText] = useInput("");
   const [toggleCategorySpread, setToggleCategorySpread] = useState(false);
   const [disabledBtn, setDisabledBtn] = useState(false);
-  const { hashtag, body, thumbnail, title } = useContext(WritePostContext);
+  const [modifyPost, setModifyPost] = useState(false);
+  const { hashtag, body, initialCategory, thumbnail, title } = useContext(WritePostContext);
   const { dispatch } = useContext(AlertListContext);
 
   // [카테고리 펼치기] 버튼 클릭
@@ -62,6 +63,13 @@ const EditorFooter = ({ categoryList, submitPostAPI }: EditorFooterProps) => {
     }
   }, [categoryText, body, dispatch, hashtag, thumbnail, title, submitPostAPI]);
 
+  // 수정 게시글 데이터 적용
+  useEffect(() => {
+    if (!initialCategory) return;
+    setCategoryText(initialCategory);
+    setModifyPost(true);
+  }, [initialCategory, setCategoryText]);
+
   return (
     <>
       <S.Layout>
@@ -86,7 +94,7 @@ const EditorFooter = ({ categoryList, submitPostAPI }: EditorFooterProps) => {
             disabledColor={palette.blue3}
             onClick={clickSubmitButton}
           >
-            작성
+            {modifyPost ? "수정" : "작성"}
           </Button>
         </S.ButtonWrapper>
       </S.Layout>

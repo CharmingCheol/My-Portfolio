@@ -13,7 +13,7 @@ const Home = loadable(() => import("@pages/Home"));
 const PostDetail = loadable(() => import("@pages/PostDetail"));
 const Profile = loadable(() => import("@pages/Profile/reducer"));
 const Project = loadable(() => import("@pages/Project/reducer"));
-const WritePost = loadable(() => import("@pages/WritePost"));
+const WritePost = loadable(() => import("@pages/WritePost/reducer"));
 
 const Routes = () => {
   return (

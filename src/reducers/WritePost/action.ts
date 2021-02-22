@@ -5,6 +5,15 @@ export const CHANGE_CATEGORY = "writePost/CHANGE_CATEGORY" as const;
 export const CHANGE_THUMBNAIL = "writePost/CHANGE_THUMBNAIL" as const;
 export const CAHANGE_TITLE = "writePost/CAHANGE_TITLE" as const;
 export const REMOVE_HASH_TAG = "writePost/REMOVE_HASH_TAG" as const;
+export const INITIALIZE_POST_DATA = "writePost/INITIALIZE_POST_DATA" as const;
+
+interface InitializePostData {
+  title: string;
+  hashtag: string[];
+  body: string;
+  category: string;
+  thumbnail: string;
+}
 
 // 해시태그 추가
 export const addHashTag = (hashTag: string) => ({
@@ -48,6 +57,12 @@ export const removeHashTag = (index: number) => ({
   payload: index,
 });
 
+// 수정 게시글 데이터 세팅
+export const initializePostData = ({ title, hashtag, body, category, thumbnail }: InitializePostData) => ({
+  type: INITIALIZE_POST_DATA,
+  payload: { title, hashtag, body, category, thumbnail },
+});
+
 export type WritePostAction = ReturnType<
   | typeof addHashTag
   | typeof addImageList
@@ -56,4 +71,5 @@ export type WritePostAction = ReturnType<
   | typeof changeThumbnail
   | typeof changeTitle
   | typeof removeHashTag
+  | typeof initializePostData
 >;

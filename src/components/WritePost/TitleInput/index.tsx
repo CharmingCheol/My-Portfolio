@@ -5,7 +5,7 @@ import { changeTitle as changeTitleAction } from "@reducers/WritePost/action";
 import * as S from "./style";
 
 const TitleInput = () => {
-  const { dispatch } = useContext(WritePostContext);
+  const { dispatch, initialTitle } = useContext(WritePostContext);
 
   // 제목 변경
   const changeTitle = useCallback(
@@ -18,7 +18,7 @@ const TitleInput = () => {
   return (
     <>
       <S.Article>
-        <Textarea onChange={changeTitle} placeholder="제목을 입력하세요" />
+        <Textarea onChange={changeTitle} placeholder="제목을 입력하세요" textProps={initialTitle} />
       </S.Article>
     </>
   );

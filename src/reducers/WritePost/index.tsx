@@ -8,6 +8,7 @@ import {
   CHANGE_CATEGORY,
   CHANGE_THUMBNAIL,
   CAHANGE_TITLE,
+  INITIALIZE_POST_DATA,
   REMOVE_HASH_TAG,
 } from "./action";
 
@@ -16,6 +17,10 @@ interface WritePostState {
   category: string;
   hashtag: string[];
   imageList: string[];
+  initialBody: string;
+  initialCategory: string;
+  initialHashTag: string[];
+  initialTitle: string;
   thumbnail: string;
   title: string;
 }
@@ -29,6 +34,10 @@ const initialState: WritePostState = {
   category: "",
   hashtag: [],
   imageList: [],
+  initialBody: "",
+  initialCategory: "",
+  initialHashTag: [],
+  initialTitle: "",
   thumbnail: "",
   title: "",
 };
@@ -39,6 +48,10 @@ export const WritePostContext = createContext<Context>({
   dispatch: () => {},
   hashtag: [],
   imageList: [],
+  initialBody: "",
+  initialCategory: "",
+  initialHashTag: [],
+  initialTitle: "",
   thumbnail: "",
   title: "",
 });
@@ -77,6 +90,20 @@ const reducer = (state: WritePostState = initialState, action: WritePostAction) 
           ...draft.hashtag.slice(action.payload + 1, draft.hashtag.length),
         ];
         break;
+      // 수정 게시글 데이터 세팅
+      case INITIALIZE_POST_DATA: {
+        const { body, category, hashtag, title, thumbnail } = action.payload;
+        draft.body = body;
+        draft.category = category;
+        draft.hashtag = hashtag;
+        draft.title = title;
+        draft.initialBody = body;
+        draft.initialCategory = category;
+        draft.initialHashTag = hashtag;
+        draft.initialTitle = title;
+        draft.thumbnail = thumbnail;
+        break;
+      }
       default:
         break;
     }
@@ -85,15 +112,34 @@ const reducer = (state: WritePostState = initialState, action: WritePostAction) 
 
 const WritePostProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { body, category, hashtag, imageList, thumbnail, title } = state;
-  const value = useMemo(() => ({ body, category, dispatch, hashtag, imageList, thumbnail, title }), [
+  const {
     body,
     category,
     hashtag,
     imageList,
+    initialBody,
+    initialCategory,
+    initialHashTag,
+    initialTitle,
     thumbnail,
     title,
-  ]);
+  } = state;
+  const value = useMemo(
+    () => ({
+      body,
+      category,
+      dispatch,
+      hashtag,
+      imageList,
+      initialBody,
+      initialCategory,
+      initialHashTag,
+      initialTitle,
+      thumbnail,
+      title,
+    }),
+    [body, category, hashtag, imageList, initialBody, initialCategory, initialHashTag, initialTitle, thumbnail, title],
+  );
 
   return (
     <>

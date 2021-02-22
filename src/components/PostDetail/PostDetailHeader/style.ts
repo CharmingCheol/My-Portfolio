@@ -9,4 +9,18 @@ export const Layout = styled.section`
     margin-bottom: 16px;
     display: block;
   }
+  .date-wrapper {
+    display: flex;
+    .created-at {
+      margin-right: auto;
+    }
+    .modify-btn,
+    .delete-btn {
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .delete-btn {
+      margin-left: 8px;
+    }
+  }
 `;

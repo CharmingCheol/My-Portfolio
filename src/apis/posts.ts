@@ -13,6 +13,11 @@ export const submitPost = ({ body, category, hashtag, thumbnail, title }: Submit
   return instance.post("/boards", { body, category, hashtag, thumbnail, title });
 };
 
+// 글 수정 PUT
+export const updatePost = ({ body, category, hashtag, thumbnail, title }: SubmitPostParams) => {
+  return instance.put("/boards", { body, category, hashtag, thumbnail, title });
+};
+
 // 전체 글 불러오기 GET
 export const getTotalPosts = ({ page }: { page: number }) => {
   return instance.get(`/boards?page=${page}`);

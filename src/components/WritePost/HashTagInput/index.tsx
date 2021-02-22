@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Input from "@common/Atoms/Input";
 import HashTag from "@common/Atoms/HashTag";
 import useInput from "@hooks/useInput";
@@ -9,7 +9,7 @@ import { addHashTag, removeHashTag } from "@reducers/WritePost/action";
 import * as S from "./style";
 
 const HashTagInput = () => {
-  const { dispatch } = useContext(WritePostContext);
+  const { dispatch, initialHashTag } = useContext(WritePostContext);
   const [hashTagText, changeHashTagText, setHashTagText] = useInput("");
   const [hashTagList, setHashTagList] = useState<string[]>([]);
 
@@ -36,6 +36,12 @@ const HashTagInput = () => {
     },
     [dispatch, hashTagList],
   );
+
+  // 수정 게시글 데이터 적용
+  useEffect(() => {
+    if (!initialHashTag) return;
+    setHashTagList(initialHashTag);
+  }, [initialHashTag]);
 
   return (
     <>

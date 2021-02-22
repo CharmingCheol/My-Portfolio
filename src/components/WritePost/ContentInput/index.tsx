@@ -1,4 +1,6 @@
 import React, { memo, useCallback, useContext, useEffect, useRef } from "react";
+import queryString from "query-string";
+import { useLocation } from "react-router-dom";
 import { IconBaseProps } from "react-icons/lib";
 import codemirror, { EditorFromTextArea } from "codemirror";
 import Button from "@common/Atoms/Button";
@@ -20,7 +22,8 @@ interface MarkDownInputProps {
 }
 
 const MarkDownInput = ({ imageUrl, imageUploadCallBack }: MarkDownInputProps) => {
-  const { dispatch } = useContext(WritePostContext);
+  const location = useLocation();
+  const { dispatch, initialBody } = useContext(WritePostContext);
   const codeMirrorRef = useRef<EditorFromTextArea | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -371,14 +374,26 @@ const MarkDownInput = ({ imageUrl, imageUploadCallBack }: MarkDownInputProps) =>
   // codemirror initialize
   useEffect(() => {
     if (!textareaRef.current) return;
-    codeMirrorRef.current = codemirror.fromTextArea(textareaRef.current, {
-      mode: "markdown",
-      theme: "one-light",
-      placeholder: "내용을 입력하세요",
-      viewportMargin: Infinity,
-      lineWrapping: true,
-    });
-  }, []);
+    const { category, id } = queryString.parse(location.search);
+    if (category && id) {
+      if (initialBody) {
+        codeMirrorRef.current = codemirror.fromTextArea(textareaRef.current, {
+          mode: "markdown",
+          theme: "one-light",
+          viewportMargin: Infinity,
+          lineWrapping: true,
+        });
+        codeMirrorRef.current.setValue(initialBody);
+      }
+    } else {
+      codeMirrorRef.current = codemirror.fromTextArea(textareaRef.current, {
+        mode: "markdown",
+        theme: "one-light",
+        viewportMargin: Infinity,
+        lineWrapping: true,
+      });
+    }
+  }, [initialBody, location]);
 
   // dispatch change event
   useEffect(() => {
@@ -386,7 +401,7 @@ const MarkDownInput = ({ imageUrl, imageUploadCallBack }: MarkDownInputProps) =>
     codeMirrorRef.current.on("change", (instance) => {
       dispatch(changeBody(instance.getValue()));
     });
-  }, [dispatch]);
+  }, [dispatch, initialBody]);
 
   // append image url text
   useEffect(() => {
