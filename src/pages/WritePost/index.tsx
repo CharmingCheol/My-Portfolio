@@ -31,7 +31,7 @@ const WritePost = () => {
     async ({ body, category, hashtag, thumbnail, title }: SubmitPostParams) => {
       const { id } = queryString.parse(location.search);
       const { data } = id
-        ? await updatePost({ body, category, hashtag, thumbnail, title })
+        ? await updatePost({ body, category, hashtag, id: id as string, thumbnail, title })
         : await submitPost({ body, category, hashtag, thumbnail, title });
       history.replace(`/blog/${data.category}/${data._id}`);
     },

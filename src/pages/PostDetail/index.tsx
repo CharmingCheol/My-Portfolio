@@ -1,15 +1,23 @@
-import React, { useLayoutEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useCallback, useLayoutEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import PostDetailHeader from "@components/PostDetail/PostDetailHeader";
 import PostDetailContent from "@components/PostDetail/PostDetailContent";
-import { getPostDetail } from "@apis/posts";
+import { deletePost, getPostDetail } from "@apis/posts";
 import { BoardDetail } from "@typings/db";
 import * as S from "./style";
 
 const PostDetail = () => {
   const { category, id } = useParams<{ category: string; id: string }>();
   const [postDetailData, setPostDetailData] = useState<BoardDetail | null>(null);
+  const history = useHistory();
 
+  // 게시글 삭제
+  const deletePostDetail = useCallback(async () => {
+    await deletePost({ category, id });
+    history.replace("/blog");
+  }, [category, history, id]);
+
+  // 게시글 상세 데이터 불러오기
   useLayoutEffect(() => {
     const callback = async () => {
       try {
@@ -29,6 +37,7 @@ const PostDetail = () => {
           <>
             <PostDetailHeader
               date={postDetailData.created_at}
+              deletePostDetail={deletePostDetail}
               hashTagList={postDetailData.hashtag}
               title={postDetailData.title}
             />

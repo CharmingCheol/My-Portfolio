@@ -14,13 +14,22 @@ export const Layout = styled.section`
     .created-at {
       margin-right: auto;
     }
-    .modify-btn,
-    .delete-btn {
+    .modify-btn {
       font-weight: bold;
       cursor: pointer;
     }
-    .delete-btn {
+  }
+  .delete-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    button {
       margin-left: 8px;
     }
   }
+`;
+
+export const DeleteText = styled.span`
+  margin-left: 8px;
+  font-weight: bold;
+  cursor: pointer;
 `;

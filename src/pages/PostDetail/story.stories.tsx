@@ -1,4 +1,5 @@
 import React from "react";
+import { MemoryRouter } from "react-router-dom";
 import { Meta } from "@storybook/react/types-6-0";
 import { text, array } from "@storybook/addon-knobs";
 import PostDetailHeader from "@components/PostDetail/PostDetailHeader";
@@ -13,14 +14,17 @@ export default {
 const DefaultTemplate = () => {
   return (
     <>
-      <S.Layout>
-        <PostDetailHeader
-          date={text("date", "2021-02-20")}
-          hashTagList={array("hashTagList", ["React"])}
-          title={text("title", "제목입니다")}
-        />
-        <PostDetailContent body={text("body", "본문입니다")} />
-      </S.Layout>
+      <MemoryRouter>
+        <S.Layout>
+          <PostDetailHeader
+            date={text("date", "2021-02-20")}
+            deletePostDetail={() => {}}
+            hashTagList={array("hashTagList", ["React"])}
+            title={text("title", "제목입니다")}
+          />
+          <PostDetailContent body={text("body", "본문입니다")} />
+        </S.Layout>
+      </MemoryRouter>
     </>
   );
 };
