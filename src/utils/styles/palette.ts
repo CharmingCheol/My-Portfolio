@@ -39,6 +39,9 @@ const palette = {
   gray7: "#B1A479",
   gray8: "#8F7D4D",
   gray9: "#76622E",
+  // skeleton
+  skeleton1: "#ebebeb", // 연함
+  skeleton2: "#dbdbdb", // 짙음
 };
 
 export default palette;
