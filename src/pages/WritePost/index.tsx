@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useLayoutEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import queryString from "query-string";
 import { useHistory, useLocation } from "react-router-dom";
 import ContentInput from "@components/WritePost/ContentInput";
@@ -71,6 +72,9 @@ const WritePost = () => {
 
   return (
     <>
+      <Helmet>
+        <title>CharmingCheol</title>
+      </Helmet>
       <S.Section className="left-section">
         <TitleInput />
         <HashTagInput />

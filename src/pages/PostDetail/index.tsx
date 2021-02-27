@@ -1,8 +1,10 @@
 import React, { useCallback, useLayoutEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useHistory, useParams } from "react-router-dom";
 import PostDetailHeader from "@components/PostDetail/PostDetailHeader";
 import PostDetailContent from "@components/PostDetail/PostDetailContent";
 import { deletePost, getPostDetail } from "@apis/posts";
+import replaceMarkDownContent from "@utils/modules/replaceMarkDownContent";
 import { BoardDetail } from "@typings/db";
 import * as S from "./style";
 
@@ -32,6 +34,14 @@ const PostDetail = () => {
 
   return (
     <>
+      <Helmet>
+        <meta name="title" content={postDetailData?.title} />
+        <meta name="description" content={replaceMarkDownContent(postDetailData?.body || "")} />
+        <meta name="og:title" content="Charming Blog" />
+        <meta name="og:description" content={replaceMarkDownContent(postDetailData?.body || "")} />
+        <meta name="og:image" content={postDetailData?.thumbnail} />
+        <title>{postDetailData?.title}</title>
+      </Helmet>
       <S.Layout>
         {postDetailData ? (
           <>
