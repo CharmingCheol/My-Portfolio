@@ -7,7 +7,7 @@ export interface CategoryList {
 export interface BoardDetail {
   body: string;
   category: string;
-  created_at: string;
+  createdAt: string;
   hashtag: string[];
   thumbnail: string;
   title: string;

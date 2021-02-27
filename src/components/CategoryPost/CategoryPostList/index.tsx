@@ -19,8 +19,8 @@ const CategoryPostList = ({ postList }: CategoryPostListProps) => {
             <h1>{categoryTitle}</h1>
             <ul>
               {postList.map((post) => {
-                const { category, created_at, _id, title } = post;
-                return <CategoryCard key={title} category={category} date={created_at} id={_id} title={title} />;
+                const { category, createdAt, _id, title } = post;
+                return <CategoryCard key={title} category={category} date={createdAt} id={_id} title={title} />;
               })}
             </ul>
           </>

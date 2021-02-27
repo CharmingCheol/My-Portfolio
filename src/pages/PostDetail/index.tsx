@@ -36,7 +36,7 @@ const PostDetail = () => {
         {postDetailData ? (
           <>
             <PostDetailHeader
-              date={postDetailData.created_at}
+              date={postDetailData.createdAt}
               deletePostDetail={deletePostDetail}
               hashTagList={postDetailData.hashtag}
               title={postDetailData.title}

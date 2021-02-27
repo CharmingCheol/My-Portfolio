@@ -20,13 +20,13 @@ const MainCardList = ({ cardList }: MainCardListProps) => {
           {postLoading && cardList ? (
             cardList.length ? (
               cardList?.map((card) => {
-                const { body, category, created_at, thumbnail, title, _id } = card;
+                const { body, category, createdAt, thumbnail, title, _id } = card;
                 return (
                   <ImageCard
                     key={title}
                     body={body}
                     category={category}
-                    createdAt={created_at}
+                    createdAt={createdAt}
                     image={thumbnail}
                     postId={_id}
                     title={title}
