@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { BsFillGearFill } from "react-icons/bs";
 import CryptoJS from "crypto-js";
 import useDecryptIP from "@hooks/useDecryptIP";
+import Logo from "@static/svg/logo";
 import * as S from "./style";
 
 interface HeaderProps {
@@ -22,7 +23,9 @@ const Header = ({ ip }: HeaderProps) => {
     <>
       <S.Header>
         <S.Container>
-          <span>logo</span>
+          <Link className="logo" to="/blog">
+            <Logo />
+          </Link>
           {sameIp && <BsFillGearFill onClick={clickSettingBtn} />}
           {toggleSettingMenu && (
             <S.SettingMenu onClick={clickSettingBtn}>

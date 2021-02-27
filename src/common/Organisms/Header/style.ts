@@ -23,6 +23,15 @@ export const Container = styled.div`
   svg {
     cursor: pointer;
   }
+  .logo {
+    width: 100px;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    svg {
+      height: 75%;
+    }
+  }
   ${media.xxlarge} {
     width: 1376px;
   }

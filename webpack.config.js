@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = () => {
@@ -85,6 +86,9 @@ module.exports = () => {
       new HtmlWebpackPlugin({
         inject: "body",
         template: path.join(__dirname, "public", "/index.html"),
+      }),
+      new FaviconsWebpackPlugin({
+        logo: path.join(__dirname, "public", "/logo.png"),
       }),
       new ForkTsCheckerWebpackPlugin({
         eslint: {
