@@ -5,6 +5,7 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = () => {
@@ -82,6 +83,12 @@ module.exports = () => {
       isEnvDevelopment && new BundleAnalyzerPlugin({ analyzerMode: "server", analyzerPort: 4000, openAnalyzer: false }),
       isEnvProduction && new BundleAnalyzerPlugin({ analyzerMode: "static" }),
       isEnvProduction && new webpack.LoaderOptionsPlugin({ minimize: true }),
+      isEnvProduction &&
+        new CopyPlugin({
+          patterns: [
+            { from: path.join(__dirname, "public", "robots.txt"), to: path.join(__dirname, "dist", "robots.txt") },
+          ],
+        }),
       new webpack.EnvironmentPlugin({ NODE_ENV: isEnvDevelopment ? "development" : "production" }),
       new HtmlWebpackPlugin({
         inject: "body",
