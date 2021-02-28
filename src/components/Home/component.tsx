@@ -3,7 +3,7 @@ import React, { memo } from "react";
 const Component = () => {
   return (
     <>
-      {Array(12)
+      {Array(30)
         .fill(0)
         .map(() => (
           <section key={Math.random()}>
