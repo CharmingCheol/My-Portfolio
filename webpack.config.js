@@ -77,7 +77,9 @@ module.exports = () => {
       ],
     },
     plugins: [
-      new Dotenv(),
+      new Dotenv({
+        path: path.resolve(__dirname, "./.env"),
+      }),
       isEnvDevelopment && new ReactRefreshWebpackPlugin(),
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       isEnvDevelopment && new BundleAnalyzerPlugin({ analyzerMode: "server", analyzerPort: 4000, openAnalyzer: false }),
