@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const { DEV_SERVER_URL, PROD_SERVER_URL, NODE_ENV } = process.env;
-
 const instance = axios.create({
-  baseURL: NODE_ENV === "development" ? DEV_SERVER_URL : PROD_SERVER_URL,
+  baseURL: process.env.NODE_ENV === "development" ? process.env.DEV_SERVER_URL : process.env.PROD_SERVER_URL,
 });
 
 export default instance;
