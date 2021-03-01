@@ -23,17 +23,23 @@
     }
   },
   "rules": {
+    "camelcase": "off",
+    "consistent-return": "off",
     "import/extensions": "off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
-    "prettier/prettier": ["error", { "endOfLine": "auto" }],
-    "no-undef": "off",
-    "no-param-reassign": "off",
     "linebreak-style": "off",
-    "consistent-return": "off",
+    "no-param-reassign": "off",
+    "no-undef": "off",
+    "no-underscore-dangle": "off",
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx", ".ts", ".json"] }],
+    "react/jsx-props-no-spreading": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/no-empty-function": "off"
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "no-use-before-define": "off"
   }
 }

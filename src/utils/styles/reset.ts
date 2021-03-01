@@ -2,8 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 const StyleReset = createGlobalStyle`
     html, body, h1, h2, h3, h4, h5, h6, p, blockquote, code, img, dl, dt, dd, ol, ul, li, fieldset, legend, caption { margin: 0; padding: 0; border: 0; }
-    div, span, article, section, header, footer, p, ul, li, fieldset, legend, label, a, nav {
-        font-size:1rem;
+    div, span, article, section, header, footer, p, ul, li, fieldset, legend, label, a, nav { 
         box-sizing: border-box; 
     }
     html {
@@ -11,7 +10,6 @@ const StyleReset = createGlobalStyle`
     }
     body {
         min-height: 100%;
-        overflow-x: hidden;
     }
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -25,10 +23,11 @@ const StyleReset = createGlobalStyle`
     article, aside, canvas, details, embed,
     figure, figcaption, footer, header, hgroup,
     menu, nav, output, ruby, section, summary,
-    time, mark, audio, video {
+    time, mark, audio, video, button, textarea {
         margin: 0;
         padding: 0;
         border: 0;
+        outline:0;
     }
     article, aside, details, figcaption, figure,
     footer, header, hgroup, menu, nav, section {
@@ -44,7 +43,15 @@ const StyleReset = createGlobalStyle`
     a {
         text-decoration: none;
         outline: none;
-        color: #fff;
+        color:black;
+    }
+    input {
+        outline: none;
+        border: none;
+    }
+    #root {
+        min-height: 100vh;
+        background:white;
     }
 `;
 

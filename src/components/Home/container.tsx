@@ -16,8 +16,14 @@ interface Queue {
   time: number;
 }
 
+interface HexagonAroundInfo {
+  type: "multiply" | "add" | "subtract";
+  value: number;
+}
+
 // const COLOR_LIST = ["#9DC8C8", "#58C9B9", "#519D9E", "#D1B6E1"];
-const MENU_COUNT = 2;
+const NUMBER_OF_HEXAGONS_IN_ONE_LINE = 17;
+const MENU_COUNT = 3;
 const LINK_BTN_INFO = [
   {
     color: "RGBA(0, 200, 200, 1)",
@@ -26,6 +32,10 @@ const LINK_BTN_INFO = [
   {
     color: "RGBA(170, 137, 118, 1)",
     link: "project",
+  },
+  {
+    color: "RGBA(50, 65, 88, 1)",
+    link: "blog",
   },
 ];
 
@@ -47,9 +57,31 @@ const Container = () => {
   // 클릭한 육각형에 대해 bfs 동작
   const runHexagonBFS = useCallback((curNum: number, curColor: string) => {
     const { innerWidth, innerHeight } = window;
-    const oddAround = [-34, -17, -16, 17, 18, 34];
-    const evenAround = [-34, -18, -17, 16, 17, 34];
+    const calcAround = (around: HexagonAroundInfo[]) =>
+      around.map((obj) => {
+        if (obj.type === "multiply") {
+          return obj.value * NUMBER_OF_HEXAGONS_IN_ONE_LINE;
+        }
+        return obj.value + NUMBER_OF_HEXAGONS_IN_ONE_LINE;
+      });
+
     const queue: Queue[] = [];
+    const oddAround = calcAround([
+      { type: "multiply", value: -2 },
+      { type: "multiply", value: -1 },
+      { type: "add", value: NUMBER_OF_HEXAGONS_IN_ONE_LINE * -2 + 1 },
+      { type: "add", value: 0 },
+      { type: "add", value: 1 },
+      { type: "multiply", value: 2 },
+    ]);
+    const evenAround = calcAround([
+      { type: "multiply", value: -2 },
+      { type: "add", value: NUMBER_OF_HEXAGONS_IN_ONE_LINE * -2 - 1 },
+      { type: "multiply", value: -1 },
+      { type: "add", value: -1 },
+      { type: "add", value: 0 },
+      { type: "multiply", value: 2 },
+    ]);
 
     // 최초 6방향에 대한 정보를 queue에 추가
     for (let i = 0; i < 6; i += 1) {
