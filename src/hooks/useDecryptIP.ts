@@ -7,8 +7,6 @@ interface UseDecryptIPParams {
   encryptIP: CryptoJS.lib.CipherParams;
 }
 
-const { MY_IP } = process.env;
-
 const useDecryptIP = ({ callback, encryptIP }: UseDecryptIPParams) => {
   const [sameIp, setSameIp] = useState(false);
 
@@ -16,7 +14,7 @@ const useDecryptIP = ({ callback, encryptIP }: UseDecryptIPParams) => {
     try {
       if (!encryptIP) return setSameIp(false);
       const originalText = decrypt(encryptIP);
-      if (MY_IP === originalText) setSameIp(true);
+      if (process.env.MY_IP === originalText) setSameIp(true);
       if (callback) callback();
     } catch (error) {
       setSameIp(false);
