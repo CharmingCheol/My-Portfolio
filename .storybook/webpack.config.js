@@ -13,8 +13,9 @@ module.exports = ({ config }) => {
     "@components": path.resolve(__dirname, "../src", "components"),
     "@hooks": path.resolve(__dirname, "../src", "hooks"),
     "@pages": path.resolve(__dirname, "../src", "pages"),
-    "@static": path.resolve(__dirname, "../src", "static"),
     "@reducers": path.resolve(__dirname, "../src", "reducers"),
+    "@static": path.resolve(__dirname, "../src", "static"),
+    "@styles": path.resolve(__dirname, "../src", "styles"),
     "@typings": path.resolve(__dirname, "../src", "typings"),
     "@utils": path.resolve(__dirname, "../src", "utils"),
   };
