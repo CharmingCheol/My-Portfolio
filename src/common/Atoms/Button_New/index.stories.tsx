@@ -7,7 +7,7 @@ import { ColorType } from "./type";
 import Button, { Props } from "./index";
 
 export default {
-  title: "atoms/Wrapper",
+  title: "atoms/Button_New",
   component: Button,
 } as Meta;
 
@@ -84,7 +84,7 @@ export const ButtonColor = ColorTemplate.bind({});
 const DisabledTemplate: Story<Props> = () => {
   const [disabled, setDisabled] = useState(false);
   const onClick = () => setDisabled((prev) => !prev);
-  return <Button text="disabled" disabled={disabled} onClick={onClick} />;
+  return <Button text="Click Me!" disabled={disabled} onClick={onClick} />;
 };
 export const DisabledButton = DisabledTemplate.bind({});
 
