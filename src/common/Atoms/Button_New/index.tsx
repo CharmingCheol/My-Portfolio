@@ -15,24 +15,24 @@ export interface Props extends AttributeProps, EventProps, PathProps, StyleProps
 }
 
 const Button = (props: Props) => {
-  const { className = [], href, newTab, to, text, ...other } = props;
+  const { className = [], href, newTab, to, text, ...others } = props;
 
   if (to) {
     return (
-      <S.Link className={classnames(...className)} to={to} {...other}>
+      <S.Link className={classnames(...className)} to={to} {...others}>
         {text}
       </S.Link>
     );
   }
   if (href) {
     return (
-      <S.Anchor className={classnames(...className)} href={href} target={newTab ? "_blank" : ""} {...other}>
+      <S.Anchor className={classnames(...className)} href={href} target={newTab ? "_blank" : ""} {...others}>
         {text}
       </S.Anchor>
     );
   }
   return (
-    <S.Button type="button" className={classnames(...className)} {...other}>
+    <S.Button type="button" className={classnames(...className)} {...others}>
       {text}
     </S.Button>
   );
