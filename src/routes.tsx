@@ -14,12 +14,14 @@ const PostDetail = loadable(() => import("@pages/PostDetail"));
 const Profile = loadable(() => import("@pages/Profile/reducer"));
 const Project = loadable(() => import("@pages/Project/reducer"));
 const WritePost = loadable(() => import("@pages/WritePost/reducer"));
+const Me = loadable(() => import("@pages/Me"));
 
 const Routes = () => {
   return (
     <>
       <Switch>
         <Route path="/" component={Home} exact />
+        <Route path="/me" component={Me} exact />
         <Route path="/profile" component={Profile} exact />
         <Route path="/project" component={Project} exact />
         <Route path="/blog" component={Blog} exact />
