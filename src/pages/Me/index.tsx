@@ -1,6 +1,6 @@
 import React from "react";
 import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
-import Button from "common/Atoms/Button_New";
+import Button from "@components/atoms/Button";
 import * as S from "./index.style";
 
 const Me = () => {

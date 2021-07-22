@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Helmet } from "react-helmet";
-import MuseumWall from "@components/Project/MuseumWall";
-import PhotoFrameList from "@components/Project/PhotoFrameList";
-import CubePopup from "@components/Project/CubePopup";
+import MuseumWall from "@containers/Project/MuseumWall";
+import PhotoFrameList from "@containers/Project/PhotoFrameList";
+import CubePopup from "@containers/Project/CubePopup";
 import logo from "@static/img/logo.png";
 import { projectContext } from "./reducer";
 import * as S from "./style";
