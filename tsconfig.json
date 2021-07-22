@@ -15,15 +15,11 @@
     "isolatedModules": true,
     "baseUrl": "src",
     "paths": {
-      "@apis/*": ["apis/*"],
-      "@common/*": ["common/*"],
       "@components/*": ["components/*"],
-      "@hooks/*": ["hooks/*"],
+      "@containers/*": ["containers/*"],
       "@pages/*": ["pages/*"],
-      "@reducers/*": ["reducers/*"],
       "@static/*": ["static/*"],
       "@styles/*": ["styles/*"],
-      "@typings/*": ["typings/*"],
       "@utils/*": ["utils/*"]
     }
   },
