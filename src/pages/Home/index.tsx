@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import Container from "@components/Home/container";
+import Container from "@containers/Home";
 import logo from "@static/img/logo.png";
 
 const Home = () => {

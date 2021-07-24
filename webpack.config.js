@@ -9,28 +9,24 @@ const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = () => {
-  const isEnvDevelopment = process.env.NODE_ENV === "development";
-  const isEnvProduction = process.env.NODE_ENV === "production";
-
+  const isDevelopmentEnv = process.env.NODE_ENV === "development";
+  const isProductionEnv = process.env.NODE_ENV === "production";
   return {
-    mode: isEnvDevelopment ? "development" : "production",
-    devtool: isEnvDevelopment ? "inline-source-map" : "hidden-source-map",
+    mode: isDevelopmentEnv ? "development" : "production",
+    devtool: isDevelopmentEnv ? "inline-source-map" : "hidden-source-map",
     node: {
       fs: "empty",
       net: "empty",
     },
     resolve: {
-      extensions: [".js", ".jsx", ".tsx", ".ts", ".json"],
+      extensions: [".js", ".jsx", ".tsx", ".ts", ".json", ".scss"],
       modules: [path.join(__dirname, "src"), "node_modules"],
       alias: {
-        "@apis": path.resolve(__dirname, "src", "apis"),
-        "@common": path.resolve(__dirname, "src", "common"),
         "@components": path.resolve(__dirname, "src", "components"),
-        "@hooks": path.resolve(__dirname, "src", "hooks"),
+        "@containers": path.resolve(__dirname, "src", "containers"),
         "@pages": path.resolve(__dirname, "src", "pages"),
         "@static": path.resolve(__dirname, "src", "static"),
-        "@reducers": path.resolve(__dirname, "src", "reducers"),
-        "@typings": path.resolve(__dirname, "src", "typings"),
+        "@styles": path.resolve(__dirname, "src", "styles"),
         "@utils": path.resolve(__dirname, "src", "utils"),
       },
     },
@@ -78,18 +74,18 @@ module.exports = () => {
     },
     plugins: [
       new Dotenv(),
-      isEnvDevelopment && new ReactRefreshWebpackPlugin(),
-      isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
-      isEnvDevelopment && new BundleAnalyzerPlugin({ analyzerMode: "server", analyzerPort: 4000, openAnalyzer: false }),
-      isEnvProduction && new BundleAnalyzerPlugin({ analyzerMode: "static" }),
-      isEnvProduction && new webpack.LoaderOptionsPlugin({ minimize: true }),
-      isEnvProduction &&
+      isDevelopmentEnv && new ReactRefreshWebpackPlugin(),
+      isDevelopmentEnv && new webpack.HotModuleReplacementPlugin(),
+      isDevelopmentEnv && new BundleAnalyzerPlugin({ analyzerMode: "server", analyzerPort: 4000, openAnalyzer: false }),
+      isProductionEnv && new BundleAnalyzerPlugin({ analyzerMode: "static" }),
+      isProductionEnv && new webpack.LoaderOptionsPlugin({ minimize: true }),
+      isProductionEnv &&
         new CopyPlugin({
           patterns: [
             { from: path.join(__dirname, "public", "robots.txt"), to: path.join(__dirname, "dist", "robots.txt") },
           ],
         }),
-      new webpack.EnvironmentPlugin({ NODE_ENV: isEnvDevelopment ? "development" : "production" }),
+      new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopmentEnv ? "development" : "production" }),
       new HtmlWebpackPlugin({
         inject: "body",
         template: path.join(__dirname, "public", "/index.html"),
