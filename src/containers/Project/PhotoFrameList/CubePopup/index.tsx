@@ -1,10 +1,10 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { projectContext } from "@pages/Project/reducer";
 import { clickPopupCloseAction } from "@pages/Project/action";
-import Art1 from "@containers/Project/Art1";
-import Art2 from "@containers/Project/Art2";
-import Art3 from "@containers/Project/Art3";
-import OpenedCube from "@containers/Project/OpenedCube";
+import Art1 from "../Art1";
+import Art2 from "../Art2";
+import Art3 from "../Art3";
+import OpenedCube from "./OpenedCube";
 import * as S from "./style";
 
 const classNameList = ["back", "top", "front", "bottom", "left", "right"];

@@ -174,6 +174,10 @@ export const Back = styled.div`
     font-size: 2rem;
     margin-bottom: 8px;
   }
+  h1,
+  p {
+    color: gray;
+  }
   footer {
     position: absolute;
     bottom: 16px;

@@ -1,11 +1,15 @@
-import React, { memo } from "react";
-import PhotoFrame from "@containers/Project/PhotoFrame";
-import Art1 from "@containers/Project/Art1";
-import Art2 from "@containers/Project/Art2";
-import Art3 from "@containers/Project/Art3";
+import React, { memo, useContext } from "react";
+import { projectContext } from "pages/Project/reducer";
+import Art1 from "./Art1";
+import Art2 from "./Art2";
+import Art3 from "./Art3";
+import CubePopup from "./CubePopup";
+import PhotoFrame from "./PhotoFrame";
 import * as S from "./style";
 
 const PhotoFrameList = () => {
+  const { togglePopup } = useContext(projectContext);
+
   const artLsit = [
     {
       component: Art1,
@@ -36,6 +40,7 @@ const PhotoFrameList = () => {
           );
         })}
       </S.Layout>
+      {togglePopup && <CubePopup />}
     </>
   );
 };

@@ -146,9 +146,6 @@ const OpenedCube = ({ canvas }: Props) => {
           </nav>
           <header>
             <h1>{popupData?.title}</h1>
-            <h2>
-              {popupData?.date}. {popupData?.team}
-            </h2>
           </header>
           <section>
             <h1>설명</h1>
