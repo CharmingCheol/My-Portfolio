@@ -42,7 +42,6 @@ export const FirstArticle = styled.article`
     img {
       width: 200px;
       height: 200px;
-      background: black;
     }
   }
   ${media.tablet("max")} {
