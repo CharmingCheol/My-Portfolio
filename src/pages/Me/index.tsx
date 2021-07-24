@@ -20,6 +20,11 @@ const Me = () => {
             <p>안녕하세요. 기본과 원리를 바탕으로 새로운 것에 도전하는</p>
             <p>개발자 차민철입니다.</p>
           </h1>
+          <h2 className="detail">
+            <a href="https://www.notion.so/286b761eccd445e0b7f960e477eda48f" target="_blank" rel="noreferrer">
+              상세한 자기소개서를 보러 갈까요?
+            </a>
+          </h2>
           <div>
             <Button href="https://github.com/CharmingCheol" icon={<AiFillGithub />} newTab color="sub1" />
             <Button href="mailto:toby0806@gmail.com" icon={<AiOutlineGoogle />} color="sub1" />

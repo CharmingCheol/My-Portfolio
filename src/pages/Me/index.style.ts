@@ -11,8 +11,8 @@ export const FirstArticle = styled.article`
     height: 85vh;
     padding: 0 8%;
     background-color: #f6f6f6;
-    h1 {
-      margin-bottom: 24px;
+    .detail {
+      margin: 8px 0;
     }
     span {
       display: block;
