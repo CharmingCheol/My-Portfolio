@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack serve",
+    "build": "cross-env NODE_ENV=production webpack",
+    "start": "cross-env NODE_ENV=development webpack serve",
     "lint": "eslint src/**/*.{ts,tsx,js,jsx}",
     "lint:fix": "eslint --fix src/**/*.{ts,tsx,js,jsx}",
     "storybook": "start-storybook -p 6006",
@@ -17,6 +17,7 @@
     "@loadable/component": "^5.14.1",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
+    "cross-env": "^7.0.3",
     "immer": "^8.0.1",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",

@@ -9,12 +9,11 @@ const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = () => {
-  const isEnvDevelopment = process.env.NODE_ENV === "development";
-  const isEnvProduction = process.env.NODE_ENV === "production";
-
+  const isDevelopmentEnv = process.env.NODE_ENV === "development";
+  const isProductionEnv = process.env.NODE_ENV === "production";
   return {
-    mode: isEnvDevelopment ? "development" : "production",
-    devtool: isEnvDevelopment ? "inline-source-map" : "hidden-source-map",
+    mode: isDevelopmentEnv ? "development" : "production",
+    devtool: isDevelopmentEnv ? "inline-source-map" : "hidden-source-map",
     node: {
       fs: "empty",
       net: "empty",
@@ -75,18 +74,18 @@ module.exports = () => {
     },
     plugins: [
       new Dotenv(),
-      isEnvDevelopment && new ReactRefreshWebpackPlugin(),
-      isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
-      isEnvDevelopment && new BundleAnalyzerPlugin({ analyzerMode: "server", analyzerPort: 4000, openAnalyzer: false }),
-      isEnvProduction && new BundleAnalyzerPlugin({ analyzerMode: "static" }),
-      isEnvProduction && new webpack.LoaderOptionsPlugin({ minimize: true }),
-      isEnvProduction &&
+      isDevelopmentEnv && new ReactRefreshWebpackPlugin(),
+      isDevelopmentEnv && new webpack.HotModuleReplacementPlugin(),
+      isDevelopmentEnv && new BundleAnalyzerPlugin({ analyzerMode: "server", analyzerPort: 4000, openAnalyzer: false }),
+      isProductionEnv && new BundleAnalyzerPlugin({ analyzerMode: "static" }),
+      isProductionEnv && new webpack.LoaderOptionsPlugin({ minimize: true }),
+      isProductionEnv &&
         new CopyPlugin({
           patterns: [
             { from: path.join(__dirname, "public", "robots.txt"), to: path.join(__dirname, "dist", "robots.txt") },
           ],
         }),
-      new webpack.EnvironmentPlugin({ NODE_ENV: isEnvDevelopment ? "development" : "production" }),
+      new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopmentEnv ? "development" : "production" }),
       new HtmlWebpackPlugin({
         inject: "body",
         template: path.join(__dirname, "public", "/index.html"),
