@@ -1,6 +1,13 @@
 import React from "react";
 import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
 import Button from "@components/atoms/Button";
+import d3Img from "static/img/d3.png";
+import reactImg from "static/img/react.png";
+import storybookImg from "static/img/storybook.png";
+import styledImg from "static/img/styled-component.png";
+import thumbnailImg from "static/img/thumbnail.png";
+import tsImg from "static/img/ts.png";
+import webpackImg from "static/img/webpack.png";
 import * as S from "./index.style";
 
 const Me = () => {
@@ -19,7 +26,7 @@ const Me = () => {
           </div>
         </section>
         <section className="right-section">
-          <div>thumbnail</div>
+          <img src={thumbnailImg} alt="thumbnail" />
         </section>
       </S.FirstArticle>
       <S.SecondArticle>
@@ -90,40 +97,52 @@ const Me = () => {
             </p>
           </div>
           <div>
-            <h3>4.개선사항이 생기면, 미루지 않고 바로 리팩토링을 합니다</h3>
-            <p>ㅇ</p>
+            <h3>4.일부 수정에도 더욱 넓은 범위를 생각하면서 접근합니다</h3>
+            <p>
+              글을 작성 할 때 단어를 교정했다면 전체적인 문맥과 자연스러운지 처음부터 다시 읽어야 됩니다. 코드 또한
+              마찬가지 입니다. 일부 코드를 바꿨다면 side effect는 없는지, 테스트 검증을 완료했는지, 다른 방법으로는 바꿀
+              수 없는지 등을 항상 고려합니다.
+            </p>
           </div>
           <div>
             <h3>5.코드 리뷰 시, 개선 방안들을 제안하면서 문제점을 뒷받침합니다</h3>
-            <p>ㅇ</p>
+            <p>
+              누군가 이미 완성 된 작품에 근거없는 의견을 제시한다면, 상대방에게 신뢰를 얻지 못할 뿐만 아니라 불쾌한
+              감정을 줄 수 있습니다. 코드 리뷰를 할 때, 항상 충분한 논리와 근거를 바탕으로 저의 의견을 뒷받침합니다.
+              그리고 이를 바탕으로 더 나은 방향으로 의견을 제시합니다.
+            </p>
           </div>
           <div>
             <h3>6.기획자, 디자이너분과 끈임없는 소통을 즐깁니다</h3>
-            <p>ㅇ</p>
+            <p>
+              기획과 디자인이 완료 될 때까지 기다리지 않습니다. 기획과 커뮤니케이션을 할 때 new feature의 구현 가능성을
+              공유하고, 이를 바탕으로 일정을 산출합니다. 디자인과 커뮤니케이션을 할 때, UX적으로 불편한 부분을
+              전달드리고, 더 나은 방향으로 디자인이 될 수 있도록 의견을 제안합니다.
+            </p>
           </div>
         </section>
       </S.SecondArticle>
       <S.ThirdArticle>
         <h2>Tech Stack</h2>
         <section>
-          <li>
-            <div />
-          </li>
-          <li>
-            <div />
-          </li>
-          <li>
-            <div />
-          </li>
-          <li>
-            <div />
-          </li>
-          <li>
-            <div />
-          </li>
-          <li>
-            <div />
-          </li>
+          <figure>
+            <img src={tsImg} alt="ts" />
+          </figure>
+          <figure>
+            <img src={reactImg} alt="react" />
+          </figure>
+          <figure>
+            <img src={styledImg} alt="styled-component" />
+          </figure>
+          <figure>
+            <img src={webpackImg} alt="webpack" />
+          </figure>
+          <figure>
+            <img src={storybookImg} alt="storybook" />
+          </figure>
+          <figure>
+            <img src={d3Img} alt="d3" />
+          </figure>
         </section>
       </S.ThirdArticle>
     </main>

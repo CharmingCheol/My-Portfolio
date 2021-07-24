@@ -39,7 +39,7 @@ export const FirstArticle = styled.article`
     align-items: center;
     height: 60vh;
     background-color: #d4d4ce;
-    div {
+    img {
       width: 200px;
       height: 200px;
       background: black;
@@ -60,21 +60,21 @@ export const FirstArticle = styled.article`
     .right-section {
       width: 40vw;
       height: 100%;
-      div {
+      img {
         transform: translate(-40px, 0px);
       }
     }
   }
   ${media.desktop("min")} {
     .right-section {
-      div {
+      img {
         transform: translate(-40px, 0px) scale(1.25);
       }
     }
   }
   ${media.xlarge("min")} {
     .right-section {
-      div {
+      img {
         transform: translate(-40px, 0px) scale(1.5);
       }
     }
@@ -106,31 +106,30 @@ export const ThirdArticle = styled.article`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    li {
+    figure {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
       height: 240px;
       padding: 16px;
-      div {
+      img {
         width: 200px;
         height: 200px;
-        background: black;
         border-radius: 50%;
       }
     }
   }
   ${media.tablet("min")} {
     section {
-      li {
+      figure {
         width: 50%;
       }
     }
   }
   ${media.desktop("min")} {
     section {
-      li {
+      figure {
         width: 33%;
       }
     }
