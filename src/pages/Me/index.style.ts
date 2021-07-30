@@ -13,6 +13,7 @@ export const FirstArticle = styled.article`
     background-color: #f6f6f6;
     .detail {
       margin: 8px 0;
+      text-decoration: underline;
     }
     span {
       display: block;
