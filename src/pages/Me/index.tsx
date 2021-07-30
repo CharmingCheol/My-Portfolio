@@ -26,8 +26,14 @@ const Me = () => {
             </a>
           </h2>
           <div>
-            <Button href="https://github.com/CharmingCheol" icon={<AiFillGithub />} newTab color="sub1" />
-            <Button href="mailto:toby0806@gmail.com" icon={<AiOutlineGoogle />} color="sub1" />
+            <Button
+              href="https://github.com/CharmingCheol"
+              icon={<AiFillGithub />}
+              newTab
+              color="sub1"
+              text="깃허브로 이동하기"
+            />
+            <Button href="mailto:toby0806@gmail.com" icon={<AiOutlineGoogle />} color="sub1" text="G-mail로 이동하기" />
           </div>
         </section>
         <section className="right-section">

@@ -47,11 +47,6 @@ export interface PathProps {
 }
 
 export interface StyleProps {
-  /**
-   * 원형 버튼으로 출력하고 싶을 경우, true로 전달
-   */
-  circled?: boolean;
-
   size?: SizeType;
   color?: ColorType;
 }

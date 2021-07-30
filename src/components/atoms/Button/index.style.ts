@@ -27,39 +27,44 @@ export const color = {
 };
 
 export const size = {
-  primary: css`
+  small: css`
     font-size: 12px;
-    padding: 8px 24px;
+    height: 28px;
+    padding: 5px;
     svg {
       margin-right: 6px;
     }
   `,
   medium: css`
     font-size: 12px;
-    padding: 8px 28px;
+    height: 32px;
+    padding: 6px;
     svg {
-      margin-right: 4px;
+      margin-right: 6px;
     }
   `,
   large: css`
     font-size: 14px;
-    padding: 8px 40px;
+    height: 36px;
+    padding: 7px;
     svg {
-      margin-right: 4px;
+      margin-right: 6px;
     }
   `,
   xlarge: css`
     font-size: 16px;
-    padding: 8px 48px;
+    height: 44px;
+    padding: 8px;
     svg {
-      margin-right: 4px;
+      margin-right: 6px;
     }
   `,
   xxlarge: css`
     font-size: 18px;
-    padding: 8px 54px;
+    height: 50px;
+    padding: 9px;
     svg {
-      margin-right: 4px;
+      margin-right: 6px;
     }
   `,
 };
@@ -67,20 +72,12 @@ export const size = {
 const baseStyle = (params: StyleProps) => css`
   font-weight: bold;
   cursor: pointer;
-  border-radius: ${params.circled ? "50%" : "4px"};
+  border-radius: 4px;
   ${color[params.color || "main"]};
-  ${size[params.size || "primary"]};
+  ${size[params.size || "medium"]};
   &:disabled {
     cursor: default;
   }
-  ${() => {
-    if (params.circled) {
-      return css`
-        padding: 20px 10px;
-      `;
-    }
-    return css``;
-  }}
 `;
 
 export const Button = styled.button<StyleProps>`
@@ -89,8 +86,12 @@ export const Button = styled.button<StyleProps>`
 
 export const Anchor = styled.a<StyleProps>`
   ${(params) => baseStyle(params)}
+  display: inline-flex;
+  align-items: center;
 `;
 
 export const Link = styled(RouterLink)<StyleProps>`
   ${(params) => baseStyle(params)}
+  display: inline-flex;
+  align-items: center;
 `;

@@ -7,7 +7,8 @@ export interface Props extends AttributeProps, EventProps, PathProps, StyleProps
   /**
    * 버튼에 출력되는 icon
    */
-  icon?: any;
+  icon?: JSX.Element;
+
   /**
    * 버튼에 출력되는 text
    */

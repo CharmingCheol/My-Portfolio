@@ -24,9 +24,6 @@ export const FirstArticle = styled.article`
       display: flex;
       a {
         margin-right: 16px;
-        svg {
-          margin: 0;
-        }
       }
     }
     .main-title {
