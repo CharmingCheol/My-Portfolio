@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MemoryRouter } from "react-router-dom";
+import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
 import styled from "styled-components";
 import { Meta, Story } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -57,7 +58,7 @@ export const ButtonEvent = ButtonEventTemplate.bind({});
 const SizeTemplate: Story<Props> = () => {
   return (
     <Wrapper>
-      <Button text="primary" size="primary" />
+      <Button text="small" size="small" />
       <Button text="medium" size="medium" />
       <Button text="large" size="large" />
       <Button text="xlarge" size="xlarge" />
@@ -88,11 +89,16 @@ const DisabledTemplate: Story<Props> = () => {
 };
 export const DisabledButton = DisabledTemplate.bind({});
 
-// circled 버튼
-const CircledButtonTemplate: Story<Props> = () => {
-  return <Button text="circled" circled />;
+// 아이콘이 있는 버튼(왼쪽에 아이콘 배치, 아이콘만)
+const ButtonWithIconTemplate: Story<Props> = () => {
+  return (
+    <Wrapper>
+      <Button icon={<AiFillGithub />} text="깃허브로 로그인" />
+      <Button icon={<AiOutlineGoogle />} text="구글로 로그인" />
+    </Wrapper>
+  );
 };
-export const CircledButton = CircledButtonTemplate.bind({});
+export const ButtonWithIcon = ButtonWithIconTemplate.bind({});
 
 // 버튼 case
 const ButtonCaseTemplate: Story<Props> = () => {
@@ -101,7 +107,7 @@ const ButtonCaseTemplate: Story<Props> = () => {
     <>
       {size.map((value) => (
         <Wrapper>
-          <Button text="primary" color={value} size="primary" />
+          <Button text="small" color={value} size="small" />
           <Button text="medium" color={value} size="medium" />
           <Button text="large" color={value} size="large" />
           <Button text="xlarge" color={value} size="xlarge" />
@@ -112,5 +118,3 @@ const ButtonCaseTemplate: Story<Props> = () => {
   );
 };
 export const ButtonCase = ButtonCaseTemplate.bind({});
-
-// 아이콘이 있는 버튼(좌, 우, 아이콘만)
