@@ -86,8 +86,12 @@ export const Button = styled.button<StyleProps>`
 
 export const Anchor = styled.a<StyleProps>`
   ${(params) => baseStyle(params)}
+  display: inline-flex;
+  align-items: center;
 `;
 
 export const Link = styled(RouterLink)<StyleProps>`
   ${(params) => baseStyle(params)}
+  display: inline-flex;
+  align-items: center;
 `;
