@@ -8,7 +8,7 @@ import { ColorType } from "./type";
 import Button, { Props } from "./index";
 
 export default {
-  title: "atoms/Button_New",
+  title: "atoms/Button",
   component: Button,
 } as Meta;
 
@@ -72,10 +72,12 @@ export const ButtonSize = SizeTemplate.bind({});
 const ColorTemplate: Story<Props> = () => {
   return (
     <Wrapper>
-      <Button text="primary" color="main" />
+      <Button text="main" color="main" />
+      <Button text="main_away" color="main_away" />
       <Button text="sub1" color="sub1" />
+      <Button text="sub1_away" color="sub1_away" />
       <Button text="sub2" color="sub2" />
-      <Button text="outline" color="outline" />
+      <Button text="sub2_away" color="sub2_away" />
     </Wrapper>
   );
 };
@@ -102,7 +104,7 @@ export const ButtonWithIcon = ButtonWithIconTemplate.bind({});
 
 // 버튼 case
 const ButtonCaseTemplate: Story<Props> = () => {
-  const size: ColorType[] = ["main", "sub1", "sub2", "outline"];
+  const size: ColorType[] = ["main", "main_away", "sub1", "sub1_away", "sub2", "sub2_away"];
   return (
     <>
       {size.map((value) => (
