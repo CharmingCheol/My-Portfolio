@@ -1,16 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 import fontSize from "./fontSize";
+import { palette } from "./palette";
 
 const StyleReset = createGlobalStyle`
-    html, body, h1, h2, h3, h4, h5, h6, p, blockquote, code, img, dl, dt, dd, ol, ul, li, fieldset, legend, caption { margin: 0; padding: 0; border: 0; }
-    div, span, article, section, header, footer, p, ul, li, fieldset, legend, label, a, nav { 
-        box-sizing: border-box;
-    }
-    html {
-        height: 100%;
-    }
-    body {
-        min-height: 100%;
+    #root {
+        min-height: 100vh;
+        background:${palette.white_20};
+        overflow-x: hidden;
+        font-size: ${fontSize.base}px;
     }
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -30,14 +27,8 @@ const StyleReset = createGlobalStyle`
         padding: 0;
         border: 0;
         outline:0;
-        font-size:1rem;
-        color:black;
+        color:${palette.black_100};
         box-sizing: border-box;
-        font-size: 17px;
-    }
-    article, aside, details, figcaption, figure,
-    footer, header, hgroup, menu, nav, section {
-        display: block;
     }
     ol, ul, li {
         list-style: none;
@@ -46,18 +37,9 @@ const StyleReset = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
     }
-    a {
-        text-decoration: none;
-        outline: none;
-    }
     input {
         outline: none;
         border: none;
-    }
-    #root {
-        min-height: 100vh;
-        background:white;
-        overflow-x: hidden;
     }
     h1 {
         font-size: ${fontSize.h1}px;
@@ -68,11 +50,15 @@ const StyleReset = createGlobalStyle`
     h3 {
         font-size: ${fontSize.h3}px;
     }
-    h4, h5, h6, p {
-        font-size: ${fontSize.base}px;
+    h4, h5, h6 {
+        font-size: ${fontSize.h4}px;
     }
     p {
         line-height: 1.75;
+    }
+    a {
+        text-decoration: none;
+        outline: none;
     }
 `;
 

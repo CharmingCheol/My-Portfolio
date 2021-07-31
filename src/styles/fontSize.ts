@@ -1,10 +1,10 @@
-const BASE_FONT_SIZE = 17;
-
 const fontSize = {
   h1: 40,
-  h2: 24,
-  h3: 20,
-  base: BASE_FONT_SIZE,
+  h2: 26,
+  h3: 22,
+  h4: 20,
+  base: 16,
+  sub: 14,
 };
 
 export default fontSize;
