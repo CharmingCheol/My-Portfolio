@@ -9,7 +9,8 @@
     "lint": "eslint src/**/*.{ts,tsx,js,jsx}",
     "lint:fix": "eslint --fix src/**/*.{ts,tsx,js,jsx}",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -40,6 +41,8 @@
     "@storybook/addon-knobs": "^6.2.9",
     "@storybook/addon-links": "^6.3.4",
     "@storybook/react": "^6.3.4",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
     "@types/loadable__component": "^5.13.1",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.throttle": "^4.1.6",
@@ -69,6 +72,7 @@
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^5.2.1",
     "html-webpack-plugin": "^4.5.0",
+    "jest": "^27.0.6",
     "prettier": "^2.1.2",
     "react-dev-utils": "^11.0.0",
     "react-is": "^17.0.1",
