@@ -15,12 +15,12 @@
     "isolatedModules": true,
     "baseUrl": "src",
     "paths": {
-      "@components/*": ["components/*"],
-      "@containers/*": ["containers/*"],
-      "@pages/*": ["pages/*"],
-      "@static/*": ["static/*"],
-      "@styles/*": ["styles/*"],
-      "@utils/*": ["utils/*"]
+      "components/*": ["components/*"],
+      "containers/*": ["containers/*"],
+      "pages/*": ["pages/*"],
+      "static/*": ["static/*"],
+      "styles/*": ["styles/*"],
+      "utils/*": ["utils/*"]
     }
   },
   "exclude": ["node_modules"],

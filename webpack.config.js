@@ -22,12 +22,12 @@ module.exports = () => {
       extensions: [".js", ".jsx", ".tsx", ".ts", ".json", ".scss"],
       modules: [path.join(__dirname, "src"), "node_modules"],
       alias: {
-        "@components": path.resolve(__dirname, "src", "components"),
-        "@containers": path.resolve(__dirname, "src", "containers"),
-        "@pages": path.resolve(__dirname, "src", "pages"),
-        "@static": path.resolve(__dirname, "src", "static"),
-        "@styles": path.resolve(__dirname, "src", "styles"),
-        "@utils": path.resolve(__dirname, "src", "utils"),
+        components: path.resolve(__dirname, "src", "components"),
+        containers: path.resolve(__dirname, "src", "containers"),
+        pages: path.resolve(__dirname, "src", "pages"),
+        static: path.resolve(__dirname, "src", "static"),
+        styles: path.resolve(__dirname, "src", "styles"),
+        utils: path.resolve(__dirname, "src", "utils"),
       },
     },
     devServer: {
