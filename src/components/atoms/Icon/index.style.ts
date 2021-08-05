@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { palette } from "styles/palette";
 import { StyleProps } from "./type";
 
-export const iconSize = {
+export const size = {
   small: css`
     padding: 4px;
     svg {
@@ -50,7 +50,7 @@ export const Icon = styled.div<Partial<StyleProps>>`
       cursor: pointer;
     }
   }
-  ${(params) => iconSize[params.size || "medium"]}
+  ${(params) => size[params.iconSize || "small"]}
   ${(params) => {
     if (params.borderColor) {
       return css`
@@ -60,6 +60,13 @@ export const Icon = styled.div<Partial<StyleProps>>`
     if (params.backgroundColor) {
       return css`
         background-color: ${palette[params.backgroundColor] || "none"};
+      `;
+    }
+    if (params.iconColor) {
+      return css`
+        svg {
+          color: ${palette[params.iconColor || "black_100"]};
+        }
       `;
     }
   }}

@@ -30,7 +30,7 @@ const DefaultIconTemplate: Story<Props> = (props) => {
   return (
     <Wrapper>
       {iconSize.map((size) => (
-        <Icon key={size} size={size} {...props} />
+        <Icon key={size} iconSize={size} {...props} />
       ))}
     </Wrapper>
   );
@@ -47,7 +47,7 @@ const IconSizeTemplate: Story<Props> = () => {
     <Wrapper>
       {iconSize.map((size) => (
         <div className="wrapper">
-          <Icon key={size} icon={AiFillGithub} size={size} />
+          <Icon key={size} icon={AiFillGithub} iconSize={size} />
           <span>{size}</span>
         </div>
       ))}
@@ -55,6 +55,19 @@ const IconSizeTemplate: Story<Props> = () => {
   );
 };
 export const IconSizeCase = IconSizeTemplate.bind({});
+
+// icon color
+const IconColorTemplate: Story<Props> = () => {
+  const palette: PaletteType[] = ["black_20", "green_40", "red_40", "gray_40", "navy_40"];
+  return (
+    <Wrapper>
+      {palette.map((color) => (
+        <Icon key={color} icon={AiFillGithub} iconColor={color} />
+      ))}
+    </Wrapper>
+  );
+};
+export const IconColorCase = IconColorTemplate.bind({});
 
 // border icon
 const BorderIconTemplate: Story<Props> = () => {

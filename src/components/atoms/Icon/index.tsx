@@ -11,7 +11,7 @@ export interface Props extends Partial<StyleProps> {
 }
 
 const Icon = (props: Props) => {
-  const { className = [], icon, onClick, ...others } = props;
+  const { className = ["icon-wrapper"], icon, onClick, ...others } = props;
   const IconComponent = icon;
   return (
     <S.Icon className={classnames(...className, onClick ? "icon-button" : "")} {...others}>

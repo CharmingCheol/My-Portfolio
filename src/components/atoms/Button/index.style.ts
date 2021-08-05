@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Link as RouterLink } from "react-router-dom";
-import { buttonPalette, palette } from "@styles/palette";
+import { buttonPalette, palette } from "styles/palette";
 import { StyleProps } from "./type";
 
 export const color = {
@@ -8,31 +8,49 @@ export const color = {
     background-color: ${buttonPalette.main};
     color: ${palette.white_20};
     border: 1px solid ${palette.white_20};
+    svg {
+      color: ${palette.white_20};
+    }
   `,
   main_away: css`
     background-color: ${palette.white_20};
     color: ${buttonPalette.main};
     border: 1px solid ${buttonPalette.main};
+    svg {
+      color: ${buttonPalette.main};
+    }
   `,
   sub1: css`
     background-color: ${buttonPalette.sub1};
     color: ${palette.white_20};
     border: 1px solid ${palette.white_20};
+    svg {
+      color: ${palette.white_20};
+    }
   `,
   sub1_away: css`
     background-color: ${palette.white_20};
     color: ${buttonPalette.sub1};
     border: 1px solid ${buttonPalette.sub1};
+    svg {
+      color: ${buttonPalette.sub1};
+    }
   `,
   sub2: css`
     background-color: ${buttonPalette.sub2};
     color: ${palette.white_20};
     border: 1px solid ${palette.white_20};
+    svg {
+      color: ${palette.white_20};
+    }
   `,
   sub2_away: css`
     background-color: ${palette.white_20};
     color: ${buttonPalette.sub2};
     border: 1px solid ${buttonPalette.sub2};
+    svg {
+      color: ${buttonPalette.sub2};
+    }
   `,
 };
 
@@ -87,6 +105,13 @@ const baseStyle = (params: StyleProps) => css`
   ${size[params.size || "medium"]};
   &:disabled {
     cursor: default;
+  }
+  &.with-icon {
+    display: inline-flex;
+    align-items: center;
+    .icon-wrapper {
+      padding: 0;
+    }
   }
 `;
 

@@ -95,8 +95,8 @@ export const DisabledButton = DisabledTemplate.bind({});
 const ButtonWithIconTemplate: Story<Props> = () => {
   return (
     <Wrapper>
-      <Button icon={<AiFillGithub />} text="깃허브로 로그인" />
-      <Button icon={<AiOutlineGoogle />} text="구글로 로그인" />
+      <Button icon={AiFillGithub} text="깃허브로 로그인" />
+      <Button icon={AiOutlineGoogle} text="구글로 로그인" />
     </Wrapper>
   );
 };

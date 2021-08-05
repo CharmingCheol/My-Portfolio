@@ -1,10 +1,11 @@
 import { PaletteType } from "styles/palette";
-import { iconSize } from "./index.style";
+import { size } from "./index.style";
 
-export type IconSize = keyof typeof iconSize;
+export type IconSize = keyof typeof size;
 
 export interface StyleProps {
   backgroundColor: PaletteType;
   borderColor: PaletteType;
-  size: IconSize;
+  iconColor: PaletteType;
+  iconSize: IconSize;
 }
