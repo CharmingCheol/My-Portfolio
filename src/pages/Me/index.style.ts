@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import media from "@styles/media";
-import fontSize from "@styles/fontSize";
+import media from "styles/media";
+import fontSize from "styles/fontSize";
 
 export const FirstArticle = styled.article`
   width: 100vw;

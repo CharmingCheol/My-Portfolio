@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from "react";
-import { projectContext } from "@pages/Project/reducer";
-import { clickPhotoFrameAction } from "@pages/Project/action";
+import { projectContext } from "pages/Project/reducer";
+import { clickPhotoFrameAction } from "pages/Project/action";
 import * as S from "./style";
 
 export interface PhotoFrameProps {

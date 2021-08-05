@@ -1,15 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
-import MuseumWall from "@containers/Project/MuseumWall";
-import PhotoFrameList from "@containers/Project/PhotoFrameList";
-// import CubePopup from "@containers/Project/CubePopup";
-import logo from "@static/img/logo.png";
-// import { projectContext } from "./reducer";
+import MuseumWall from "containers/Project/MuseumWall";
+import PhotoFrameList from "containers/Project/PhotoFrameList";
+import logo from "static/img/logo.png";
 import * as S from "./style";
 
 const Project = () => {
-  // const { togglePopup } = useContext(projectContext);
-
   return (
     <>
       <Helmet>
@@ -22,7 +18,6 @@ const Project = () => {
       <S.Layout>
         <MuseumWall />
         <PhotoFrameList />
-        {/* {togglePopup && <CubePopup />} */}
       </S.Layout>
     </>
   );

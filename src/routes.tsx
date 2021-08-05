@@ -2,9 +2,9 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import loadable from "@loadable/component";
 
-const Home = loadable(() => import("@pages/Home"));
-const Project = loadable(() => import("@pages/Project/reducer"));
-const Me = loadable(() => import("@pages/Me"));
+const Home = loadable(() => import("pages/Home"));
+const Project = loadable(() => import("pages/Project/reducer"));
+const Me = loadable(() => import("pages/Me"));
 
 const Routes = () => {
   return (
