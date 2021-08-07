@@ -1,10 +1,18 @@
 import React from "react";
 import StyleReset from "../src/styles/reset";
+import { createGlobalStyle } from "styled-components";
+
+const StorybookReset = createGlobalStyle`
+  #root {
+    margin:-1rem;
+  }
+`;
 
 export const decorators = [
   (Story) => (
     <>
       <StyleReset />
+      <StorybookReset />
       <Story />
     </>
   ),

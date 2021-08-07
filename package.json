@@ -73,6 +73,7 @@
     "fork-ts-checker-webpack-plugin": "^5.2.1",
     "html-webpack-plugin": "^4.5.0",
     "jest": "^27.0.6",
+    "jest-transform-stub": "^2.0.0",
     "prettier": "^2.1.2",
     "react-dev-utils": "^11.0.0",
     "react-is": "^17.0.1",
