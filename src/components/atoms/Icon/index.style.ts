@@ -4,38 +4,38 @@ import { StyleProps } from "./type";
 
 export const size = {
   small: css`
-    padding: 4px;
+    padding: 2px;
     svg {
-      width: 16px;
-      height: 16px;
+      width: 12px;
+      height: 12px;
     }
   `,
   medium: css`
+    padding: 2px;
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+  `,
+  large: css`
     padding: 4px;
     svg {
       width: 18px;
       height: 18px;
     }
   `,
-  large: css`
+  xlarge: css`
     padding: 6px;
     svg {
-      width: 22px;
-      height: 22px;
-    }
-  `,
-  xlarge: css`
-    padding: 8px;
-    svg {
-      width: 26px;
-      height: 26px;
+      width: 21px;
+      height: 21px;
     }
   `,
   xxlarge: css`
-    padding: 10px;
+    padding: 8px;
     svg {
-      width: 30px;
-      height: 30px;
+      width: 24px;
+      height: 24px;
     }
   `,
 };
@@ -52,20 +52,29 @@ export const Icon = styled.div<Partial<StyleProps>>`
   }
   ${(params) => size[params.iconSize || "small"]}
   ${(params) => {
-    if (params.borderColor) {
+    const { backgroundColor, borderColor, disabled, disabledColor, iconColor } = params;
+    if (borderColor) {
       return css`
-        border: 1px solid ${palette[params.borderColor] || "none"};
+        border: 1px solid ${palette[borderColor] || "none"};
       `;
     }
-    if (params.backgroundColor) {
+    if (backgroundColor) {
       return css`
-        background-color: ${palette[params.backgroundColor] || "none"};
+        background-color: ${palette[backgroundColor] || "none"};
       `;
     }
-    if (params.iconColor) {
+    if (iconColor) {
       return css`
         svg {
-          color: ${palette[params.iconColor || "black_100"]};
+          color: ${palette[iconColor || "black_100"]};
+        }
+      `;
+    }
+    if (disabled) {
+      return css`
+        svg {
+          pointer-events: none;
+          color: ${palette[disabledColor || "gray_100"]};
         }
       `;
     }

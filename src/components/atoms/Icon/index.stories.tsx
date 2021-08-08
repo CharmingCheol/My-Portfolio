@@ -113,3 +113,20 @@ const IconClickTemplate: Story<Props> = () => {
   );
 };
 export const IconClickCase = IconClickTemplate.bind({});
+
+// 아이콘 클릭 시 disabled
+const IconClickDisabledTemplate: Story<Props> = () => {
+  const [disabled, setDisabled] = useState(false);
+  const clickIcon = () => {
+    setDisabled(true);
+  };
+  return (
+    <>
+      <p>
+        아이콘 클릭 시 disabled를 적용시킵니다. disabled color를 변경하고 싶다면, props로 disabledColor를 전달합니다.
+      </p>
+      <Icon icon={AiFillGithub} onClick={clickIcon} disabled={disabled} />
+    </>
+  );
+};
+export const IconClickDisabledCase = IconClickDisabledTemplate.bind({});
