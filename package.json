@@ -10,7 +10,8 @@
     "lint:fix": "eslint --fix src/**/*.{ts,tsx,js,jsx}",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest"
+    "test": "jest",
+    "cypress": "cypress open"
   },
   "author": "",
   "license": "ISC",
@@ -59,6 +60,7 @@
     "cache-loader": "^4.1.0",
     "copy-webpack-plugin": "^6.3.2",
     "css-loader": "^5.2.6",
+    "cypress": "^8.2.0",
     "dotenv-webpack": "^6.0.0",
     "eslint": "^7.29.0",
     "eslint-config-airbnb": "^18.2.1",
