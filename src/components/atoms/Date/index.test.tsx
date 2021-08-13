@@ -6,15 +6,13 @@ const year = "2021";
 const month = "09";
 const day = "28";
 const endPoint = "T";
-const searchValue = "-";
-const replaceValue = ".";
-const yearMonthDay = `${year}${searchValue}${month}${searchValue}${day}`; // 2021-09-28
+const replaceText = { from: "-", to: "." };
+const yearMonthDay = `${year}${replaceText.from}${month}${replaceText.from}${day}`; // 2021-09-28
 
 const initialProps: Props = {
   date: `${yearMonthDay}${endPoint}10:55:51.603Z`,
   endPoint,
-  searchValue,
-  replaceValue,
+  replaceText,
 };
 
 describe("atoms/Date", () => {
@@ -24,7 +22,7 @@ describe("atoms/Date", () => {
 
   it("date props를 주었을 때, YYYY.MM.DD으로 변환한다", () => {
     setup();
-    const result = `${year}${replaceValue}${month}${replaceValue}${day}`;
+    const result = `${year}${replaceText.to}${month}${replaceText.to}${day}`;
     expect(screen.getByText(result)).toBeInTheDocument(); // 2021.09.28
   });
 
@@ -34,10 +32,10 @@ describe("atoms/Date", () => {
     expect(screen.getByText("", { ignore: "body, div" })).toBeInTheDocument();
   });
 
-  it("searchValue를 찾지 못한 경우, replaceValue로 변환하지 않는다", () => {
-    const wrongSearchValue = "/";
-    const result = `${year}${searchValue}${month}${searchValue}${day}`;
-    setup({ searchValue: wrongSearchValue });
+  it("변환 할 text를 찾지 못한 경우 변환하지 않는다", () => {
+    const wrongText = "/";
+    const result = `${year}${replaceText.from}${month}${replaceText.from}${day}`;
+    setup({ replaceText: { from: wrongText, to: "." } });
     expect(screen.getByText(result)).toBeInTheDocument(); // 2021-09-28. replaceValue로 변환하지 않음
   });
 });

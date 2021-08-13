@@ -14,6 +14,5 @@ export const DefaultDate = DefaultDateTemplate.bind({});
 DefaultDate.args = {
   date: "2021-08-02T10:55:51.603Z",
   endPoint: "T",
-  searchValue: "-",
-  replaceValue: ".",
+  replaceText: { from: "-", to: "." },
 };

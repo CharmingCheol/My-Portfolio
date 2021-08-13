@@ -17,25 +17,20 @@ export interface Props {
   endPoint: string;
 
   /**
-   * 연/도/일의 divider가 되는 문자열
+   * 변환 할 문자열 찾고, 어떤 문자열로 변환할지 체크
    */
-  searchValue: string;
-
-  /**
-   * searchValue가 변경 결과
-   */
-  replaceValue: string;
+  replaceText: { from: string; to: string };
 }
 
 const Date = (props: Props) => {
-  const { className = [], date, endPoint, replaceValue, searchValue } = props;
+  const { className = [], date, endPoint, replaceText } = props;
 
   const getDate = () => {
     const index = date.indexOf(endPoint);
     if (index === -1) return "";
     const substring = date.substring(0, index);
-    const regExp = new RegExp(searchValue, "gi");
-    const replaceAll = substring.replace(regExp, replaceValue);
+    const regExp = new RegExp(replaceText.from, "gi");
+    const replaceAll = substring.replace(regExp, replaceText.to);
     return replaceAll;
   };
 
