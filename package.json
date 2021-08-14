@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@loadable/component": "^5.14.1",
+    "@toast-ui/editor": "^3.0.2",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
     "cross-env": "^7.0.3",
