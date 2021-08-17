@@ -1,21 +1,21 @@
 import { useEffect, useReducer, Dispatch } from "react";
-import { AxiosResponse, AxiosError } from "axios";
+import { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 
 type DispatchType = "REQUEST" | "SUCCESS" | "FAILURE" | null;
 
-interface State<Req, Res> {
+interface State<Res> {
   error?: AxiosError;
   responseData?: Res;
-  requestData?: Req;
+  requestData?: AxiosRequestConfig;
   status?: number;
   type: DispatchType;
 }
 
-interface Reducer<Req, Res> {
-  (state: State<Req, Res>, action: State<Req, Res>): State<Req, Res>;
+interface Reducer<Res> {
+  (state: State<Res>, action: State<Res>): State<Res>;
 }
 
-function reducer<Req, Res>(state: State<Req, Res>, action: State<Req, Res>): State<Req, Res> {
+function reducer<Res>(state: State<Res>, action: State<Res>): State<Res> {
   switch (action.type) {
     case "REQUEST": {
       return { requestData: action.requestData, type: action.type };
@@ -32,13 +32,13 @@ function reducer<Req, Res>(state: State<Req, Res>, action: State<Req, Res>): Sta
   }
 }
 
-const useApiRequest = <Req, Res>(
+const useApiRequest = <Res>(
   api: (...args: any[]) => Promise<AxiosResponse<Res>>,
-): [State<Req, Res>, Dispatch<State<Req, Res>>] => {
-  const initialState: State<Req, Res> = {
+): [State<Res>, Dispatch<State<Res>>] => {
+  const initialState: State<Res> = {
     type: null,
   };
-  const [state, dispatch] = useReducer<Reducer<Req, Res>>(reducer, initialState);
+  const [state, dispatch] = useReducer<Reducer<Res>>(reducer, initialState);
 
   useEffect(() => {
     if (state.type === "REQUEST") {
