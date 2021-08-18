@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@loadable/component": "^5.14.1",
+    "@reduxjs/toolkit": "^1.6.1",
     "@toast-ui/editor": "^3.0.2",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
@@ -28,7 +29,9 @@
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.1.0",
+    "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
+    "redux": "^4.1.1",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
