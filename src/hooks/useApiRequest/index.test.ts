@@ -17,7 +17,7 @@ describe("hooks/useApiRequest", () => {
 
     // type과 requestData를 같이 전달
     act(() => {
-      result.current[1]({ type: "REQUEST", requestData: "requestData" });
+      result.current[1]({ type: "REQUEST", requestData: { data: "requestData" } });
     });
     expect(result.current[0]).toStrictEqual({
       requestData: "requestData",
