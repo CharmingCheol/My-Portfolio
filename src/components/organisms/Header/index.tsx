@@ -20,15 +20,15 @@ const Header = () => {
           onClick={handleClickMenuButton}
           className={["menu-icon", isShowedMenu ? "close" : "hamburger"]}
         />
-        <S.Logo to="/">
+        <S.Logo to="/portfolio">
           <img src={logo} alt="logo" />
         </S.Logo>
         <S.List className={isShowedMenu ? "showed" : ""}>
           <li>
-            <Link to="/me">Me</Link>
+            <Link to="/portfolio/me">Me</Link>
           </li>
           <li>
-            <Link to="/project">Project</Link>
+            <Link to="/portfolio/project">Project</Link>
           </li>
         </S.List>
       </div>

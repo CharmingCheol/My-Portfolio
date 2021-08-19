@@ -11,9 +11,9 @@ const App = () => (
   <>
     <Header />
     <Switch>
-      <Route path="/" component={Home} exact />
-      <Route path="/me" component={Me} />
-      <Route path="/project" component={Project} />
+      <Route path="/portfolio" component={Home} exact />
+      <Route path="/portfolio/me" component={Me} />
+      <Route path="/portfolio/project" component={Project} />
     </Switch>
   </>
 );
@@ -24,20 +24,20 @@ describe("organisms/Header", () => {
     return render(<App />, { wrapper: BrowserRouter });
   };
 
-  it("logo image 클릭 시, /으로 이동한다", () => {
-    setup("/me");
-    expect(screen.getByText("You are me")).toBeInTheDocument();
+  it("logo image 클릭 시, /portfolio으로 이동한다", () => {
+    setup("/portfolio/me");
+    expect(screen.getByText("You are on the me page")).toBeInTheDocument();
     fireEvent.click(screen.getByAltText("logo"));
     expect(screen.getByText("You are on the home page")).toBeInTheDocument();
   });
 
-  it("Me 메뉴 클릭 시, /me로 이동한다", () => {
+  it("Me 메뉴 클릭 시, /portfolio/me로 이동한다", () => {
     setup();
     fireEvent.click(screen.getByText("Me"));
     expect(screen.getByText("You are on the me page")).toBeInTheDocument();
   });
 
-  it("Project 메뉴 클릭 시, /project로 이동한다", () => {
+  it("Project 메뉴 클릭 시, /portfolio/project로 이동한다", () => {
     setup();
     fireEvent.click(screen.getByText("Project"));
     expect(screen.getByText("You are on the project page")).toBeInTheDocument();
