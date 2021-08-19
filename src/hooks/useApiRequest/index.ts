@@ -32,9 +32,7 @@ function reducer<Res>(state: State<Res>, action: State<Res>): State<Res> {
   }
 }
 
-const useApiRequest = <Res>(
-  api: (...args: any[]) => Promise<AxiosResponse<Res>>,
-): [State<Res>, Dispatch<State<Res>>] => {
+const useApiRequest = <Res>(api: (...args: any[]) => Promise<AxiosResponse>): [State<Res>, Dispatch<State<Res>>] => {
   const initialState: State<Res> = {
     type: null,
   };
@@ -45,7 +43,7 @@ const useApiRequest = <Res>(
       const requestApi = async () => {
         try {
           const { status, data } = state.requestData ? await api(state.requestData) : await api();
-          if (status < 300) dispatch({ responseData: data, status, type: "SUCCESS" });
+          if (status < 300) dispatch({ responseData: data.body, status, type: "SUCCESS" });
         } catch (error) {
           dispatch({ type: "FAILURE", error });
         }
