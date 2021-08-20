@@ -2,34 +2,27 @@
 import React from "react";
 import { Redirect, Route, RouteProps, Switch } from "react-router-dom";
 import loadable, { LoadableComponent } from "@loadable/component";
-import LoadingBar from "components/atoms/LoadingBar";
 import Header from "components/organisms/Header";
-import { useAppSelector } from "store";
+import { encrypt, decrypt } from "utils";
 
 const Blog = loadable(() => import("pages/Blog"));
 const Error = loadable(() => import("pages/Error"));
 const Home = loadable(() => import("pages/Home"));
 const Me = loadable(() => import("pages/Me"));
+const NotFound = loadable(() => import("pages/NotFound"));
 const Post = loadable(() => import("pages/Post"));
 const Project = loadable(() => import("pages/Project/reducer"));
 const Write = loadable(() => import("pages/Write"));
 
 interface PrivateRouteProps extends RouteProps {
   component: LoadableComponent<unknown>;
+  encrypted: string;
 }
 
 const PrivateRoute = (params: PrivateRouteProps) => {
-  const { component: Component, ...other } = params;
-  const isAdmin = useAppSelector((state) => state.option.isAdmin);
-
-  return (
-    <Route
-      {...other}
-      render={() => {
-        return isAdmin ? <Component /> : <LoadingBar />;
-      }}
-    />
-  );
+  const { component: Component, encrypted, ...other } = params;
+  const decrypted = decrypt(encrypted);
+  return <Route {...other} path={decrypted} render={() => <Component />} />;
 };
 
 const Routes = () => {
@@ -47,8 +40,14 @@ const Routes = () => {
         <Route path="/portfolio/project" component={Project} />
         <Route path="/" component={Blog} exact />
         <Route path="/post/:id" component={Post} />
-        <PrivateRoute path="/write" component={Write} />
+        <PrivateRoute
+          component={Write}
+          path={process.env.WRITE_PAGE as string}
+          encrypted={encrypt(process.env.WRITE_PAGE as string)}
+          exact
+        />
         {/* <Route path="/blog/error" component={Error} /> */}
+        <Route component={NotFound} />
         <Redirect from="*" to="/" />
       </Switch>
     </>
