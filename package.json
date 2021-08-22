@@ -70,6 +70,7 @@
     "copy-webpack-plugin": "^6.3.2",
     "css-loader": "^5.2.6",
     "cypress": "^8.2.0",
+    "cypress-file-upload": "^5.0.8",
     "dotenv-webpack": "^6.0.0",
     "eslint": "^7.29.0",
     "eslint-config-airbnb": "^18.2.1",
