@@ -1,39 +1,71 @@
 describe("글 작성 페이지", () => {
-  describe("페이지 접근 권한", () => {
-    it("유저가 글 작성 페이지로 접속하려는 경우, 이전 페이지에 돌아가도록 처리한다", () => {});
-
-    it("관리자가 글 작성 페이지로 접속하려는 경우, 글 작성 페에지에 입장되도록 처리한다", () => {});
+  describe("뒤로가기 버튼", () => {
+    it("글 작성 도중 뒤로 갔다가 다시 앞으로 갈 경우, 초기화 된 상태로 글 작성 페에지에 이동한다", () => {
+      cy.visit("/post/2");
+      cy.visit(Cypress.env("WRITE_PAGE"));
+      cy.get(".title-input").type("hello title");
+      cy.get(".ProseMirror").first().type("hello content");
+      cy.go(-1);
+      cy.url().should("include", "/post/2");
+      cy.get("#editor").should("not.exist");
+      cy.go(1);
+      cy.get("#editor");
+      cy.contains("hello title").should("not.exist");
+      cy.contains("hello content").should("not.exist");
+    });
   });
 
-  describe("뒤로가기 버튼 클릭", () => {
-    it("뒤로가기 버튼 클릭 시, 이전에 있던 페이지로 이동한다", () => {});
+  describe("에디터", () => {
+    it("툴바에서 이미지 업로드 버튼 클릭 시, img src에 my-portfolio-server uri가 포함된다", () => {
+      cy.intercept(
+        {
+          method: "POST",
+          url: "http://localhost:3001/api/images",
+        },
+        { body: { url: "https://res.cloudinary.com/demo/image/upload/w_400/sofa_cat.jpg" } },
+      ).as("uploadImage");
+      cy.visit(Cypress.env("WRITE_PAGE"));
 
-    it("뒤로가기 했다가 앞으로 갈 경우, 초기화 된 상태로 글 작성 페에지에 이동한다", () => {});
+      cy.get("button.image").click();
+      cy.contains("Choose a file").click();
+      cy.get('input[type="file"]').attachFile("logo.png");
+      cy.contains("OK").click();
+      cy.wait("@uploadImage");
+      cy.get("img")
+        .should("have.attr", "src")
+        .and("equal", "https://res.cloudinary.com/demo/image/upload/w_400/sofa_cat.jpg");
+      cy.get("img").should("have.attr", "alt").and("equal", "sofa_cat.jpg");
+    });
+
+    it("이미지가 아닌 file을 업로드 한 경우, 에디터에 아무런 반응을 주지 않는다", () => {
+      cy.visit(Cypress.env("WRITE_PAGE"));
+      cy.get(".ProseMirror").first().type("hello content"); // 본문 입력
+      cy.get("button.image").click();
+      cy.contains("Choose a file").click();
+      cy.get('input[type="file"]').attachFile("example.json"); // json 업로드
+      cy.get(".ProseMirror").first().should("have.text", "hello content"); // [alt](url)이 추가되지 않음
+    });
   });
 
-  describe("마크다운 에디터", () => {
-    it("툴바에서 이미지 업로드 버튼 클릭 시, img src에 my-portfolio-server uri가 포함된다", () => {});
-  });
+  // describe("환결설정", () => {
+  //   it("환경설정 버튼 클릭 시, 환경설정 모달창이 출력된다", () => {});
 
-  describe("환결설정", () => {
-    it("환경설정 버튼 클릭 시, 환경설정 모달창이 출력된다", () => {});
+  //   it("기본값으로 버튼 클릭 시, 환결설정에 입력한 값들이 초기화된다", () => {});
 
-    it("기본값으로 버튼 클릭 시, 환결설정에 입력한 값들이 초기화된다", () => {});
+  //   it("기본값으로 초기화 후 확인 버튼을 눌렀다가 다시 모달창을 열었을 때, 기본값으로 세팅되어 있다", () => {});
 
-    it("기본값으로 초기화 후 확인 버튼을 눌렀다가 다시 모달창을 열었을 때, 기본값으로 세팅되어 있다", () => {});
+  //   it("설정값을 변경 후 확인 버튼을 눌렀다가 다시 모달창을 열었을 때, 세팅 된 값으로 출력된다 ", () => {});
+  // });
 
-    it("설정값을 변경 후 확인 버튼을 눌렀다가 다시 모달창을 열었을 때, 세팅 된 값으로 출력된다 ", () => {});
-  });
+  // describe("출간하기 버튼", () => {
+  //   it("제목이 비어있는 상태로 출간하기 버튼 클릭 시, '제목이 비었습니다' 알림창을 띄운다", () => {});
 
-  describe("글 작성하기", () => {
-    it("제목이 비어있는 상태로 출간하기 버튼 클릭 시, '제목이 비었습니다' 알림창을 띄운다", () => {});
+  //   it("본문이 비어있는 상태로 출간하기 버튼 클릭 시, '본문이 비었습니다' 알림창을 띄운다", () => {});
 
-    it("본문이 비어있는 상태로 출간하기 버튼 클릭 시, '본문이 비었습니다' 알림창을 띄운다", () => {});
+  //   it("썸네일이 비어있는 상태로 출간하기 버튼 클릭 시, '썸네일이 비었습니다' 알림창을 띄운다", () => {});
 
-    it("썸네일이 비어있는 상태로 출간하기 버튼 클릭 시, '썸네일이 비었습니다' 알림창을 띄운다", () => {});
+  //   it("제목, 본문, 썸네일을 작성 후 출간하기 버튼 클릭 시, api 응답이 이루어지고 게시글 상세 페이지로 이동한다", () => {});
 
-    it("제목, 본문, 썸네일을 작성 후 출간하기 버튼 클릭 시, api 응답이 이루어지고 게시글 상세 페이지로 이동한다", () => {});
-
-    it("글을 작성해서 게시글 상세 페이지로 이동 후 뒤로가기 버튼 클릭 시, 초기화 된 상태로 글 쓰기 페이지에 이동한다", () => {});
-  });
+  //   it("글을 작성해서 게시글 상세 페이지로 이동 후 뒤로가기 버튼 클릭 시, 초기화 된 상태로 글 쓰기 페이지에 이동한다", () => {});
+  // });
 });
