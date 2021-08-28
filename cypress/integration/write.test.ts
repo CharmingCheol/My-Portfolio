@@ -1,4 +1,5 @@
 const RESPONSE_IMAGE = "https://res.cloudinary.com/demo/image/upload/w_400/sofa_cat.jpg";
+const SERVER_URL = "http://localhost:3001/api";
 
 describe("글 작성 페이지", () => {
   describe("뒤로가기 버튼", () => {
@@ -22,7 +23,7 @@ describe("글 작성 페이지", () => {
       cy.intercept(
         {
           method: "POST",
-          url: "http://localhost:3001/api/images",
+          url: `${SERVER_URL}/images/contents`,
         },
         { body: { url: RESPONSE_IMAGE } },
       ).as("uploadImage");
@@ -52,7 +53,7 @@ describe("글 작성 페이지", () => {
       cy.intercept(
         {
           method: "POST",
-          url: "http://localhost:3001/api/images/thumbnails",
+          url: `${SERVER_URL}/images/thumbnails`,
         },
         { body: { url: RESPONSE_IMAGE } },
       ).as("thumbnails");

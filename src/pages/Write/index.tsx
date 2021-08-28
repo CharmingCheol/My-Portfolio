@@ -1,7 +1,7 @@
-import React, { useCallback, useRef, useState, useLayoutEffect, useEffect } from "react";
+import React, { useCallback, useRef, useState, useLayoutEffect } from "react";
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import { postImages, postThumbnailImages } from "apis";
+import { postContentImages, postThumbnailImages } from "apis";
 import Button from "components/atoms/Button";
 import Modal from "components/organisms/Modal";
 import { useApiRequest } from "hooks";
@@ -14,7 +14,6 @@ interface ThumbnailResponse {
 const Write = () => {
   const [thumbnailResponse, dispatch] = useApiRequest<ThumbnailResponse>(postThumbnailImages);
   const [showedModal, setShowedModal] = useState(false);
-  const [thumbnail, setThumbnail] = useState("");
   const thumbInputRef = useRef<HTMLInputElement>(null);
 
   // 환경설정 버튼 클릭
@@ -59,10 +58,10 @@ const Write = () => {
             try {
               const formData = new FormData();
               formData.append("images", blob, (blob as File).name);
-              const imageResponse = await postImages({ data: formData });
-              const urlSplitting = imageResponse.data.url.split("/");
+              const { data } = await postContentImages({ data: formData });
+              const urlSplitting = data.url.split("/");
               const splitedLength = urlSplitting.length - 1;
-              callback(imageResponse.data.url, urlSplitting[splitedLength]);
+              callback(data.url, urlSplitting[splitedLength]);
             } catch (error) {
               console.error(error);
             }
@@ -71,21 +70,6 @@ const Write = () => {
       });
     }
   }, []);
-
-  // 썸네일 업로드 성공 및 실패 처리
-  useEffect(() => {
-    switch (thumbnailResponse.type) {
-      case "SUCCESS": {
-        if (thumbnailResponse.responseData) {
-          setThumbnail(thumbnailResponse.responseData.url);
-        }
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  }, [thumbnailResponse.responseData, thumbnailResponse.type]);
 
   return (
     <main>
@@ -103,7 +87,7 @@ const Write = () => {
           onClick={handleThumbnailClick}
           onKeyDown={() => {}}
         >
-          <img src={thumbnail || skeleton} alt="thumbnail-preview" />
+          <img src={thumbnailResponse.responseData?.url || skeleton} alt="thumbnail-preview" />
         </div>
         <input ref={thumbInputRef} className="thumbnail-input" type="file" onChange={handleThumbInputChange} />
       </Modal>
