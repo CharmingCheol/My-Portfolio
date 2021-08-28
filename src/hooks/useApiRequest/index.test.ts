@@ -20,7 +20,7 @@ describe("hooks/useApiRequest", () => {
       result.current[1]({ type: "REQUEST", requestData: { data: "requestData" } });
     });
     expect(result.current[0]).toStrictEqual({
-      requestData: "requestData",
+      requestData: { data: "requestData" },
       type: "REQUEST",
     });
   });

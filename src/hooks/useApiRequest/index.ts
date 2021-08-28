@@ -43,7 +43,7 @@ const useApiRequest = <Res>(api: (...args: any[]) => Promise<AxiosResponse>): [S
       const requestApi = async () => {
         try {
           const { status, data } = state.requestData ? await api(state.requestData) : await api();
-          if (status < 300) dispatch({ responseData: data.body, status, type: "SUCCESS" });
+          if (status < 300) dispatch({ responseData: data, status, type: "SUCCESS" });
         } catch (error) {
           dispatch({ type: "FAILURE", error });
         }
