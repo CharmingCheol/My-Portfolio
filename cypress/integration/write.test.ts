@@ -75,11 +75,28 @@ describe("글 작성 페이지", () => {
       cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", RESPONSE_IMAGE); // 이전에 업로드 한 썸네일 이미지 출력
     });
 
-    // it("[초기화] 버튼 클릭 시, 환결설정에 입력한 값들이 기본값으로 초기화된다", () => {});
+    it("[초기화] 버튼 클릭 시, 환결설정에 입력한 값들이 기본값으로 초기화된다", () => {
+      thumbnailUpload();
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", RESPONSE_IMAGE);
+      cy.contains("초기화").click();
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", RESPONSE_IMAGE);
+    });
 
-    // it("[초기화] 초기화 후 확인 버튼을 눌렀다가 다시 모달창을 열었을 때, 기본값으로 초기화된다", () => {});
+    it("설정값을 변경 후 [확인] 버튼을 눌렀다가 다시 모달창을 열었을 때, 세팅 된 값으로 출력된다 ", () => {
+      thumbnailUpload();
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", RESPONSE_IMAGE);
+      cy.contains("확인").click();
+      cy.contains("환경설정").click();
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", RESPONSE_IMAGE);
+    });
 
-    // it("설정값을 변경 후 [적용] 버튼을 눌렀다가 다시 모달창을 열었을 때, 세팅 된 값으로 출력된다 ", () => {});
+    it("설정값을 변경 후 [취소] 버튼을 눌렀다가 다시 모달창을 열었을 때, 이전에 변경 된 값으로 출력되지 않는다", () => {
+      thumbnailUpload();
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", RESPONSE_IMAGE);
+      cy.contains("취소").click();
+      cy.contains("환경설정").click();
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", RESPONSE_IMAGE);
+    });
   });
 
   // describe("출간하기 버튼", () => {
