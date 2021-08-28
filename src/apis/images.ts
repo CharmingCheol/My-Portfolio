@@ -8,3 +8,11 @@ export const postImages = (config: AxiosRequestConfig) => {
     ...config,
   });
 };
+
+export const postThumbnailImages = (config: AxiosRequestConfig) => {
+  return mainAxios({
+    method: "POST",
+    url: "/images/thumbnails",
+    ...config,
+  });
+};
