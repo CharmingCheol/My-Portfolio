@@ -1,10 +1,10 @@
 import { AxiosRequestConfig } from "axios";
 import { mainAxios } from "./index";
 
-export const postImages = (config: AxiosRequestConfig) => {
+export const postContentImages = (config: AxiosRequestConfig) => {
   return mainAxios({
     method: "POST",
-    url: "/images",
+    url: "/images/contents",
     ...config,
   });
 };
