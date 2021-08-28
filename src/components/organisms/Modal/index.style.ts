@@ -49,6 +49,7 @@ export const Overlay = styled.div`
   height: 100vh;
   background-color: rgba(225, 228, 232, 0.3); /* palette.white80 */
   backdrop-filter: blur(4px);
+  z-index: 9999;
 `;
 
 export const Content = styled.div<Size>`
