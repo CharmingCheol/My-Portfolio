@@ -1,0 +1,7 @@
+{
+  "_id": "1234qwer",
+  "content": "Fixtures are a great way to mock data for responses to routes",
+  "date": "2021-08-02T10:55:51.603Z",
+  "title": "title",
+  "thumbnail": "https://res.cloudinary.com/demo/image/upload/w_400/sofa_cat.jpg"
+}
