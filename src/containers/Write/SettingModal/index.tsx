@@ -5,6 +5,8 @@ import Modal from "components/organisms/Modal";
 import { useAppDispatch, useAppSelector } from "store";
 import { updatePrevSettings, changeThumbnail, clearSettings, undoSettings } from "reducers/writeSlice";
 import useApiRequest from "hooks/useApiRequest";
+import defaultThumbnail from "static/img/skeleton.png";
+import * as S from "./index.style";
 
 interface ThumbnailResponse {
   url: string;
@@ -80,9 +82,15 @@ const SettingModal = (props: Props) => {
 
   return (
     <Modal isOpened={showedModal}>
-      <div className="thumbnail-preview" role="button" tabIndex={0} onClick={handleThumbnailClick} onKeyDown={() => {}}>
-        <img src={thumbnail} alt="thumbnail-preview" />
-      </div>
+      <S.Thumbnail
+        className="thumbnail-preview"
+        role="button"
+        tabIndex={0}
+        onClick={handleThumbnailClick}
+        onKeyDown={() => {}}
+      >
+        <img src={thumbnail || defaultThumbnail} alt="thumbnail-preview" />
+      </S.Thumbnail>
       <input ref={thumbInputRef} className="thumbnail-input" type="file" onChange={handleThumbInputChange} />
       <Button text="초기화" onClick={handleResetButtonClick} />
       <Button text="확인" onClick={handleComfirmButtonClick} />
