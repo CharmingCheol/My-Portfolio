@@ -1,6 +1,8 @@
 import React from "react";
-import StyleReset from "../src/styles/reset";
+import { Provider } from "react-redux";
 import { createGlobalStyle } from "styled-components";
+import { store } from "../src/store";
+import StyleReset from "../src/styles/reset";
 
 const StorybookReset = createGlobalStyle`
   #root {
@@ -10,11 +12,11 @@ const StorybookReset = createGlobalStyle`
 
 export const decorators = [
   (Story) => (
-    <>
+    <Provider store={store}>
       <StyleReset />
       <StorybookReset />
       <Story />
-    </>
+    </Provider>
   ),
 ];
 
