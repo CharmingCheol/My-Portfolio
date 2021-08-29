@@ -1,4 +1,5 @@
 import React from "react";
+import { MemoryRouter } from "react-router-dom";
 import { Meta } from "@storybook/react";
 import Write from "./index";
 
@@ -8,6 +9,10 @@ export default {
 } as Meta;
 
 const WritePageTemplate = () => {
-  return <Write />;
+  return (
+    <MemoryRouter>
+      <Write />
+    </MemoryRouter>
+  );
 };
 export const WritePage = WritePageTemplate.bind({});

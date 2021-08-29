@@ -12,7 +12,7 @@ interface ThumbnailResponse {
   url: string;
 }
 
-interface Props {
+export interface Props {
   onHide: () => void;
   showedModal: boolean;
 }
@@ -82,19 +82,27 @@ const SettingModal = (props: Props) => {
 
   return (
     <Modal isOpened={showedModal}>
-      <S.Thumbnail
-        className="thumbnail-preview"
-        role="button"
-        tabIndex={0}
-        onClick={handleThumbnailClick}
-        onKeyDown={() => {}}
-      >
-        <img src={thumbnail || defaultThumbnail} alt="thumbnail-preview" />
-      </S.Thumbnail>
-      <input ref={thumbInputRef} className="thumbnail-input" type="file" onChange={handleThumbInputChange} />
-      <Button text="초기화" onClick={handleResetButtonClick} />
-      <Button text="확인" onClick={handleComfirmButtonClick} />
-      <Button text="취소" onClick={handleCancelButtonClick} />
+      <S.ModalWrapper>
+        <S.ModalBody>
+          <div
+            className="thumbnail-preview"
+            role="button"
+            tabIndex={0}
+            onClick={handleThumbnailClick}
+            onKeyDown={() => {}}
+          >
+            <img src={thumbnail || defaultThumbnail} alt="thumbnail-preview" />
+          </div>
+          <input ref={thumbInputRef} className="thumbnail-input" type="file" onChange={handleThumbInputChange} />
+        </S.ModalBody>
+        <S.ModalFooter>
+          <Button text="초기화" onClick={handleResetButtonClick} color="main_away" />
+          <div className="right-buttons">
+            <Button text="확인" onClick={handleComfirmButtonClick} />
+            <Button text="취소" onClick={handleCancelButtonClick} color="main_away" />
+          </div>
+        </S.ModalFooter>
+      </S.ModalWrapper>
     </Modal>
   );
 };

@@ -7,6 +7,7 @@ import useApiRequest from "hooks/useApiRequest";
 import { useAppSelector } from "store";
 import SettingModal from "containers/Write/SettingModal";
 import Button from "components/atoms/Button";
+import * as S from "./index.style";
 
 interface PostWritingApi {
   _id: string;
@@ -59,8 +60,8 @@ const Write = () => {
     if (editorSelector) {
       const editor = new Editor({
         el: editorSelector,
-        height: "100vh",
         initialEditType: "markdown",
+        height: "100%",
         previewStyle: "vertical",
         hooks: {
           addImageBlobHook: async (blob, callback) => {
@@ -106,16 +107,27 @@ const Write = () => {
   }, [content, thumbnail, title]);
 
   return (
-    <main>
-      <input type="text" className="title-input" onChange={handleTitleInputChange} value={title} />
+    <S.Main>
+      <S.TitleWrapper>
+        <input
+          type="text"
+          className="title-input"
+          placeholder="제목을 입력하세요"
+          maxLength={100}
+          onChange={handleTitleInputChange}
+          value={title}
+        />
+      </S.TitleWrapper>
       <div id="editor" />
-      <footer>
-        <Button text="뒤로가기" onClick={handleGoBackButtonClick} />
-        <Button text="환경설정" onClick={handleModalToggle} />
-        <Button text="출간하기" disabled={disabled} onClick={handleSubmitButtonClick} />
-      </footer>
+      <S.Footer>
+        <Button text="뒤로가기" onClick={handleGoBackButtonClick} color="main_away" />
+        <div className="right-buttons">
+          <Button text="환경설정" onClick={handleModalToggle} color="main_away" />
+          <Button text="출간하기" disabled={disabled} onClick={handleSubmitButtonClick} />
+        </div>
+      </S.Footer>
       <SettingModal onHide={handleModalToggle} showedModal={showedModal} />
-    </main>
+    </S.Main>
   );
 };
 
