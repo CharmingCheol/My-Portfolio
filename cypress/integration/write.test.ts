@@ -1,6 +1,3 @@
-const RESPONSE_IMAGE = "https://res.cloudinary.com/demo/image/upload/w_400/sofa_cat.jpg";
-const SERVER_URL = "http://localhost:3001/api";
-
 beforeEach(() => {
   cy.visit("/writing/2");
   cy.visit(Cypress.env("WRITE_PAGE"));
@@ -19,9 +16,9 @@ describe("글 작성 페이지", () => {
     cy.intercept(
       {
         method: "POST",
-        url: `${SERVER_URL}/images/thumbnails`,
+        url: `${Cypress.env("serverUrl")}/images/thumbnails`,
       },
-      { body: { url: RESPONSE_IMAGE } },
+      { body: { url: Cypress.env("responseImage") } },
     ).as("thumbnails");
     cy.contains("환경설정").click();
     cy.get(".thumbnail-preview").click();
@@ -36,7 +33,7 @@ describe("글 작성 페이지", () => {
     cy.contains("hello title").should("not.exist");
     cy.contains("hello content").should("not.exist");
     cy.contains("환경설정").click();
-    cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", RESPONSE_IMAGE);
+    cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", Cypress.env("responseImage"));
     cy.contains("확인").click();
   };
 
@@ -52,7 +49,7 @@ describe("글 작성 페이지", () => {
     cy.intercept(
       {
         method: "POST",
-        url: `${SERVER_URL}/writings`,
+        url: `${Cypress.env("serverUrl")}/writings`,
       },
       { fixture: "writing.json" },
     ).as("postWriting");
@@ -85,14 +82,14 @@ describe("글 작성 페이지", () => {
       cy.intercept(
         {
           method: "POST",
-          url: `${SERVER_URL}/images/contents`,
+          url: `${Cypress.env("serverUrl")}/images/contents`,
         },
-        { body: { url: RESPONSE_IMAGE } },
+        { body: { url: Cypress.env("responseImage") } },
       ).as("uploadImage");
       uploadContentImage("logo.png");
       cy.contains("OK").click();
       cy.wait("@uploadImage");
-      cy.get("img").should("have.attr", "src").and("equal", RESPONSE_IMAGE);
+      cy.get("img").should("have.attr", "src").and("equal", Cypress.env("responseImage"));
       cy.get("img").should("have.attr", "alt").and("equal", "sofa_cat.jpg");
     });
 
@@ -106,37 +103,37 @@ describe("글 작성 페이지", () => {
   describe("환결설정", () => {
     it("대표사진 업로드 성공 시, 이미지 미리보기가 변경된다", () => {
       uploadThumbnailImage();
-      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", RESPONSE_IMAGE);
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", Cypress.env("responseImage"));
     });
 
     it("대표사진 업로드에 실패 할 경우, 이미지 미리보기가 변경되지 않는다", () => {
       uploadThumbnailImage(); // 썸네일 업로드
       cy.get(".thumbnail-preview").click(); // 썸네일 업로드 재시도
       cy.get(".thumbnail-input").attachFile("example.json"); // 이미지 파일 대신 json 업로드
-      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", RESPONSE_IMAGE); // 이전에 업로드 한 썸네일 이미지 출력
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", Cypress.env("responseImage")); // 이전에 업로드 한 썸네일 이미지 출력
     });
 
     it("[초기화] 버튼 클릭 시, 환결설정에 입력한 값들이 기본값으로 초기화된다", () => {
       uploadThumbnailImage();
-      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", RESPONSE_IMAGE);
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", Cypress.env("responseImage"));
       cy.contains("초기화").click();
-      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", RESPONSE_IMAGE);
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", Cypress.env("responseImage"));
     });
 
     it("설정값을 변경 후 [확인] 버튼을 눌렀다가 다시 모달창을 열었을 때, 세팅 된 값으로 출력된다 ", () => {
       uploadThumbnailImage();
-      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", RESPONSE_IMAGE);
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", Cypress.env("responseImage"));
       cy.contains("확인").click();
       cy.contains("환경설정").click();
-      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", RESPONSE_IMAGE);
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", Cypress.env("responseImage"));
     });
 
     it("설정값을 변경 후 [취소] 버튼을 눌렀다가 다시 모달창을 열었을 때, 이전에 변경 된 값으로 출력되지 않는다", () => {
       uploadThumbnailImage();
-      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", RESPONSE_IMAGE);
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", Cypress.env("responseImage"));
       cy.contains("취소").click();
       cy.contains("환경설정").click();
-      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", RESPONSE_IMAGE);
+      cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", Cypress.env("responseImage"));
     });
   });
 
