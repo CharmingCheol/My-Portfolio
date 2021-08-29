@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { postThumbnailImages } from "apis";
 import Button from "components/atoms/Button";
 import Modal from "components/organisms/Modal";
+import { useAppDispatch, useAppSelector } from "store";
+import { updatePrevSettings, changeThumbnail, clearSettings, undoSettings } from "reducers/writeSlice";
 import useApiRequest from "hooks/useApiRequest";
-import skeleton from "static/img/skeleton.png";
 
 interface ThumbnailResponse {
   url: string;
@@ -16,9 +17,9 @@ interface Props {
 
 const SettingModal = (props: Props) => {
   const { onHide, showedModal } = props;
-  const [thumbnailApi, dispatch] = useApiRequest<ThumbnailResponse>(postThumbnailImages);
-  const [thumbnail, setThumbnail] = useState(skeleton);
-  const [prevThumbnail, setPrevThumbnail] = useState(skeleton);
+  const dispatch = useAppDispatch();
+  const [thumbnailApi, thumbnailApiDispatch] = useApiRequest<ThumbnailResponse>(postThumbnailImages);
+  const thumbnail = useAppSelector((state) => state.write.thumbnail);
   const thumbInputRef = useRef<HTMLInputElement>(null);
 
   // 썸네일 업로드 클릭
@@ -33,7 +34,7 @@ const SettingModal = (props: Props) => {
       const formData = new FormData();
       if (!fileList || !fileList[0].type.includes("image")) return;
       formData.append("thumbnail", fileList[0]);
-      dispatch({
+      thumbnailApiDispatch({
         type: "REQUEST",
         requestData: {
           data: formData,
@@ -41,38 +42,41 @@ const SettingModal = (props: Props) => {
         },
       });
     },
-    [dispatch],
+    [thumbnailApiDispatch],
   );
 
   // 초기화 버튼 클릭
   const handleResetButtonClick = useCallback(() => {
-    setThumbnail(skeleton);
-  }, []);
+    // setThumbnail(skeleton);
+    dispatch(clearSettings());
+  }, [dispatch]);
 
   // 확인 버튼 클릭
   const handleComfirmButtonClick = useCallback(() => {
+    dispatch(updatePrevSettings({ prevThumbnail: thumbnail }));
     onHide();
-    setPrevThumbnail(thumbnail);
-  }, [onHide, thumbnail]);
+  }, [dispatch, onHide, thumbnail]);
 
   // 취소 버튼 클릭
   const handleCancelButtonClick = useCallback(() => {
+    dispatch(undoSettings());
     onHide();
-    setThumbnail(prevThumbnail);
-  }, [onHide, prevThumbnail]);
+  }, [dispatch, onHide]);
 
   // 썸네일 데이터 업데이트
   useEffect(() => {
     switch (thumbnailApi.type) {
       case "SUCCESS": {
-        setThumbnail(thumbnailApi.responseData?.url);
+        if (thumbnailApi.responseData) {
+          dispatch(changeThumbnail(thumbnailApi.responseData?.url));
+        }
         break;
       }
       default: {
         break;
       }
     }
-  }, [thumbnailApi.responseData, thumbnailApi.type]);
+  }, [dispatch, thumbnailApi.responseData, thumbnailApi.type]);
 
   return (
     <Modal isOpened={showedModal}>
