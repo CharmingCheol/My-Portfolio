@@ -7,19 +7,13 @@ import useApiRequest from "hooks/useApiRequest";
 import { useAppSelector } from "store";
 import SettingModal from "containers/Write/SettingModal";
 import Button from "components/atoms/Button";
+import { Writing } from "types/writing";
 import * as S from "./index.style";
-
-interface PostWritingApi {
-  _id: string;
-  content: string;
-  thumbnail: string;
-  title: string;
-}
 
 const Write = () => {
   const history = useHistory();
   const thumbnail = useAppSelector((state) => state.write.thumbnail);
-  const [postWritingApi, postWritingApiDispatch] = useApiRequest<PostWritingApi>(postWriting);
+  const [postWritingApi, postWritingApiDispatch] = useApiRequest<Writing>(postWriting);
   const [showedModal, setShowedModal] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -90,8 +84,8 @@ const Write = () => {
     switch (postWritingApi.type) {
       case "SUCCESS": {
         if (postWritingApi.responseData) {
-          const { _id } = postWritingApi.responseData;
-          history.replace(`/writing/${_id}`);
+          const { id } = postWritingApi.responseData;
+          history.replace(`/writing/${id}`);
         }
         break;
       }

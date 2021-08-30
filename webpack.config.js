@@ -31,7 +31,7 @@ module.exports = () => {
         static: path.resolve(__dirname, "src", "static"),
         store: path.resolve(__dirname, "src", "store"),
         styles: path.resolve(__dirname, "src", "styles"),
-        types: path.resolve(__dirname, "../src", "types"),
+        types: path.resolve(__dirname, "src", "types"),
         utils: path.resolve(__dirname, "src", "utils"),
       },
     },

@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Date from "components/atoms/Date";
-import { Content } from "types/content";
+import { Writing } from "types/writing";
 import * as S from "./index.style";
 
-export type Props = Pick<Content, "body" | "createdAt" | "id" | "title">;
+export type Props = Pick<Writing, "body" | "createdAt" | "id" | "title">;
 
 const ContentCard = (props: Props) => {
   const { body, createdAt, id, title } = props;
