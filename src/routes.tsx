@@ -10,9 +10,9 @@ const Error = loadable(() => import("pages/Error"));
 const Home = loadable(() => import("pages/Home"));
 const Me = loadable(() => import("pages/Me"));
 const NotFound = loadable(() => import("pages/NotFound"));
-const Post = loadable(() => import("pages/Post"));
 const Project = loadable(() => import("pages/Project/reducer"));
 const Write = loadable(() => import("pages/Write"));
+const Writing = loadable(() => import("pages/Writing"));
 
 interface PrivateRouteProps extends RouteProps {
   component: LoadableComponent<unknown>;
@@ -39,7 +39,7 @@ const Routes = () => {
         <Route path="/portfolio/me" component={Me} />
         <Route path="/portfolio/project" component={Project} />
         <Route path="/" component={Blog} exact />
-        <Route path="/post/:id" component={Post} />
+        <Route path="/writing/:id" component={Writing} />
         <PrivateRoute
           component={Write}
           path={process.env.WRITE_PAGE as string}
