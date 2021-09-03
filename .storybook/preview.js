@@ -1,8 +1,13 @@
 import React from "react";
 import { Provider } from "react-redux";
+import { addDecorator } from "@storybook/react";
+import { initializeWorker, mswDecorator } from "msw-storybook-addon";
 import { createGlobalStyle } from "styled-components";
 import { store } from "../src/store";
 import StyleReset from "../src/styles/reset";
+
+initializeWorker();
+addDecorator(mswDecorator);
 
 const StorybookReset = createGlobalStyle`
   #root {
