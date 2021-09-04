@@ -9,8 +9,9 @@ module.exports = ({ config }) => {
   config.resolve.alias = {
     ...config.resolve.alias,
     apis: path.resolve(__dirname, "../src", "apis"),
-    containers: path.resolve(__dirname, "../src", "containers"),
+    common: path.resolve(__dirname, "../src", "common"),
     components: path.resolve(__dirname, "../src", "components"),
+    containers: path.resolve(__dirname, "../src", "containers"),
     hooks: path.resolve(__dirname, "../src", "hooks"),
     pages: path.resolve(__dirname, "../src", "pages"),
     reducers: path.resolve(__dirname, "../src", "reducers"),
