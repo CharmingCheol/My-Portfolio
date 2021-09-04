@@ -1,7 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { MainLayout } from "common";
-import Header from "components/organisms/Header";
+import { Header, MainLayout } from "common";
 import { fnGetMainLayoutPage } from "utils";
 import StyleReset from "styles/reset";
 import Routes from "./routes";

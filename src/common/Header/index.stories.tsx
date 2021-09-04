@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Header from "./index";
 
 export default {
-  title: "organisms/Header",
+  title: "common/Header",
   component: Header,
 } as Meta;
 
