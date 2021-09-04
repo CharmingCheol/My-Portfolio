@@ -47,7 +47,7 @@ const WritingPage = () => {
   if (isNotFound) return <NotFound />;
 
   return (
-    <S.Main>
+    <S.Layout>
       {writing && (
         <>
           <h1>{writing.title}</h1>
@@ -57,7 +57,7 @@ const WritingPage = () => {
         </>
       )}
       <div id="viewer" />
-    </S.Main>
+    </S.Layout>
   );
 };
 

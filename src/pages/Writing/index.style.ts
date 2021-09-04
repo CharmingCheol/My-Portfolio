@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import media from "styles/media";
 
-export const Main = styled.main`
+export const Layout = styled.div`
   width: 100%;
   margin: 40px 0;
   .thumbnail {

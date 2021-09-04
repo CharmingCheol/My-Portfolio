@@ -101,7 +101,7 @@ const Write = () => {
   }, [content, thumbnail, title]);
 
   return (
-    <S.Main>
+    <S.Layout>
       <S.TitleWrapper>
         <input
           type="text"
@@ -121,7 +121,7 @@ const Write = () => {
         </div>
       </S.Footer>
       <SettingModal onHide={handleModalToggle} showedModal={showedModal} />
-    </S.Main>
+    </S.Layout>
   );
 };
 

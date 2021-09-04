@@ -1,12 +1,10 @@
 /* eslint-disable no-nested-ternary */
 import React from "react";
-import { Redirect, Route, RouteProps, Switch } from "react-router-dom";
+import { Route, RouteProps, Switch } from "react-router-dom";
 import loadable, { LoadableComponent } from "@loadable/component";
-import Header from "components/organisms/Header";
 import { encrypt, decrypt } from "utils";
 
 const Blog = loadable(() => import("pages/Blog"));
-const Error = loadable(() => import("pages/Error"));
 const Home = loadable(() => import("pages/Home"));
 const Me = loadable(() => import("pages/Me"));
 const NotFound = loadable(() => import("pages/NotFound"));
@@ -28,12 +26,6 @@ const PrivateRoute = (params: PrivateRouteProps) => {
 const Routes = () => {
   return (
     <>
-      <Route
-        render={({ location }) => {
-          if (location.pathname === "/") return <Header />;
-          return null;
-        }}
-      />
       <Switch>
         <Route path="/portfolio" component={Home} exact />
         <Route path="/portfolio/me" component={Me} />
@@ -46,9 +38,7 @@ const Routes = () => {
           encrypted={encrypt(process.env.WRITE_PAGE as string)}
           exact
         />
-        {/* <Route path="/blog/error" component={Error} /> */}
         <Route component={NotFound} />
-        <Redirect from="*" to="/" />
       </Switch>
     </>
   );
