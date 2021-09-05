@@ -1,4 +1,12 @@
+import CryptoJS from "crypto-js";
+
 beforeEach(() => {
+  cy.window().then((win) => {
+    const message = Cypress.env("LOG_IN_TEXT");
+    const secrectKey = Cypress.env("SECRECT_KEY");
+    const encrypted = CryptoJS.AES.encrypt(message, secrectKey).toString();
+    win.sessionStorage.setItem("login", encrypted);
+  });
   cy.visit("/writing/2");
   cy.visit(Cypress.env("WRITE_PAGE"));
 });
