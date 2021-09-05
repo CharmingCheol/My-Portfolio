@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MemoryRouter } from "react-router-dom";
 import { Meta } from "@storybook/react";
 import styled from "styled-components";
+import { useAppDispatch } from "store";
+import { changeIsAdmin } from "reducers/optionSlice";
 import Header from "./index";
 
 export default {
@@ -22,3 +24,22 @@ const DefaultHeaderTemplate = () => (
   </MemoryRouter>
 );
 export const DefaultHeader = DefaultHeaderTemplate.bind({});
+
+const AdminHeaderTemplate = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(changeIsAdmin(true));
+    return () => {
+      dispatch(changeIsAdmin(false));
+    };
+  }, [dispatch]);
+  return (
+    <MemoryRouter>
+      <Wrapper>
+        <Header />
+        <main />
+      </Wrapper>
+    </MemoryRouter>
+  );
+};
+export const AdminHeader = AdminHeaderTemplate.bind({});

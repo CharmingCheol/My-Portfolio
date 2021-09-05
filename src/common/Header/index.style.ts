@@ -15,6 +15,9 @@ export const Header = styled.header`
     display: flex;
     align-items: center;
     height: 100%;
+    .write {
+      margin-left: auto;
+    }
   }
   ${media.laptop("min")} {
     .menu-icon {
