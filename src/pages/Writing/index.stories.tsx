@@ -2,6 +2,7 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { Meta } from "@storybook/react";
 import { rest } from "msw";
+import { Header, MainLayout } from "common";
 import Writing from "./index";
 import writingJson from "../../../cypress/fixtures/writing.json";
 
@@ -15,7 +16,10 @@ const PATH = "http://localhost:3001/api/writings?id=1234";
 const WritingPageTemplate = () => {
   return (
     <MemoryRouter>
-      <Writing />
+      <Header />
+      <MainLayout>
+        <Writing />
+      </MainLayout>
     </MemoryRouter>
   );
 };
