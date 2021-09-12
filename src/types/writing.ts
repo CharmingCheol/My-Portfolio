@@ -1,5 +1,5 @@
 export interface Writing {
-  body: string;
+  content: string;
   createdAt: string;
   id: number;
   title: string;

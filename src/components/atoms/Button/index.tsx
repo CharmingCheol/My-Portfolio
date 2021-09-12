@@ -15,15 +15,20 @@ export interface Props extends AttributeProps, EventProps, PathProps, StyleProps
    * 버튼에 출력되는 text
    */
   text?: string;
+
+  /**
+   * 페이지 이동 시 같이 전달하는 state data
+   */
+  linkState?: any;
 }
 
 const Button = (props: Props) => {
-  const { className = [], href, icon, newTab, to, text, ...others } = props;
+  const { className = [], href, icon, newTab, to, text, linkState, ...others } = props;
   const classNameAttr = classnames(...className, { "with-icon": !!icon });
 
   if (to) {
     return (
-      <S.Link className={classNameAttr} to={to} {...others}>
+      <S.Link className={classNameAttr} to={{ pathname: to, state: linkState }} {...others}>
         {icon && <Icon icon={icon} />}
         {text}
       </S.Link>
