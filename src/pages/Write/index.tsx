@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useLayoutEffect, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { postContentImages, postWriting } from "apis";
@@ -10,14 +10,20 @@ import Button from "components/atoms/Button";
 import { Writing } from "types/writing";
 import * as S from "./index.style";
 
+interface LocationState {
+  title: string;
+  content: string;
+}
+
 const Write = () => {
   const history = useHistory();
+  const location = useLocation<LocationState>();
   const thumbnail = useAppSelector((state) => state.write.thumbnail);
   const [postWritingApi, postWritingApiDispatch] = useApiRequest<Writing>(postWriting);
-  const [showedModal, setShowedModal] = useState(false);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(location.state.title || "");
   const [content, setContent] = useState("");
-  const [disabled, setDisabled] = useState(true);
+  const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
+  const [showedModal, setShowedModal] = useState(false);
 
   // 제목 인풋 입력
   const handleTitleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +61,7 @@ const Write = () => {
       const editor = new Editor({
         el: editorSelector,
         initialEditType: "markdown",
+        initialValue: location.state.content,
         height: "100%",
         previewStyle: "vertical",
         hooks: {
@@ -77,7 +84,7 @@ const Write = () => {
         setContent(htmlText);
       });
     }
-  }, []);
+  }, [location.state.content]);
 
   // 글 작성 성공 시, 게시글 상세 페이지로 이동
   useEffect(() => {
@@ -95,9 +102,9 @@ const Write = () => {
     }
   }, [history, postWritingApi.responseData, postWritingApi.type]);
 
-  // 썸네일, 제목, 본문 체크
+  // 썸네일, 제목, 본문 체크 -> 모두 글이 있을 경우 출간하기 비활성화 해제
   useEffect(() => {
-    if (thumbnail && title.trim() && content.trim()) setDisabled(false);
+    if (thumbnail && title.trim() && content.trim()) setDisabledSubmitButton(false);
   }, [content, thumbnail, title]);
 
   return (
@@ -117,7 +124,7 @@ const Write = () => {
         <Button text="뒤로가기" onClick={handleGoBackButtonClick} color="main_away" />
         <div className="right-buttons">
           <Button text="환경설정" onClick={handleModalToggle} color="main_away" />
-          <Button text="출간하기" disabled={disabled} onClick={handleSubmitButtonClick} />
+          <Button text="출간하기" disabled={disabledSubmitButton} onClick={handleSubmitButtonClick} />
         </div>
       </S.Footer>
       <SettingModal onHide={handleModalToggle} showedModal={showedModal} />

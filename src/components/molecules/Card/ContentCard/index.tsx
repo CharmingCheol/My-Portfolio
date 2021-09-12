@@ -4,17 +4,17 @@ import Date from "components/atoms/Date";
 import { Writing } from "types/writing";
 import * as S from "./index.style";
 
-export type Props = Pick<Writing, "body" | "createdAt" | "id" | "title">;
+export type Props = Pick<Writing, "content" | "createdAt" | "id" | "title">;
 
 const ContentCard = (props: Props) => {
-  const { body, createdAt, id, title } = props;
+  const { content, createdAt, id, title } = props;
 
   return (
     <S.ContentCard>
       <Link to={`/blog/${id}`}>
         <div>
           <h4>{title}</h4>
-          <p>{body}</p>
+          <p>{content}</p>
           <Date date={createdAt} endPoint="T" replaceText={{ from: "-", to: "." }} />
         </div>
       </Link>
