@@ -3,24 +3,37 @@ import useApiRequest from "./index";
 
 describe("hooks/useApiRequest", () => {
   it("dispatch 함수 호출 시, state의 상태값이 변경된다", () => {
+    // given
     const api: () => Promise<any> = () => new Promise(() => {});
-    const { result } = renderHook(() => useApiRequest(api));
+    const { result: result1 } = renderHook(() => useApiRequest(api));
+    const { result: result2 } = renderHook(() => useApiRequest(api));
+    const { result: result3 } = renderHook(() => useApiRequest(api));
 
-    // type만 전달
+    // when
     act(() => {
-      result.current[1]({ type: "REQUEST" });
+      result1.current[1]({ type: "REQUEST" });
     });
-    expect(result.current[0]).toStrictEqual({
+    act(() => {
+      result2.current[1]({ type: "REQUEST", url: { id: 1 } });
+    });
+    act(() => {
+      result3.current[1]({ type: "REQUEST", requestData: { timeout: 1 } });
+    });
+
+    // then
+    expect(result1.current[0]).toStrictEqual({
+      url: undefined,
       requestData: undefined,
       type: "REQUEST",
     });
-
-    // type과 requestData를 같이 전달
-    act(() => {
-      result.current[1]({ type: "REQUEST", requestData: { data: "requestData" } });
+    expect(result2.current[0]).toStrictEqual({
+      url: { id: 1 },
+      requestData: undefined,
+      type: "REQUEST",
     });
-    expect(result.current[0]).toStrictEqual({
-      requestData: { data: "requestData" },
+    expect(result3.current[0]).toStrictEqual({
+      url: undefined,
+      requestData: { timeout: 1 },
       type: "REQUEST",
     });
   });

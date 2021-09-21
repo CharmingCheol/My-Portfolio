@@ -2,23 +2,25 @@ import { useEffect, useReducer, Dispatch } from "react";
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 
 type DispatchType = "REQUEST" | "SUCCESS" | "FAILURE" | null;
+type Return<Response> = [State<Response>, Dispatch<State<Response>>];
 
-interface State<Res> {
+interface State<Response> {
   error?: AxiosError;
-  responseData?: Res;
   requestData?: AxiosRequestConfig;
+  url?: any;
+  responseData?: Response;
   status?: number;
   type: DispatchType;
 }
 
-interface Reducer<Res> {
-  (state: State<Res>, action: State<Res>): State<Res>;
+interface Reducer<Response> {
+  (state: State<Response>, action: State<Response>): State<Response>;
 }
 
-function reducer<Res>(state: State<Res>, action: State<Res>): State<Res> {
+function reducer<Response>(state: State<Response>, action: State<Response>): State<Response> {
   switch (action.type) {
     case "REQUEST": {
-      return { requestData: action.requestData, type: action.type };
+      return { requestData: action.requestData, url: action.url, type: action.type };
     }
     case "SUCCESS": {
       return { responseData: action.responseData, status: action.status, type: action.type };
@@ -32,25 +34,25 @@ function reducer<Res>(state: State<Res>, action: State<Res>): State<Res> {
   }
 }
 
-const useApiRequest = <Res>(api: (...args: any[]) => Promise<AxiosResponse>): [State<Res>, Dispatch<State<Res>>] => {
-  const initialState: State<Res> = {
+const useApiRequest = <Response>(api: (...args: any[]) => Promise<AxiosResponse>): Return<Response> => {
+  const initialState: State<Response> = {
     type: null,
   };
-  const [state, dispatch] = useReducer<Reducer<Res>>(reducer, initialState);
+  const [state, dispatch] = useReducer<Reducer<Response>>(reducer, initialState);
 
   useEffect(() => {
     if (state.type === "REQUEST") {
       const requestApi = async () => {
         try {
-          const { status, data } = state.requestData ? await api(state.requestData) : await api();
+          const { status, data } = await api(state.url, state.requestData);
           if (status < 300) dispatch({ responseData: data, status, type: "SUCCESS" });
         } catch (error) {
-          dispatch({ type: "FAILURE", error: error as any });
+          dispatch({ type: "FAILURE", error: error as AxiosError });
         }
       };
       requestApi();
     }
-  }, [api, state.requestData, state.type]);
+  }, [api, state.requestData, state.url, state.type]);
 
   return [state, dispatch];
 };
