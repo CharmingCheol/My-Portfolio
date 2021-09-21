@@ -2,25 +2,31 @@ import React, { useCallback, useState, useLayoutEffect, useEffect } from "react"
 import { useHistory, useLocation } from "react-router-dom";
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
+
 import { postContentImages, postWriting } from "apis";
 import useApiRequest from "hooks/useApiRequest";
-import { useAppSelector } from "store";
+import { useAppDispatch, useAppSelector } from "store";
+import { claerAll } from "reducers/writeSlice";
+
 import SettingModal from "containers/Write/SettingModal";
 import Button from "components/atoms/Button";
+
 import { Writing } from "types/writing";
 import * as S from "./index.style";
 
 interface LocationState {
-  title: string;
-  content: string;
+  title?: string;
+  content?: string;
 }
 
 const Write = () => {
   const history = useHistory();
   const location = useLocation<LocationState>();
+  const dispatch = useAppDispatch();
   const thumbnail = useAppSelector((state) => state.write.thumbnail);
-  const [postWritingApi, postWritingApiDispatch] = useApiRequest<Writing>(postWriting);
-  const [title, setTitle] = useState(location.state.title || "");
+
+  const [postWritingResponse, postWritingApi] = useApiRequest<Writing>(postWriting);
+  const [title, setTitle] = useState(location.state?.title || "");
   const [content, setContent] = useState("");
   const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
   const [showedModal, setShowedModal] = useState(false);
@@ -42,7 +48,7 @@ const Write = () => {
 
   // 출간하기 버튼 클릭
   const handleSubmitButtonClick = useCallback(() => {
-    postWritingApiDispatch({
+    postWritingApi({
       type: "REQUEST",
       requestData: {
         data: {
@@ -52,7 +58,7 @@ const Write = () => {
         },
       },
     });
-  }, [content, postWritingApiDispatch, thumbnail, title]);
+  }, [content, postWritingApi, thumbnail, title]);
 
   // toast ui editor 적용
   useLayoutEffect(() => {
@@ -61,7 +67,7 @@ const Write = () => {
       const editor = new Editor({
         el: editorSelector,
         initialEditType: "markdown",
-        initialValue: location.state.content,
+        initialValue: location.state?.content || "",
         height: "100%",
         previewStyle: "vertical",
         hooks: {
@@ -84,14 +90,14 @@ const Write = () => {
         setContent(htmlText);
       });
     }
-  }, [location.state.content]);
+  }, [location.state]);
 
   // 글 작성 성공 시, 게시글 상세 페이지로 이동
   useEffect(() => {
-    switch (postWritingApi.type) {
+    switch (postWritingResponse.type) {
       case "SUCCESS": {
-        if (postWritingApi.responseData) {
-          const { id } = postWritingApi.responseData;
+        if (postWritingResponse.responseData) {
+          const { id } = postWritingResponse.responseData;
           history.replace(`/writing/${id}`);
         }
         break;
@@ -100,12 +106,19 @@ const Write = () => {
         break;
       }
     }
-  }, [history, postWritingApi.responseData, postWritingApi.type]);
+  }, [history, postWritingResponse.responseData, postWritingResponse.type]);
 
   // 썸네일, 제목, 본문 체크 -> 모두 글이 있을 경우 출간하기 비활성화 해제
   useEffect(() => {
     if (thumbnail && title.trim() && content.trim()) setDisabledSubmitButton(false);
   }, [content, thumbnail, title]);
+
+  // 글 작성 페이지를 벗어날 경우 reducer clear
+  useEffect(() => {
+    return () => {
+      dispatch(claerAll());
+    };
+  }, [dispatch]);
 
   return (
     <S.Layout>

@@ -7,6 +7,7 @@ import { changeThumbnail } from "reducers/writeSlice";
 import { getWriting } from "apis";
 import useApiRequest from "hooks/useApiRequest";
 import NotFound from "pages/NotFound";
+import { DeleteModal } from "containers/Writing";
 import Button from "components/atoms/Button";
 import Date from "components/atoms/Date";
 import { Writing } from "types/writing";
@@ -15,26 +16,32 @@ import * as S from "./index.style";
 const WritingPage = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const [getWritingApi, apiDispatch] = useApiRequest<Writing>(getWriting);
   const isAdmin = useAppSelector((state) => state.option.isAdmin);
+  const [getWritingResponse, getWritingDispatch] = useApiRequest<Writing>(getWriting);
   const [writing, setWriting] = useState<Writing | null>(null);
   const [isNotFound, setIsNotFound] = useState(false);
+  const [openedModal, setOpenedModal] = useState(false);
 
   // 수정 버튼 클릭
   const clickModifyButton = useCallback(() => {
     if (writing) dispatch(changeThumbnail(writing.thumbnail));
   }, [dispatch, writing]);
 
+  // 삭제 버튼 클릭
+  const toggleDeleteModal = useCallback(() => {
+    setOpenedModal((prev) => !prev);
+  }, []);
+
   // 마크다운 viewer 적용
   useEffect(() => {
-    switch (getWritingApi.type) {
+    switch (getWritingResponse.type) {
       case "SUCCESS": {
-        if (getWritingApi.responseData) {
+        if (getWritingResponse.responseData) {
           const editor = new Viewer({
             el: document.querySelector("#viewer") as HTMLDivElement,
-            initialValue: getWritingApi.responseData.content,
+            initialValue: getWritingResponse.responseData.content,
           });
-          setWriting(getWritingApi.responseData);
+          setWriting(getWritingResponse.responseData);
         }
         break;
       }
@@ -43,17 +50,17 @@ const WritingPage = () => {
         break;
       }
       default: {
-        if (getWritingApi.type === "REQUEST") return;
+        if (getWritingResponse.type === "REQUEST") return;
         const spliting = location.pathname.split("/");
         const id = spliting[spliting.length - 1];
-        apiDispatch({
+        getWritingDispatch({
           type: "REQUEST",
-          requestData: { params: { id } },
+          url: id,
         });
         break;
       }
     }
-  }, [apiDispatch, getWritingApi.responseData, getWritingApi.type, location.pathname]);
+  }, [getWritingDispatch, getWritingResponse.responseData, getWritingResponse.type, location.pathname]);
 
   if (isNotFound) return <NotFound />;
 
@@ -74,7 +81,7 @@ const WritingPage = () => {
                 }}
                 onClick={clickModifyButton}
               />
-              <Button text="삭제" />
+              <Button text="삭제" onClick={toggleDeleteModal} />
             </div>
           )}
           <img src={writing.thumbnail} alt="thumbnail" className="thumbnail" />
@@ -82,6 +89,7 @@ const WritingPage = () => {
         </>
       )}
       <div id="viewer" />
+      {openedModal && <DeleteModal isOpened={openedModal} onHide={toggleDeleteModal} />}
     </S.Layout>
   );
 };

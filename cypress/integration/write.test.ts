@@ -1,87 +1,109 @@
-import CryptoJS from "crypto-js";
+const uploadContentImage = (file: string) => {
+  cy.get("button.image").click();
+  cy.contains("Choose a file").click();
+  cy.get('input[type="file"]').attachFile(file);
+};
+
+const uploadThumbnailImage = () => {
+  // 썸네일 이미지 선택
+  cy.contains("환경설정").click();
+  cy.get(".thumbnail-preview").click();
+  cy.get(".thumbnail-input").attachFile("logo.png");
+
+  // 썸네일 이미지 업로드 api
+  cy.intercept(
+    {
+      method: "POST",
+      url: `${Cypress.env("serverUrl")}/images/thumbnails`,
+    },
+    { body: { url: Cypress.env("responseImage") } },
+  ).as("thumbnails");
+  cy.wait("@thumbnails");
+};
+
+const haveNotContents = () => {
+  // 제목, 본문이 비어있음 확인
+  cy.contains("hello title").should("not.exist");
+  cy.contains("hello content").should("not.exist");
+
+  // 썸네일 이미지 없음 확인
+  cy.contains("환경설정").click();
+  cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", Cypress.env("responseImage"));
+  cy.contains("확인").click();
+};
+
+const writeContents = () => {
+  cy.get(".title-input").type("hello title");
+  cy.get(".ProseMirror").first().type("hello content");
+  uploadThumbnailImage();
+};
+
+const postWriting = () => {
+  // 최초에 버튼 비활성화
+  cy.contains("출간하기").should("be.disabled");
+
+  // 제목, 본문, 썸네일 이미지 추가
+  writeContents();
+
+  // 버튼 활성화 확인 후 클릭
+  cy.contains("확인").click();
+  cy.contains("출간하기").should("not.be.disabled").click();
+
+  // 게시글 추가 api
+  cy.intercept(
+    {
+      method: "POST",
+      url: `${Cypress.env("serverUrl")}/writings`,
+    },
+    { fixture: "writing.json" },
+  ).as("postWriting");
+  cy.wait("@postWriting");
+};
+
+before(() => {
+  cy.visit(Cypress.env("LOGIN_PAGE"));
+  cy.get("input.id").type(Cypress.env("ID"));
+  cy.get("input.password").type(Cypress.env("PASSWORD"));
+  cy.get("button").contains("로그인").click();
+});
 
 beforeEach(() => {
-  cy.window().then((win) => {
-    const message = Cypress.env("LOG_IN_TEXT");
-    const secrectKey = Cypress.env("SECRECT_KEY");
-    const encrypted = CryptoJS.AES.encrypt(message, secrectKey).toString();
-    win.sessionStorage.setItem("login", encrypted);
+  cy.visit("/writing/1234qwer");
+  cy.contains("글 작성하기").click();
+});
+
+after(() => {
+  cy.window().then((window) => {
+    window.sessionStorage.removeItem("login");
   });
-  cy.visit("/writing/2");
-  cy.visit(Cypress.env("WRITE_PAGE"));
 });
 
 describe("글 작성 페이지", () => {
-  // 본문 이미지 업로드
-  const uploadContentImage = (file: string) => {
-    cy.get("button.image").click();
-    cy.contains("Choose a file").click();
-    cy.get('input[type="file"]').attachFile(file);
-  };
-
-  // 썸네일 이미지 업로드
-  const uploadThumbnailImage = () => {
-    cy.intercept(
-      {
-        method: "POST",
-        url: `${Cypress.env("serverUrl")}/images/thumbnails`,
-      },
-      { body: { url: Cypress.env("responseImage") } },
-    ).as("thumbnails");
-    cy.contains("환경설정").click();
-    cy.get(".thumbnail-preview").click();
-    cy.get(".thumbnail-input").attachFile("logo.png");
-    cy.wait("@thumbnails");
-  };
-
-  // 제목, 본문, 썸네일이 존재하지 않음 확인
-  const getNotExisted = () => {
-    cy.go(1);
-    cy.get("#editor");
-    cy.contains("hello title").should("not.exist");
-    cy.contains("hello content").should("not.exist");
-    cy.contains("환경설정").click();
-    cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", Cypress.env("responseImage"));
-    cy.contains("확인").click();
-  };
-
-  // 제목, 본문, 썸네일 작성
-  const writeThings = () => {
-    cy.get(".title-input").type("hello title");
-    cy.get(".ProseMirror").first().type("hello content");
-    uploadThumbnailImage();
-  };
-
-  // 게시글 전송
-  const postWriting = () => {
-    cy.intercept(
-      {
-        method: "POST",
-        url: `${Cypress.env("serverUrl")}/writings`,
-      },
-      { fixture: "writing.json" },
-    ).as("postWriting");
-    cy.contains("출간하기").should("be.disabled");
-    writeThings();
-    cy.contains("확인").click();
-    cy.contains("출간하기").should("not.be.disabled").click();
-    cy.wait("@postWriting");
-  };
-
   describe("뒤로가기", () => {
     it("글 작성 도중 브라우저 뒤로 가기->앞으로 가기 할 경우, 초기화 된 상태로 글 작성 페에지에 이동한다", () => {
-      writeThings();
+      // 글 작성
+      writeContents();
+
+      // 브라우저 뒤로 가기 클릭
       cy.go(-1);
-      cy.url().should("include", "/writing/2");
       cy.get("#editor").should("not.exist");
-      getNotExisted();
+
+      // 브라우저 앞으로 가기 클릭
+      cy.go(1);
+      haveNotContents();
     });
 
     it("뒤로가기 버튼을 누르고 브라우저 앞으로 가기를 할 경우, 초기화 된 상태로 글 작성 페이지에 이동한다", () => {
-      writeThings();
+      // 글 작성
+      writeContents();
       cy.contains("확인").click();
+
+      // 뒤로가기 버튼 클릭
       cy.contains("뒤로가기").click();
-      getNotExisted();
+
+      // 브라우저 앞으로 가기 클릭
+      cy.go(1);
+      haveNotContents();
     });
   });
 
@@ -93,18 +115,22 @@ describe("글 작성 페이지", () => {
           url: `${Cypress.env("serverUrl")}/images/contents`,
         },
         { body: { url: Cypress.env("responseImage") } },
-      ).as("uploadImage");
+      ).as("contents");
+
+      // png 이미지 업로드
       uploadContentImage("logo.png");
       cy.contains("OK").click();
-      cy.wait("@uploadImage");
+      cy.wait("@contents");
+
+      // 이미지 출력
       cy.get("img").should("have.attr", "src").and("equal", Cypress.env("responseImage"));
       cy.get("img").should("have.attr", "alt").and("equal", "sofa_cat.jpg");
     });
 
     it("이미지가 아닌 file을 업로드 한 경우, 에디터에 아무런 반응을 주지 않는다", () => {
       cy.get(".ProseMirror").first().type("hello content"); // 본문 입력
-      uploadContentImage("example.json"); // json 업로드
-      cy.get(".ProseMirror").first().should("have.text", "hello content"); // [alt](url)이 추가되지 않음
+      uploadContentImage("writing.json"); // json 업로드
+      cy.get(".ProseMirror").first().should("have.text", "hello content"); // [alt](url)이 본문에 추가되지 않음
     });
   });
 
@@ -117,7 +143,7 @@ describe("글 작성 페이지", () => {
     it("대표사진 업로드에 실패 할 경우, 이미지 미리보기가 변경되지 않는다", () => {
       uploadThumbnailImage(); // 썸네일 업로드
       cy.get(".thumbnail-preview").click(); // 썸네일 업로드 재시도
-      cy.get(".thumbnail-input").attachFile("example.json"); // 이미지 파일 대신 json 업로드
+      cy.get(".thumbnail-input").attachFile("writing.json"); // 이미지 파일 대신 json 업로드
       cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("equal", Cypress.env("responseImage")); // 이전에 업로드 한 썸네일 이미지 출력
     });
 
