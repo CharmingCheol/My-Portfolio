@@ -1,97 +1,8 @@
-const postThumbnailImageAPI = () => {
-  cy.intercept(
-    {
-      method: "POST",
-      url: `${Cypress.env("serverUrl")}/images/thumbnails`,
-    },
-    { body: { url: Cypress.env("responseImage") } },
-  ).as("postThumbnailImageAPI");
-};
-
-const postWritingAPI = () => {
-  cy.intercept(
-    {
-      method: "POST",
-      url: `${Cypress.env("serverUrl")}/writings`,
-    },
-    { fixture: "writing.json" },
-  ).as("postWritingAPI");
-};
-
-const postContentImageAPI = () => {
-  cy.intercept(
-    {
-      method: "POST",
-      url: `${Cypress.env("serverUrl")}/images/contents`,
-    },
-    { body: { url: Cypress.env("responseImage") } },
-  ).as("postContentImageAPI");
-};
-
-const uploadContentImage = (file: string) => {
-  cy.get("button.image").click();
-  cy.contains("Choose a file").click();
-  cy.get('input[type="file"]').attachFile(file);
-};
-
-const uploadThumbnailImage = () => {
-  // 썸네일 이미지 선택
-  cy.contains("환경설정").click();
-  cy.get(".thumbnail-preview").click();
-  cy.get(".thumbnail-input").attachFile("logo.png");
-
-  // 썸네일 이미지 업로드 api
-  cy.wait("@postThumbnailImageAPI");
-};
-
-const haveNotContents = () => {
-  // 제목, 본문이 비어있음 확인
-  cy.contains("hello title").should("not.exist");
-  cy.contains("hello content").should("not.exist");
-
-  // 썸네일 이미지 없음 확인
-  cy.contains("환경설정").click();
-  cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", Cypress.env("responseImage"));
-  cy.contains("확인").click();
-};
-
-const writeContents = () => {
-  cy.get(".title-input").type("hello title");
-  cy.get(".ProseMirror").first().type("hello content");
-  uploadThumbnailImage();
-};
-
-const postWriting = () => {
-  // 최초에 버튼 비활성화
-  cy.contains("출간하기").should("be.disabled");
-
-  // 제목, 본문, 썸네일 이미지 추가
-  writeContents();
-
-  // 버튼 활성화 확인 후 클릭
-  cy.contains("확인").click();
-  cy.contains("출간하기").should("not.be.disabled").click();
-
-  // 게시글 추가 api
-  cy.wait("@postWritingAPI");
-};
-
 before(() => {
   cy.visit(Cypress.env("LOGIN_PAGE"));
   cy.get("input.id").type(Cypress.env("ID"));
   cy.get("input.password").type(Cypress.env("PASSWORD"));
   cy.get("button").contains("로그인").click();
-});
-
-beforeEach(() => {
-  // api
-  postThumbnailImageAPI();
-  postContentImageAPI();
-  postWritingAPI();
-
-  // 글 작성화면 이동
-  cy.visit("/writing/1234qwer");
-  cy.contains("글 작성하기").click();
 });
 
 after(() => {
@@ -101,6 +12,97 @@ after(() => {
 });
 
 describe("글 작성 페이지", () => {
+  const WRITING_ID = "1234qwer";
+
+  const postThumbnailImageAPI = () => {
+    cy.intercept(
+      {
+        method: "POST",
+        url: `${Cypress.env("serverUrl")}/images/thumbnails`,
+      },
+      { body: { url: Cypress.env("responseImage") } },
+    ).as("postThumbnailImageAPI");
+  };
+
+  const postWritingAPI = () => {
+    cy.intercept(
+      {
+        method: "POST",
+        url: `${Cypress.env("serverUrl")}/writings`,
+      },
+      { id: WRITING_ID },
+    ).as("postWritingAPI");
+  };
+
+  const postContentImageAPI = () => {
+    cy.intercept(
+      {
+        method: "POST",
+        url: `${Cypress.env("serverUrl")}/images/contents`,
+      },
+      { body: { url: Cypress.env("responseImage") } },
+    ).as("postContentImageAPI");
+  };
+
+  const uploadContentImage = (file: string) => {
+    cy.get("button.image").click();
+    cy.contains("Choose a file").click();
+    cy.get('input[type="file"]').attachFile(file);
+  };
+
+  const uploadThumbnailImage = () => {
+    // 썸네일 이미지 선택
+    cy.contains("환경설정").click();
+    cy.get(".thumbnail-preview").click();
+    cy.get(".thumbnail-input").attachFile("logo.png");
+
+    // 썸네일 이미지 업로드 api
+    cy.wait("@postThumbnailImageAPI");
+  };
+
+  const haveNotContents = () => {
+    // 제목, 본문이 비어있음 확인
+    cy.contains("hello title").should("not.exist");
+    cy.contains("hello content").should("not.exist");
+
+    // 썸네일 이미지 없음 확인
+    cy.contains("환경설정").click();
+    cy.get('[alt="thumbnail-preview"]').should("have.attr", "src").and("not.equal", Cypress.env("responseImage"));
+    cy.contains("확인").click();
+  };
+
+  const writeContents = () => {
+    cy.get(".title-input").type("hello title");
+    cy.get(".ProseMirror").first().type("hello content");
+    uploadThumbnailImage();
+  };
+
+  const postWriting = () => {
+    // 최초에 버튼 비활성화
+    cy.contains("출간하기").should("be.disabled");
+
+    // 제목, 본문, 썸네일 이미지 추가
+    writeContents();
+
+    // 버튼 활성화 확인 후 클릭
+    cy.contains("확인").click();
+    cy.contains("출간하기").should("not.be.disabled").click();
+
+    // 게시글 추가 api
+    cy.wait("@postWritingAPI");
+  };
+
+  beforeEach(() => {
+    // api
+    postThumbnailImageAPI();
+    postContentImageAPI();
+    postWritingAPI();
+
+    // 글 작성화면 이동
+    cy.visit(`/writing/${WRITING_ID}`);
+    cy.contains("글 작성하기").click();
+  });
+
   describe("뒤로가기", () => {
     it("글 작성 도중 브라우저 뒤로 가기->앞으로 가기 할 경우, 초기화 된 상태로 글 작성 페에지에 이동한다", () => {
       // 글 작성
@@ -188,7 +190,7 @@ describe("글 작성 페이지", () => {
   describe("출간하기 버튼", () => {
     it("제목, 본문, 썸네일을 작성 후 출간하기 버튼 클릭 시, api 응답이 이루어지고 게시글 상세 페이지로 이동한다", () => {
       postWriting();
-      cy.url().should("include", "/writing/1234qwer");
+      cy.url().should("include", `/writing/${WRITING_ID}`);
     });
 
     it("글을 작성해서 게시글 상세 페이지로 이동 후 뒤로가기 버튼 클릭 시, 글 작성 페이지로 이동하지 않는다", () => {

@@ -1,25 +1,3 @@
-const WRITING_ID = "1234qwer";
-
-const getWritingSuccess = (fixture?: string) => {
-  cy.intercept(
-    {
-      method: "GET",
-      url: `${Cypress.env("serverUrl")}/writings/${WRITING_ID}`,
-    },
-    { fixture: fixture || "writing.json" },
-  ).as("getWritingSuccess");
-};
-
-const getWritingNotFound = () => {
-  cy.intercept(
-    {
-      method: "GET",
-      url: `${Cypress.env("serverUrl")}/writings/${WRITING_ID}`,
-    },
-    { statusCode: 404 },
-  ).as("getWritingNotFound");
-};
-
 before(() => {
   cy.visit(Cypress.env("LOGIN_PAGE"));
   cy.get("input.id").type(Cypress.env("ID"));
@@ -34,6 +12,28 @@ after(() => {
 });
 
 describe("글 상세 페이지", () => {
+  const WRITING_ID = "1234qwer";
+
+  const getWritingSuccess = (fixture?: string) => {
+    cy.intercept(
+      {
+        method: "GET",
+        url: `${Cypress.env("serverUrl")}/writings/${WRITING_ID}`,
+      },
+      { fixture: fixture || "writing.json" },
+    ).as("getWritingSuccess");
+  };
+
+  const getWritingNotFound = () => {
+    cy.intercept(
+      {
+        method: "GET",
+        url: `${Cypress.env("serverUrl")}/writings/${WRITING_ID}`,
+      },
+      { statusCode: 404 },
+    ).as("getWritingNotFound");
+  };
+
   describe("페이지 접근", () => {
     it("페이지 이동 시, id에 맞는 게시글을 불러온다", () => {
       // api
@@ -91,11 +91,11 @@ describe("글 상세 페이지", () => {
       // api
       cy.intercept(
         {
-          method: "POST",
-          url: `${Cypress.env("serverUrl")}/writings`,
+          method: "PATCH",
+          url: `${Cypress.env("serverUrl")}/writings/${WRITING_ID}`,
         },
-        { fixture: "writing_update.json" },
-      ).as("postWriting");
+        { id: WRITING_ID },
+      ).as("patchWriting");
       getWritingSuccess("writing_update.json");
 
       // 현재 제목, 본문 입력창 clear
@@ -108,7 +108,7 @@ describe("글 상세 페이지", () => {
 
       // 츨간하기 클릭 시 게시글 업데이트
       cy.contains("출간하기").should("not.be.disabled").click();
-      cy.wait("@postWriting");
+      cy.wait("@patchWriting");
 
       // 업데이트 된 게시글 페이지 이동
       cy.wait("@getWritingSuccess");

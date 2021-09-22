@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { useAppDispatch } from "store";
 import { changeThumbnail } from "reducers/writeSlice";
@@ -16,7 +17,13 @@ interface Props {
 const ModifyDeleteButton = (props: Props) => {
   const { content, title, thumbnail } = props;
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const [openedModal, setOpenedModal] = useState(false);
+
+  const id = useMemo(() => {
+    const spliting = location.pathname.split("/");
+    return spliting[spliting.length - 1];
+  }, [location.pathname]);
 
   // 수정 버튼 클릭
   const clickModifyButton = useCallback(() => {
@@ -34,7 +41,7 @@ const ModifyDeleteButton = (props: Props) => {
         <Button
           text="수정"
           to={`${process.env.WRITE_PAGE}`}
-          linkState={{ title, content }}
+          linkState={{ title, content, thumbnail, id }}
           onClick={clickModifyButton}
         />
         <Button text="삭제" onClick={toggleDeleteModal} />
