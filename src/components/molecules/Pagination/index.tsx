@@ -1,8 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AiOutlineDoubleLeft, AiOutlineLeft, AiOutlineRight, AiOutlineDoubleRight } from "react-icons/ai";
 import classnames from "classnames";
+
 import Button from "components/atoms/Button";
 import Icon from "components/atoms/Icon";
+
 import * as S from "./index.style";
 import { PaginationIcon, Props } from "./type";
 
@@ -12,29 +14,35 @@ const Pagination = (props: Props) => {
     isShowedFirstButton = true,
     isShowedLastButton = true,
     now,
-    total,
-    visibleCount = 5,
+    totalCount,
+    size,
+    visiblePage = 5,
     onClick,
     ...other
   } = props;
   const [disabledPrevButton, setDisabledPrevButton] = useState(true);
   const [disabledNextButton, setDisabledNextButton] = useState(false);
 
+  const totalPage = useMemo(() => {
+    const quotient = Math.floor(totalCount / size);
+    return totalCount / size === quotient ? quotient : quotient + 1;
+  }, [size, totalCount]);
+
   const range = useMemo(() => {
-    const nowStartPage = Math.floor((now - 1) / visibleCount) * visibleCount + 1;
+    const nowStartPage = Math.floor((now - 1) / visiblePage) * visiblePage + 1;
     let nowEndPage: number;
-    if (total < nowStartPage + visibleCount) {
-      nowEndPage = nowStartPage + (total - nowStartPage);
-    } else if (total === nowStartPage + visibleCount) {
-      nowEndPage = nowStartPage + (total - nowStartPage) - 1;
+    if (totalPage < nowStartPage + visiblePage) {
+      nowEndPage = nowStartPage + (totalPage - nowStartPage);
+    } else if (totalPage === nowStartPage + visiblePage) {
+      nowEndPage = nowStartPage + (totalPage - nowStartPage) - 1;
     } else {
-      nowEndPage = nowStartPage + visibleCount - 1;
+      nowEndPage = nowStartPage + visiblePage - 1;
     }
     const length = nowEndPage - nowStartPage + 1;
     setDisabledPrevButton(now <= 1);
-    setDisabledNextButton(total <= now);
+    setDisabledNextButton(totalPage <= now);
     return Array.from({ length }, (_, index) => nowStartPage + index);
-  }, [now, total, visibleCount]);
+  }, [now, totalPage, visiblePage]);
 
   const itmes = [
     ...(isShowedFirstButton ? ["first"] : []),
@@ -59,22 +67,22 @@ const Pagination = (props: Props) => {
   };
 
   const handleClickItem = (item: number | PaginationIcon) => () => {
-    const floor = Math.floor(now / visibleCount);
+    const floor = Math.floor(now / visiblePage);
     switch (item) {
       case "first":
         return onClick(1);
       case "previous": {
-        const quotient = Math.floor((now - visibleCount) / visibleCount);
-        const previous = quotient * visibleCount + 1;
+        const quotient = Math.floor((now - visiblePage) / visiblePage);
+        const previous = quotient * visiblePage + 1;
         return onClick(floor === 0 ? 1 : previous);
       }
       case "next": {
-        const quotient = Math.floor((now - 1) / visibleCount);
-        const next = quotient * visibleCount + visibleCount + 1;
-        return onClick(total <= next ? total : next);
+        const quotient = Math.floor((now - 1) / visiblePage);
+        const next = quotient * visiblePage + visiblePage + 1;
+        return onClick(totalPage <= next ? totalPage : next);
       }
       case "last":
-        return onClick(total);
+        return onClick(totalPage);
       default:
         return onClick(item);
     }

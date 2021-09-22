@@ -24,8 +24,10 @@ const DefaultPaginationTemplate: Story<Props> = (props) => {
 };
 export const DefaultPagiantion = DefaultPaginationTemplate.bind({});
 DefaultPagiantion.args = {
-  total: 50,
-  visibleCount: 5,
+  // total: 50,
+  totalCount: 76,
+  size: 10,
+  visiblePage: 5,
 };
 
 // 맨 앞으로, 맨 뒤로 버튼 숨기기
@@ -44,8 +46,10 @@ const HideFisrtLastButtonTemplate: Story<Props> = (props) => {
 };
 export const HideFisrtLastButton = HideFisrtLastButtonTemplate.bind({});
 HideFisrtLastButton.args = {
-  total: 50,
-  visibleCount: 5,
+  // total: 50,
+  totalCount: 76,
+  size: 10,
+  visiblePage: 5,
   isShowedFirstButton: false,
   isShowedLastButton: false,
 };
