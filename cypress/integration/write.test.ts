@@ -1,3 +1,33 @@
+const postThumbnailImageAPI = () => {
+  cy.intercept(
+    {
+      method: "POST",
+      url: `${Cypress.env("serverUrl")}/images/thumbnails`,
+    },
+    { body: { url: Cypress.env("responseImage") } },
+  ).as("postThumbnailImageAPI");
+};
+
+const postWritingAPI = () => {
+  cy.intercept(
+    {
+      method: "POST",
+      url: `${Cypress.env("serverUrl")}/writings`,
+    },
+    { fixture: "writing.json" },
+  ).as("postWritingAPI");
+};
+
+const postContentImageAPI = () => {
+  cy.intercept(
+    {
+      method: "POST",
+      url: `${Cypress.env("serverUrl")}/images/contents`,
+    },
+    { body: { url: Cypress.env("responseImage") } },
+  ).as("postContentImageAPI");
+};
+
 const uploadContentImage = (file: string) => {
   cy.get("button.image").click();
   cy.contains("Choose a file").click();
@@ -11,14 +41,7 @@ const uploadThumbnailImage = () => {
   cy.get(".thumbnail-input").attachFile("logo.png");
 
   // 썸네일 이미지 업로드 api
-  cy.intercept(
-    {
-      method: "POST",
-      url: `${Cypress.env("serverUrl")}/images/thumbnails`,
-    },
-    { body: { url: Cypress.env("responseImage") } },
-  ).as("thumbnails");
-  cy.wait("@thumbnails");
+  cy.wait("@postThumbnailImageAPI");
 };
 
 const haveNotContents = () => {
@@ -50,14 +73,7 @@ const postWriting = () => {
   cy.contains("출간하기").should("not.be.disabled").click();
 
   // 게시글 추가 api
-  cy.intercept(
-    {
-      method: "POST",
-      url: `${Cypress.env("serverUrl")}/writings`,
-    },
-    { fixture: "writing.json" },
-  ).as("postWriting");
-  cy.wait("@postWriting");
+  cy.wait("@postWritingAPI");
 };
 
 before(() => {
@@ -68,6 +84,12 @@ before(() => {
 });
 
 beforeEach(() => {
+  // api
+  postThumbnailImageAPI();
+  postContentImageAPI();
+  postWritingAPI();
+
+  // 글 작성화면 이동
   cy.visit("/writing/1234qwer");
   cy.contains("글 작성하기").click();
 });
@@ -109,18 +131,10 @@ describe("글 작성 페이지", () => {
 
   describe("에디터", () => {
     it("툴바에서 이미지 업로드 버튼 클릭 시, img src에 my-portfolio-server uri가 포함된다", () => {
-      cy.intercept(
-        {
-          method: "POST",
-          url: `${Cypress.env("serverUrl")}/images/contents`,
-        },
-        { body: { url: Cypress.env("responseImage") } },
-      ).as("contents");
-
       // png 이미지 업로드
       uploadContentImage("logo.png");
       cy.contains("OK").click();
-      cy.wait("@contents");
+      cy.wait("@postContentImageAPI");
 
       // 이미지 출력
       cy.get("img").should("have.attr", "src").and("equal", Cypress.env("responseImage"));
