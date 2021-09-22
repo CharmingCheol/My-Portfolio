@@ -7,23 +7,23 @@ interface Size {
 
 const size = {
   small: css`
-    width: 360px;
-    height: 480px;
+    width: 300px;
+    height: 420px;
     padding: 8px;
   `,
   small_wide: css`
-    width: 480px;
-    height: 360px;
+    width: 420px;
+    height: 300px;
     padding: 8px;
   `,
   medium: css`
-    width: 540px;
+    width: 500px;
     height: 640px;
     padding: 12px;
   `,
   medium_wide: css`
     width: 640px;
-    height: 540px;
+    height: 500px;
     padding: 12px;
   `,
   large: css`
