@@ -1,8 +1,11 @@
 export interface Writing {
-  content: string;
   createdAt: string;
-  id: number;
+  id: string;
+  content: string;
   title: string;
-  thumbnail: string;
-  // updatedAt: string;
+}
+
+export interface WritingPagination {
+  list: Writing[];
+  totalCount: number;
 }

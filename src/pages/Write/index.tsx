@@ -3,43 +3,26 @@ import { useHistory, useLocation } from "react-router-dom";
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
-import { patchWriting, postContentImages, postWriting } from "apis";
+import { patchWriting, postWriting, postContentImages } from "apis";
 import useApiRequest from "hooks/useApiRequest";
-import { useAppDispatch, useAppSelector } from "store";
-import { claerAll } from "reducers/writeSlice";
+import { Writing } from "types/writing";
 
-import SettingModal from "containers/Write/SettingModal";
 import Button from "components/atoms/Button";
 import * as S from "./index.style";
 
-interface LocationState {
-  content?: string;
-  title?: string;
-  thumbnail?: string;
-  id?: string;
-}
-
 const Write = () => {
   const history = useHistory();
-  const location = useLocation<LocationState>();
-  const dispatch = useAppDispatch();
-  const thumbnail = useAppSelector((state) => state.write.thumbnail);
+  const location = useLocation<Partial<Writing>>();
 
-  const [patchWritingResponse, patchWritingApi] = useApiRequest<{ id: number }>(patchWriting);
-  const [postWritingResponse, postWritingApi] = useApiRequest<{ id: number }>(postWriting);
+  const [patchWritingResponse, patchWritingApi] = useApiRequest<Pick<Writing, "id">>(patchWriting);
+  const [postWritingResponse, postWritingApi] = useApiRequest<Pick<Writing, "id">>(postWriting);
   const [title, setTitle] = useState(location.state?.title || "");
   const [content, setContent] = useState("");
   const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
-  const [showedModal, setShowedModal] = useState(false);
 
   // 제목 인풋 입력
   const handleTitleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
-  }, []);
-
-  // 환경설정 버튼 클릭
-  const handleModalToggle = useCallback(() => {
-    setShowedModal((prev) => !prev);
   }, []);
 
   // 뒤로가기 버튼 클릭
@@ -49,13 +32,13 @@ const Write = () => {
 
   // 출간하기 버튼 클릭
   const handleSubmitButtonClick = useCallback(() => {
-    const api = location.state?.id ? patchWritingApi : postWritingApi;
+    const api = location.state.id ? patchWritingApi : postWritingApi;
     api({
       type: "REQUEST",
-      requestData: { data: { content, title, thumbnail } },
-      url: location.state?.id,
+      requestData: { data: { content, title } },
+      url: location.state.id,
     });
-  }, [content, location.state, patchWritingApi, postWritingApi, thumbnail, title]);
+  }, [content, location.state, patchWritingApi, postWritingApi, title]);
 
   // toast ui editor 적용
   useLayoutEffect(() => {
@@ -73,9 +56,8 @@ const Write = () => {
               const formData = new FormData();
               formData.append("images", blob, (blob as File).name);
               const { data } = await postContentImages({ data: formData });
-              const urlSplitting = data.url.split("/");
-              const splitedLength = urlSplitting.length - 1;
-              callback(data.url, urlSplitting[splitedLength]);
+              const splitedUrl = data.url.split("/");
+              callback(data.url, splitedUrl[splitedUrl.length - 1]);
             } catch (error) {
               console.error(error);
             }
@@ -107,15 +89,8 @@ const Write = () => {
 
   // 썸네일, 제목, 본문 체크 -> 모두 글이 있을 경우 출간하기 비활성화 해제
   useEffect(() => {
-    if (thumbnail && title.trim() && content.trim()) setDisabledSubmitButton(false);
-  }, [content, thumbnail, title]);
-
-  // 글 작성 페이지를 벗어날 경우 reducer clear
-  useEffect(() => {
-    return () => {
-      dispatch(claerAll());
-    };
-  }, [dispatch]);
+    if (title.trim() && content.trim()) setDisabledSubmitButton(false);
+  }, [content, title]);
 
   return (
     <S.Layout>
@@ -133,11 +108,9 @@ const Write = () => {
       <S.Footer>
         <Button text="뒤로가기" onClick={handleGoBackButtonClick} color="main_away" />
         <div className="right-buttons">
-          <Button text="환경설정" onClick={handleModalToggle} color="main_away" />
           <Button text="출간하기" disabled={disabledSubmitButton} onClick={handleSubmitButtonClick} />
         </div>
       </S.Footer>
-      <SettingModal onHide={handleModalToggle} showedModal={showedModal} />
     </S.Layout>
   );
 };

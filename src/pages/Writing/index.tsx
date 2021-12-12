@@ -59,10 +59,7 @@ const WritingPage = () => {
         <>
           <h1>{writing.title}</h1>
           <Date date={writing.createdAt} endPoint="T" replaceText={{ from: "-", to: "." }} />
-          {isAdmin && (
-            <ModifyDeleteButton content={writing.content} title={writing.title} thumbnail={writing.thumbnail} />
-          )}
-          <img src={writing.thumbnail} alt="thumbnail" className="thumbnail" />
+          {isAdmin && <ModifyDeleteButton content={writing.content} title={writing.title} id={writing.id} />}
           <p>{writing.content}</p>
         </>
       )}
