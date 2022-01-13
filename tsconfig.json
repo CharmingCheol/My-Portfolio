@@ -17,6 +17,7 @@
     "paths": {
       "components/*": ["components/*"],
       "containers/*": ["containers/*"],
+      "fireConfig/*": ["fireConfig/*"],
       "hooks/*": ["hooks/*"],
       "pages/*": ["pages/*"],
       "static/*": ["static/*"],
