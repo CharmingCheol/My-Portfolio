@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-
-import { deleteWriting } from "apis";
-import { useApiRequest } from "hooks";
 
 import Button from "components/atoms/Button";
 import Modal from "components/organisms/Modal";
+import { deleteWriting } from "fireConfig/writings";
 
 import * as S from "./index.style";
 
@@ -18,20 +16,16 @@ const DeleteModal = (props: Props) => {
   const { isOpened, onHide } = props;
   const location = useLocation();
   const history = useHistory();
-  const [response, deleteWritingApi] = useApiRequest(deleteWriting);
 
-  const clickDeleteButton = useCallback(() => {
-    const spliting = location.pathname.split("/");
-    const id = spliting[spliting.length - 1];
-    deleteWritingApi({
-      type: "REQUEST",
-      url: id,
-    });
-  }, [deleteWritingApi, location.pathname]);
-
-  useEffect(() => {
-    if (response.type === "SUCCESS") history.replace("/");
-  }, [history, response.type]);
+  const clickDeleteButton = useCallback(async () => {
+    try {
+      const id = location.pathname.split("/")[2];
+      await deleteWriting(id);
+      history.replace("/");
+    } catch {
+      //
+    }
+  }, [history, location.pathname]);
 
   return (
     <Modal isOpened={isOpened} size="small_wide">

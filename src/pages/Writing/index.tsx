@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
-import { getWriting } from "apis";
+import { getWriting } from "fireConfig/writings";
 import { useAppSelector } from "store";
-import useApiRequest from "hooks/useApiRequest";
 
 import NotFound from "pages/NotFound";
 import { ModifyDeleteButton } from "containers/Writing";
@@ -17,39 +16,26 @@ import * as S from "./index.style";
 const WritingPage = () => {
   const location = useLocation();
   const isAdmin = useAppSelector((state) => state.option.isAdmin);
-  const [getWritingResponse, getWritingDispatch] = useApiRequest<Writing>(getWriting);
   const [writing, setWriting] = useState<Writing | null>(null);
   const [isNotFound, setIsNotFound] = useState(false);
 
   // 마크다운 viewer 적용
-  useEffect(() => {
-    switch (getWritingResponse.type) {
-      case "SUCCESS": {
-        if (getWritingResponse.responseData) {
-          const editor = new Viewer({
-            el: document.querySelector("#viewer") as HTMLDivElement,
-            initialValue: getWritingResponse.responseData.content,
-          });
-          setWriting(getWritingResponse.responseData);
-        }
-        break;
-      }
-      case "FAILURE": {
-        setIsNotFound(true);
-        break;
-      }
-      default: {
-        if (getWritingResponse.type === "REQUEST") return;
-        const spliting = location.pathname.split("/");
-        const id = spliting[spliting.length - 1];
-        getWritingDispatch({
-          type: "REQUEST",
-          url: id,
+  useLayoutEffect(() => {
+    const callGetWriting = async () => {
+      try {
+        const id = location.pathname.split("/")[2];
+        const response = await getWriting(id);
+        const editor = new Viewer({
+          el: document.querySelector("#viewer") as HTMLDivElement,
+          initialValue: response.content,
         });
-        break;
+        setWriting(response);
+      } catch {
+        setIsNotFound(true);
       }
-    }
-  }, [getWritingDispatch, getWritingResponse.responseData, getWritingResponse.type, location.pathname]);
+    };
+    callGetWriting();
+  }, [location.pathname]);
 
   if (isNotFound) return <NotFound />;
 
@@ -58,9 +44,8 @@ const WritingPage = () => {
       {writing && (
         <>
           <h1>{writing.title}</h1>
-          <Date date={writing.createdAt} endPoint="T" replaceText={{ from: "-", to: "." }} />
+          <Date date={writing.createdAt} />
           {isAdmin && <ModifyDeleteButton content={writing.content} title={writing.title} id={writing.id} />}
-          <p>{writing.content}</p>
         </>
       )}
       <div id="viewer" />

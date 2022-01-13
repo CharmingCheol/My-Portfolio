@@ -3,8 +3,8 @@ import { useHistory, useLocation } from "react-router-dom";
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
-import { patchWriting, postWriting, postContentImages } from "apis";
-import useApiRequest from "hooks/useApiRequest";
+import { postContentImages } from "fireConfig/images";
+import { patchWriting, postWriting } from "fireConfig/writings";
 import { Writing } from "types/writing";
 
 import Button from "components/atoms/Button";
@@ -14,10 +14,8 @@ const Write = () => {
   const history = useHistory();
   const location = useLocation<Partial<Writing>>();
 
-  const [patchWritingResponse, patchWritingApi] = useApiRequest<Pick<Writing, "id">>(patchWriting);
-  const [postWritingResponse, postWritingApi] = useApiRequest<Pick<Writing, "id">>(postWriting);
   const [title, setTitle] = useState(location.state?.title || "");
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(location.state?.content || "");
   const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
 
   // 제목 인풋 입력
@@ -31,14 +29,12 @@ const Write = () => {
   }, [history]);
 
   // 출간하기 버튼 클릭
-  const handleSubmitButtonClick = useCallback(() => {
-    const api = location.state.id ? patchWritingApi : postWritingApi;
-    api({
-      type: "REQUEST",
-      requestData: { data: { content, title } },
-      url: location.state.id,
-    });
-  }, [content, location.state, patchWritingApi, postWritingApi, title]);
+  const handleSubmitButtonClick = useCallback(async () => {
+    const writingId = location.state?.id
+      ? await patchWriting(location.state.id, { content, title })
+      : await postWriting({ content, title });
+    history.replace(`/writing/${writingId}`);
+  }, [content, history, location.state, title]);
 
   // toast ui editor 적용
   useLayoutEffect(() => {
@@ -53,39 +49,20 @@ const Write = () => {
         hooks: {
           addImageBlobHook: async (blob, callback) => {
             try {
-              const formData = new FormData();
-              formData.append("images", blob, (blob as File).name);
-              const { data } = await postContentImages({ data: formData });
-              const splitedUrl = data.url.split("/");
-              callback(data.url, splitedUrl[splitedUrl.length - 1]);
+              const iamgeUrl = await postContentImages(blob as File);
+              callback(iamgeUrl, "");
             } catch (error) {
-              console.error(error);
+              callback("", "");
             }
           },
         },
       });
       editor.on("change", () => {
-        const htmlText = editor.getHTML();
-        setContent(htmlText);
+        const markdownText = editor.getMarkdown();
+        setContent(markdownText);
       });
     }
   }, [location.state]);
-
-  // 글 작성 성공 시, 게시글 상세 페이지로 이동
-  useEffect(() => {
-    if (postWritingResponse.type === "SUCCESS" && postWritingResponse.responseData) {
-      const { id } = postWritingResponse.responseData;
-      history.replace(`/writing/${id}`);
-    }
-  }, [history, postWritingResponse.responseData, postWritingResponse.type]);
-
-  // 글 업데이트 성공 시, 게시글 상세 페이지로 이동
-  useEffect(() => {
-    if (patchWritingResponse.type === "SUCCESS" && patchWritingResponse.responseData) {
-      const { id } = patchWritingResponse.responseData;
-      history.replace(`/writing/${id}`);
-    }
-  }, [history, patchWritingResponse.type, patchWritingResponse.responseData]);
 
   // 썸네일, 제목, 본문 체크 -> 모두 글이 있을 경우 출간하기 비활성화 해제
   useEffect(() => {
