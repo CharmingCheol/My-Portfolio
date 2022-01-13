@@ -24,12 +24,12 @@ export const ContentCard = styled.li`
     overflow: hidden;
     word-break: break-all;
   }
+  ${media.xlarge("min")} {
+    width: 30%;
+    flex: 0 0 30%;
+  }
   ${media.laptop("min")} {
     width: 50%;
     flex: 0 0 50%;
-  }
-  ${media.desktop("min")} {
-    width: 33.333333%;
-    flex: 0 0 33.333333%;
   }
 `;

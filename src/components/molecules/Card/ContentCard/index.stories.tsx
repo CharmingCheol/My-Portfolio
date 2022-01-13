@@ -29,8 +29,8 @@ const DefaultContentCardTemplate: Story<Props> = (props) => {
 export const DefaultContentCard = DefaultContentCardTemplate.bind({});
 DefaultContentCard.args = {
   content: "contentcontentcontentcontent",
-  createdAt: "2021-08-02T10:55:51.603Z",
-  id: 1,
+  createdAt: "Wed Jan 12 2022 23:50:58 GM",
+  id: "1",
   title: "titletitletitle",
 };
 
@@ -39,7 +39,7 @@ const FlexibleContentCardTemplate: Story<Props> = (props) => {
     <MemoryRouter>
       <Wrapper>
         <ContentCard {...props} />
-        <ContentCard createdAt="2021-08-08T" title="title" content="content" id={1} />
+        <ContentCard createdAt="2021-08-08T" title="title" content="content" id="1" />
       </Wrapper>
     </MemoryRouter>
   );
@@ -48,6 +48,6 @@ export const FlexibleContentCard = FlexibleContentCardTemplate.bind({});
 FlexibleContentCard.args = {
   content: "contentcontentcontentcontent",
   createdAt: "2021-08-02T10:55:51.603Z",
-  id: 1,
+  id: "1",
   title: "titletitletitle",
 };

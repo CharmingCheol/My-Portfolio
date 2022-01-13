@@ -1,18 +1,12 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Date, { Props } from "./index";
 
-const year = "2021";
-const month = "09";
-const day = "28";
-const endPoint = "T";
-const replaceText = { from: "-", to: "." };
-const yearMonthDay = `${year}${replaceText.from}${month}${replaceText.from}${day}`; // 2021-09-28
+const day = "12";
+const year = "2022";
 
 const initialProps: Props = {
-  date: `${yearMonthDay}${endPoint}10:55:51.603Z`,
-  endPoint,
-  replaceText,
+  date: `Wed Jan ${day} ${year} 23:50:58 GM`,
 };
 
 describe("atoms/Date", () => {
@@ -20,22 +14,31 @@ describe("atoms/Date", () => {
     return render(<Date {...initialProps} {...props} />);
   };
 
-  it("date props를 주었을 때, YYYY.MM.DD으로 변환한다", () => {
-    setup();
-    const result = `${year}${replaceText.to}${month}${replaceText.to}${day}`;
-    expect(screen.getByText(result)).toBeInTheDocument(); // 2021.09.28
-  });
+  it("date props를 줬을 때, YYYY.MM.DD으로 변환한다", () => {
+    const january = setup({ date: `Wed Jan ${day} ${year} 23:50:58 GM` });
+    const feburary = setup({ date: `Wed Feb ${day} ${year} 23:50:58 GM` });
+    const march = setup({ date: `Wed Mar ${day} ${year} 23:50:58 GM` });
+    const april = setup({ date: `Wed Apr ${day} ${year} 23:50:58 GM` });
+    const may = setup({ date: `Wed May ${day} ${year} 23:50:58 GM` });
+    const june = setup({ date: `Wed Jun ${day} ${year} 23:50:58 GM` });
+    const july = setup({ date: `Wed Jul ${day} ${year} 23:50:58 GM` });
+    const august = setup({ date: `Wed Aug ${day} ${year} 23:50:58 GM` });
+    const september = setup({ date: `Wed Sep ${day} ${year} 23:50:58 GM` });
+    const october = setup({ date: `Wed Oct ${day} ${year} 23:50:58 GM` });
+    const november = setup({ date: `Wed Nov ${day} ${year} 23:50:58 GM` });
+    const december = setup({ date: `Wed Dec ${day} ${year} 23:50:58 GM` });
 
-  it("endPoint를 찾지 못한 경우, 빈 문자열로 리턴한다", () => {
-    const wrongEndPoint = "A";
-    setup({ endPoint: wrongEndPoint });
-    expect(screen.getByText("", { ignore: "body, div" })).toBeInTheDocument();
-  });
-
-  it("변환 할 text를 찾지 못한 경우 변환하지 않는다", () => {
-    const wrongText = "/";
-    const result = `${year}${replaceText.from}${month}${replaceText.from}${day}`;
-    setup({ replaceText: { from: wrongText, to: "." } });
-    expect(screen.getByText(result)).toBeInTheDocument(); // 2021-09-28. replaceValue로 변환하지 않음
+    expect(january.getByText(`${year}.${1}.${day}`)).toBeInTheDocument();
+    expect(feburary.getByText(`${year}.${2}.${day}`)).toBeInTheDocument();
+    expect(march.getByText(`${year}.${3}.${day}`)).toBeInTheDocument();
+    expect(april.getByText(`${year}.${4}.${day}`)).toBeInTheDocument();
+    expect(may.getByText(`${year}.${5}.${day}`)).toBeInTheDocument();
+    expect(june.getByText(`${year}.${6}.${day}`)).toBeInTheDocument();
+    expect(july.getByText(`${year}.${7}.${day}`)).toBeInTheDocument();
+    expect(august.getByText(`${year}.${8}.${day}`)).toBeInTheDocument();
+    expect(september.getByText(`${year}.${9}.${day}`)).toBeInTheDocument();
+    expect(october.getByText(`${year}.${10}.${day}`)).toBeInTheDocument();
+    expect(november.getByText(`${year}.${11}.${day}`)).toBeInTheDocument();
+    expect(december.getByText(`${year}.${12}.${day}`)).toBeInTheDocument();
   });
 });

@@ -12,7 +12,5 @@ const DefaultDateTemplate: Story<Props> = (props) => {
 };
 export const DefaultDate = DefaultDateTemplate.bind({});
 DefaultDate.args = {
-  date: "2021-08-02T10:55:51.603Z",
-  endPoint: "T",
-  replaceText: { from: "-", to: "." },
+  date: "Wed Jan 12 2022 23:50:58 GM",
 };
