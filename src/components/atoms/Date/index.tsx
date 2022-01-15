@@ -18,43 +18,39 @@ const Date = (props: Props) => {
   const convertMMMtoNumber = useCallback((mmm: string) => {
     switch (mmm) {
       case "Jan":
-        return 1;
+        return "01";
       case "Feb":
-        return 2;
+        return "02";
       case "Mar":
-        return 3;
+        return "03";
       case "Apr":
-        return 4;
+        return "04";
       case "May":
-        return 5;
+        return "05";
       case "Jun":
-        return 6;
+        return "06";
       case "Jul":
-        return 7;
+        return "07";
       case "Aug":
-        return 8;
+        return "08";
       case "Sep":
-        return 9;
+        return "09";
       case "Oct":
-        return 10;
+        return "10";
       case "Nov":
-        return 11;
+        return "11";
       case "Dec":
-        return 12;
+        return "12";
       default:
-        return -1;
+        return "-1";
     }
-  }, []);
-
-  const joinDate = useCallback((year: string, month: number, day: string) => {
-    return `${year}.${month}.${day}`;
   }, []);
 
   const formattedDate = useMemo(() => {
     const [month, day, year] = date.split(" ").slice(1, 4);
     const monthToNumber = convertMMMtoNumber(month);
-    return joinDate(year, monthToNumber, day);
-  }, [convertMMMtoNumber, date, joinDate]);
+    return `${year}.${monthToNumber}.${day}`;
+  }, [convertMMMtoNumber, date]);
 
   return <span className={classnames(...className)}>{formattedDate}</span>;
 };
