@@ -8,10 +8,10 @@ module.exports = ({ config }) => {
   };
   config.resolve.alias = {
     ...config.resolve.alias,
-    apis: path.resolve(__dirname, "../src", "apis"),
     common: path.resolve(__dirname, "../src", "common"),
     components: path.resolve(__dirname, "../src", "components"),
     containers: path.resolve(__dirname, "../src", "containers"),
+    fireConfig: path.resolve(__dirname, "../src", "fireConfig"),
     hooks: path.resolve(__dirname, "../src", "hooks"),
     pages: path.resolve(__dirname, "../src", "pages"),
     reducers: path.resolve(__dirname, "../src", "reducers"),
