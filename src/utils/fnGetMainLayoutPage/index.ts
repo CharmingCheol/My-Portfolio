@@ -9,7 +9,7 @@ dotenv.config();
  * @returns boolean
  */
 const fnGetMainLayoutPage = (pathname: string) => {
-  if (pathname.includes("portfolio")) return false;
+  if (pathname.includes("/project")) return false;
   if (pathname === process.env.WRITE_PAGE) return false;
   return true;
 };

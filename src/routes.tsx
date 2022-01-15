@@ -4,9 +4,7 @@ import loadable, { LoadableComponent } from "@loadable/component";
 import { encrypt, decrypt } from "utils";
 
 const Blog = loadable(() => import("pages/Blog"));
-const Home = loadable(() => import("pages/Home"));
 const Login = loadable(() => import("pages/Login"));
-const Me = loadable(() => import("pages/Me"));
 const NotFound = loadable(() => import("pages/NotFound"));
 const Project = loadable(() => import("pages/Project/reducer"));
 const Write = loadable(() => import("pages/Write"));
@@ -38,9 +36,7 @@ const Routes = () => {
   return (
     <>
       <Switch>
-        <Route path="/portfolio" component={Home} exact />
-        <Route path="/portfolio/me" component={Me} />
-        <Route path="/portfolio/project" component={Project} />
+        <Route path="/project" component={Project} />
         <Route path="/" component={Blog} exact />
         <Route path="/writing/:id" component={Writing} />
         <PrivateRoute

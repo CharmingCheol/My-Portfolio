@@ -4,12 +4,8 @@ import fnGetMainLayoutPage from "./index";
 dotenv.config();
 
 describe("utils/fnSetEncryptDecrypt", () => {
-  it("portfolio 페이지를 전달할 경우, false를 반환한다", () => {
-    const portfolio = fnGetMainLayoutPage("/portfolio");
-    const me = fnGetMainLayoutPage("/portfolio/me");
-    const project = fnGetMainLayoutPage("/portfolio/project");
-    expect(portfolio).toBe(false);
-    expect(me).toBe(false);
+  it("project 페이지를 전달할 경우, false를 반환한다", () => {
+    const project = fnGetMainLayoutPage("/project");
     expect(project).toBe(false);
   });
 
