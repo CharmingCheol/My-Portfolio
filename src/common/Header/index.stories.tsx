@@ -13,13 +13,18 @@ export default {
 
 const Wrapper = styled.div`
   height: 150vh;
+  main {
+    padding-top: 66px;
+  }
 `;
 
 const DefaultHeaderTemplate = () => (
   <MemoryRouter>
     <Wrapper>
       <Header />
-      <main />
+      <main>
+        <span>hello</span>
+      </main>
     </Wrapper>
   </MemoryRouter>
 );

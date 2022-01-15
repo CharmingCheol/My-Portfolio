@@ -1,10 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+
 import { useAppSelector } from "store";
 import Icon from "components/atoms/Icon";
 import Button from "components/atoms/Button";
 import logo from "static/img/logo.png";
+
 import * as S from "./index.style";
 
 const Header = () => {
@@ -23,15 +25,17 @@ const Header = () => {
           onClick={handleClickMenuButton}
           className={["menu-icon", isShowedMenu ? "close" : "hamburger"]}
         />
-        <S.Logo to="/portfolio">
+        <S.Logo to="/">
           <img src={logo} alt="logo" />
         </S.Logo>
         <S.List className={isShowedMenu ? "showed" : ""}>
           <li>
-            <Link to="/portfolio/me">Me</Link>
+            <a href="https://www.notion.so/286b761eccd445e0b7f960e477eda48f" target="_blank" rel="noreferrer">
+              Me
+            </a>
           </li>
           <li>
-            <Link to="/portfolio/project">Project</Link>
+            <Link to="/project">Project</Link>
           </li>
         </S.List>
         {isAdmin && <Button className={["write"]} text="글 작성하기" to={process.env.WRITE_PAGE} />}

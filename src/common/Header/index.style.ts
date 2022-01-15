@@ -54,6 +54,7 @@ export const List = styled.ul`
     padding: 16px;
     text-align: center;
     font-weight: bold;
+    background: ${palette.white_20};
   }
   &.showed {
     display: block;
@@ -61,7 +62,7 @@ export const List = styled.ul`
   ${media.laptop("min")} {
     & {
       position: static;
-      display: flex;
+      display: flex !important;
       width: auto;
       margin-left: 24px;
       box-shadow: none;
