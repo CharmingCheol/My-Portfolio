@@ -12,7 +12,6 @@ const ContentCard = (props: Props) => {
   const { content, createdAt, id, title } = props;
 
   const shortenContent = useMemo(() => {
-    console.log("removeMd(content)", content, removeMd(content));
     const removedMd = removeMd(content.replace(/```([\s\S]*?)```/g, "").replace(/~~~([\s\S]*?)~~~/g, ""));
     return removedMd;
   }, [content]);
