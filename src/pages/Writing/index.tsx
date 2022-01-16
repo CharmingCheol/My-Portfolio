@@ -1,5 +1,7 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import removeMd from "remove-markdown";
 import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
@@ -18,6 +20,13 @@ const WritingPage = () => {
   const isAdmin = useAppSelector((state) => state.option.isAdmin);
   const [writing, setWriting] = useState<Writing | null>(null);
   const [isNotFound, setIsNotFound] = useState(false);
+
+  const shortenContent = useMemo(() => {
+    const removedMd = removeMd(
+      writing?.content.replace(/```([\s\S]*?)```/g, "").replace(/~~~([\s\S]*?)~~~/g, "") || "",
+    );
+    return removedMd;
+  }, [writing?.content]);
 
   // 마크다운 viewer 적용
   useLayoutEffect(() => {
@@ -43,6 +52,10 @@ const WritingPage = () => {
     <S.Layout>
       {writing && (
         <>
+          <Helmet>
+            <title>{writing.title}</title>
+            <meta name="description" content={shortenContent} />
+          </Helmet>
           <h1>{writing.title}</h1>
           <Date date={writing.createdAt} />
           {isAdmin && <ModifyDeleteButton content={writing.content} title={writing.title} id={writing.id} />}
