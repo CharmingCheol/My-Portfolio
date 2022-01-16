@@ -1,8 +1,8 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { AiFillGithub, AiOutlineClose } from "react-icons/ai";
-import { projectContext } from "@pages/Project/reducer";
-import { clickPopupCloseAction } from "@pages/Project/action";
-import textScale from "@utils/modules/textScale";
+import { projectContext } from "pages/Project/reducer";
+import { clickPopupCloseAction } from "pages/Project/action";
+import textScale from "utils/modules/textScale";
 import Factory from "./factory";
 import * as S from "./style";
 

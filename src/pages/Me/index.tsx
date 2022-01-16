@@ -1,6 +1,6 @@
 import React from "react";
 import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
-import Button from "@components/atoms/Button";
+import Button from "components/atoms/Button";
 import d3Img from "static/img/d3.png";
 import reactImg from "static/img/react.png";
 import storybookImg from "static/img/storybook.png";
@@ -28,12 +28,12 @@ const Me = () => {
           <div>
             <Button
               href="https://github.com/CharmingCheol"
-              icon={<AiFillGithub />}
+              icon={AiFillGithub}
               newTab
               color="sub1"
               text="깃허브로 이동하기"
             />
-            <Button href="mailto:toby0806@gmail.com" icon={<AiOutlineGoogle />} color="sub1" text="G-mail로 이동하기" />
+            <Button href="mailto:toby0806@gmail.com" icon={AiOutlineGoogle} color="sub1" text="G-mail로 이동하기" />
           </div>
         </section>
         <section className="right-section">

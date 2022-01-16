@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import media from "@styles/media";
-import fontSize from "@styles/fontSize";
+import media from "styles/media";
+import fontSize from "styles/fontSize";
 
 export const FirstArticle = styled.article`
   width: 100vw;
@@ -13,6 +13,7 @@ export const FirstArticle = styled.article`
     background-color: #f6f6f6;
     .detail {
       margin: 8px 0;
+      text-decoration: underline;
     }
     span {
       display: block;

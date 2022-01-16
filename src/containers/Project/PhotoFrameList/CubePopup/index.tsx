@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
-import { projectContext } from "@pages/Project/reducer";
-import { clickPopupCloseAction } from "@pages/Project/action";
+import { projectContext } from "pages/Project/reducer";
+import { clickPopupCloseAction } from "pages/Project/action";
 import Art1 from "../Art1";
 import Art2 from "../Art2";
 import Art3 from "../Art3";
