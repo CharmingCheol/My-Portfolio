@@ -11,7 +11,8 @@ dotenv.config();
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      {/* <App /> */}
+      <div>hello</div>
     </BrowserRouter>
   </Provider>,
   document.getElementById("root"),
