@@ -33,9 +33,9 @@ const App = () => {
           return fnGetMainLayoutPage(location.pathname) ? <Header /> : null;
         }}
       />
-      <MainLayout>
+      {/* <MainLayout>
         <Routes />
-      </MainLayout>
+      </MainLayout> */}
     </>
   );
 };
