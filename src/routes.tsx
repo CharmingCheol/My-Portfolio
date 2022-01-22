@@ -39,7 +39,7 @@ const Routes = () => {
         <Route path="/project" component={Project} />
         <Route path="/" component={Blog} exact />
         <Route path="/writing/:id" component={Writing} />
-        <PrivateRoute
+        {/* <PrivateRoute
           component={Login}
           path={process.env.LOGIN_PAGE as string}
           encrypted={encrypt(process.env.LOGIN_PAGE as string)}
@@ -50,7 +50,7 @@ const Routes = () => {
           path={process.env.WRITE_PAGE as string}
           encrypted={encrypt(process.env.WRITE_PAGE as string)}
           exact
-        />
+        /> */}
         <Route component={NotFound} />
       </Switch>
     </>
