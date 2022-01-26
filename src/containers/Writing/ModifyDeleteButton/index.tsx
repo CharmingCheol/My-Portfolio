@@ -17,7 +17,7 @@ const ModifyDeleteButton = (props: Partial<Writing>) => {
   return (
     <>
       <S.Wrapper>
-        <Button text="수정" to={`${process.env.WRITE_PAGE}`} linkState={{ title, content, id }} />
+        <Button text="수정" to={`${process.env.REACT_APP_WRITE_PAGE}`} linkState={{ title, content, id }} />
         <Button text="삭제" onClick={toggleDeleteModal} />
       </S.Wrapper>
       {openedModal && <DeleteModal isOpened={openedModal} onHide={toggleDeleteModal} />}

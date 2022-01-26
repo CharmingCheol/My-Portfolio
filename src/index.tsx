@@ -8,8 +8,6 @@ import App from "app";
 
 dotenv.config();
 
-console.log("FIREBASE_STORAGE_BUCKET", process.env.FIREBASE_STORAGE_BUCKET);
-
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>

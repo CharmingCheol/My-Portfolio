@@ -10,7 +10,7 @@ dotenv.config();
  */
 const fnGetMainLayoutPage = (pathname: string) => {
   if (pathname.includes("/project")) return false;
-  if (pathname === process.env.WRITE_PAGE) return false;
+  if (pathname === process.env.REACT_APP_WRITE_PAGE) return false;
   return true;
 };
 

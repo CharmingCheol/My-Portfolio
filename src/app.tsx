@@ -17,7 +17,7 @@ const App = () => {
     const login = window.sessionStorage.getItem("login");
     if (login) {
       const decrypted = decrypt(login);
-      if (decrypted === process.env.LOG_IN_TEXT) {
+      if (decrypted === process.env.REACT_APP_LOG_IN_TEXT) {
         dispatch(changeIsAdmin(true));
       } else {
         window.sessionStorage.removeItem("login");

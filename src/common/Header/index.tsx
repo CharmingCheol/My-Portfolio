@@ -38,7 +38,7 @@ const Header = () => {
             <Link to="/project">Project</Link>
           </li>
         </S.List>
-        {isAdmin && <Button className={["write"]} text="글 작성하기" to={process.env.WRITE_PAGE} />}
+        {isAdmin && <Button className={["write"]} text="글 작성하기" to={process.env.REACT_APP_WRITE_PAGE} />}
       </div>
     </S.Header>
   );
