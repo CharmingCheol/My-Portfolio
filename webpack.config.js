@@ -10,7 +10,7 @@ const Dotenv = require("dotenv-webpack");
 
 module.exports = () => {
   const isDevelopmentEnv = process.env.NODE_ENV === "development";
-  const isProductionEnv = process.env.NODE_ENV === "production";
+  // const isProductionEnv = process.env.NODE_ENV === "production";
   return {
     mode: isDevelopmentEnv ? "development" : "production",
     devtool: isDevelopmentEnv ? "inline-source-map" : "hidden-source-map",
@@ -80,18 +80,13 @@ module.exports = () => {
     },
     plugins: [
       new Dotenv(),
-      isDevelopmentEnv && new ReactRefreshWebpackPlugin(),
-      isDevelopmentEnv && new webpack.HotModuleReplacementPlugin(),
-      isDevelopmentEnv && new BundleAnalyzerPlugin({ analyzerMode: "server", analyzerPort: 4000, openAnalyzer: false }),
-      isProductionEnv && new BundleAnalyzerPlugin({ analyzerMode: "static" }),
-      isProductionEnv && new webpack.LoaderOptionsPlugin({ minimize: true }),
-      isProductionEnv &&
-        new CopyPlugin({
-          patterns: [
-            { from: path.join(__dirname, "public", "robots.txt"), to: path.join(__dirname, "dist", "robots.txt") },
-          ],
-        }),
-      new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopmentEnv ? "development" : "production" }),
+      new webpack.HotModuleReplacementPlugin(),
+      new ReactRefreshWebpackPlugin(),
+      new CopyPlugin({
+        patterns: [
+          { from: path.join(__dirname, "public", "robots.txt"), to: path.join(__dirname, "dist", "robots.txt") },
+        ],
+      }),
       new HtmlWebpackPlugin({
         inject: "body",
         template: path.join(__dirname, "public", "/index.html"),
@@ -104,7 +99,7 @@ module.exports = () => {
           files: "./src/**/*.{ts,tsx,js,jsx}",
         },
       }),
-    ].filter(Boolean),
+    ],
     output: {
       path: path.join(__dirname, "dist"),
       filename: "[name].[hash:8].js",
