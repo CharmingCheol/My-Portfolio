@@ -42,14 +42,14 @@ const Routes = () => {
         <Route path="/writing/:id" component={Writing} />
         <PrivateRoute
           component={Login}
-          path={process.env.REACT_APP_LOGIN_PAGE as string}
-          encrypted={encrypt(process.env.REACT_APP_LOGIN_PAGE as string)}
+          path={process.env.REACT_APP_LOGIN_PAGE}
+          encrypted={encrypt(process.env.REACT_APP_LOGIN_PAGE as any)}
           exact
         />
         <PrivateRoute
           component={Write}
-          path={process.env.REACT_APP_WRITE_PAGE as string}
-          encrypted={encrypt(process.env.REACT_APP_WRITE_PAGE as string)}
+          path={process.env.REACT_APP_WRITE_PAGE}
+          encrypted={encrypt(process.env.REACT_APP_WRITE_PAGE as any)}
           exact
         />
         <Route component={NotFound} />

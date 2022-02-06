@@ -79,7 +79,7 @@ module.exports = () => {
       ],
     },
     plugins: [
-      new Dotenv(),
+      new Dotenv({ systemvars: true }),
       new webpack.HotModuleReplacementPlugin(),
       new ReactRefreshWebpackPlugin(),
       new CopyPlugin({
