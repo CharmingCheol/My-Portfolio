@@ -94,11 +94,9 @@ const Pagination = (props: Props) => {
         {itmes.map((item) => (
           <S.Item key={item} className={classnames(...className)}>
             {typeof item === "number" ? (
-              <Button
-                text={item.toString()}
-                onClick={handleClickItem(item)}
-                color={item === now ? "sub2" : "sub2_away"}
-              />
+              <Button onClick={handleClickItem(item)} color={item === now ? "sub2" : "sub2_away"}>
+                {item.toString()}
+              </Button>
             ) : (
               <Icon
                 icon={iconType(item as PaginationIcon)}

@@ -36,8 +36,10 @@ const DeleteModal = (props: Props) => {
           게시글을 삭제 할 경우 메인 페이지로 이동합니다
         </p>
         <div>
-          <Button text="취소" onClick={onHide} color="main_away" />
-          <Button text="확인" onClick={clickDeleteButton} />
+          <Button onClick={onHide} color="main_away">
+            취소
+          </Button>
+          <Button onClick={clickDeleteButton}>확인</Button>
         </div>
       </S.Wrapper>
     </Modal>
