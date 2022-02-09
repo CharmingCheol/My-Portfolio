@@ -13,4 +13,8 @@ export const Item = styled.li`
   button {
     margin: 0 4px;
   }
+
+  .arrow-button {
+    border: none;
+  }
 `;

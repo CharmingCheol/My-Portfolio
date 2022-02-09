@@ -3,7 +3,6 @@ import { AiOutlineDoubleLeft, AiOutlineLeft, AiOutlineRight, AiOutlineDoubleRigh
 import classnames from "classnames";
 
 import Button from "components/atoms/Button";
-import Icon from "components/atoms/Icon";
 
 import * as S from "./index.style";
 import { PaginationIcon, Props } from "./type";
@@ -56,13 +55,13 @@ const Pagination = (props: Props) => {
     // eslint-disable-next-line default-case
     switch (type) {
       case "first":
-        return AiOutlineDoubleLeft;
+        return <AiOutlineDoubleLeft />;
       case "previous":
-        return AiOutlineLeft;
+        return <AiOutlineLeft />;
       case "next":
-        return AiOutlineRight;
+        return <AiOutlineRight />;
       case "last":
-        return AiOutlineDoubleRight;
+        return <AiOutlineDoubleRight />;
     }
   };
 
@@ -98,11 +97,14 @@ const Pagination = (props: Props) => {
                 {item.toString()}
               </Button>
             ) : (
-              <Icon
-                icon={iconType(item as PaginationIcon)}
+              <Button
                 onClick={handleClickItem(item as PaginationIcon)}
                 disabled={item === "first" || item === "previous" ? disabledPrevButton : disabledNextButton}
-              />
+                color="sub2_away"
+                className="arrow-button"
+              >
+                {iconType(item as PaginationIcon)}
+              </Button>
             )}
           </S.Item>
         ))}
