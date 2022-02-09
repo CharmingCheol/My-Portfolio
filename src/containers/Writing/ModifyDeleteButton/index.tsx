@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { Link } from "react-router-dom";
 
 import { Writing } from "types/writing";
 import Button from "components/atoms/Button";
@@ -17,8 +18,12 @@ const ModifyDeleteButton = (props: Partial<Writing>) => {
   return (
     <>
       <S.Wrapper>
-        <Button text="수정" to={`${process.env.REACT_APP_WRITE_PAGE}`} linkState={{ title, content, id }} />
-        <Button text="삭제" onClick={toggleDeleteModal} />
+        {/* <Button text="수정" to={`${process.env.REACT_APP_WRITE_PAGE}`} linkState={{ title, content, id }} />
+        <Button text="삭제" onClick={toggleDeleteModal} /> */}
+        <Button>
+          <Link to={{ pathname: `${process.env.REACT_APP_WRITE_PAGE}`, state: { title, content, id } }}>수정</Link>
+        </Button>
+        <Button onClick={toggleDeleteModal}>삭제</Button>
       </S.Wrapper>
       {openedModal && <DeleteModal isOpened={openedModal} onHide={toggleDeleteModal} />}
     </>

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { MemoryRouter } from "react-router-dom";
-import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
-import styled from "styled-components";
+import { Link, MemoryRouter } from "react-router-dom";
+import { AiFillGithub } from "react-icons/ai";
 import { Meta, Story } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import { ColorType } from "./type";
+
 import Button, { Props } from "./index";
 
 export default {
@@ -12,111 +10,98 @@ export default {
   component: Button,
 } as Meta;
 
-const Wrapper = styled.div`
-  display: flex;
-  button,
-  a {
-    margin: 4px;
-  }
-`;
-
-// Button, Link, Anchor 버튼
-const ButtonTypeTemplate: Story<Props> = () => {
-  return (
-    <Wrapper>
-      <Button text="button" />
-      <Button text="anchor" href="/" />
-      <Button text="new tab anchor" href="/" newTab />
-      <MemoryRouter>
-        <Button text="link" to="/" />
-      </MemoryRouter>
-    </Wrapper>
-  );
-};
-export const ButtonType = ButtonTypeTemplate.bind({});
-
-// 버튼 event
-const ButtonEventTemplate: Story<Props> = () => {
-  return (
-    <Wrapper>
-      <Button text="onClick" onClick={action("onClick")} />
-      <Button text="onDoubleClick" onDoubleClick={action("onDoubleClick")} />
-      <Button text="onContextMenu" onContextMenu={action("onContextMenu")} />
-      <Button text="onFocus / onBlur" onFocus={action("onFocus")} onBlur={action("onBlur")} />
-      <Button
-        text="onMouseEnter / onMouseLeave"
-        onMouseEnter={action("onMouseEnter")}
-        onMouseLeave={action("onMouseLeave")}
-      />
-      <Button text="onMouseDown / onMouseUp" onMouseDown={action("onMouseDown")} onMouseUp={action("onMouseUp")} />
-    </Wrapper>
-  );
-};
-export const ButtonEvent = ButtonEventTemplate.bind({});
-
-// 버튼 크기
-const SizeTemplate: Story<Props> = () => {
-  return (
-    <Wrapper>
-      <Button text="small" size="small" />
-      <Button text="medium" size="medium" />
-      <Button text="large" size="large" />
-      <Button text="xlarge" size="xlarge" />
-      <Button text="xxlarge" size="xxlarge" />
-    </Wrapper>
-  );
-};
-export const ButtonSize = SizeTemplate.bind({});
-
-// 버튼 색상
-const ColorTemplate: Story<Props> = () => {
-  return (
-    <Wrapper>
-      <Button text="main" color="main" />
-      <Button text="main_away" color="main_away" />
-      <Button text="sub1" color="sub1" />
-      <Button text="sub1_away" color="sub1_away" />
-      <Button text="sub2" color="sub2" />
-      <Button text="sub2_away" color="sub2_away" />
-    </Wrapper>
-  );
-};
-export const ButtonColor = ColorTemplate.bind({});
-
-// 버튼 disabled
-const DisabledTemplate: Story<Props> = () => {
-  const [disabled, setDisabled] = useState(false);
-  const onClick = () => setDisabled((prev) => !prev);
-  return <Button text="Click Me!" disabled={disabled} onClick={onClick} />;
-};
-export const DisabledButton = DisabledTemplate.bind({});
-
-// 아이콘이 있는 버튼(왼쪽에 아이콘 배치, 아이콘만)
-const ButtonWithIconTemplate: Story<Props> = () => {
-  return (
-    <Wrapper>
-      <Button icon={AiFillGithub} text="깃허브로 로그인" />
-      <Button icon={AiOutlineGoogle} text="구글로 로그인" />
-    </Wrapper>
-  );
-};
-export const ButtonWithIcon = ButtonWithIconTemplate.bind({});
-
-// 버튼 case
-const ButtonCaseTemplate: Story<Props> = () => {
-  const size: ColorType[] = ["main", "main_away", "sub1", "sub1_away", "sub2", "sub2_away"];
+// 텍스트만 있는 버튼
+const TextButtonTemplate: Story<Props> = () => {
   return (
     <>
-      {size.map((value) => (
-        <Wrapper>
-          <Button text="small" color={value} size="small" />
-          <Button text="medium" color={value} size="medium" />
-          <Button text="large" color={value} size="large" />
-          <Button text="xlarge" color={value} size="xlarge" />
-          <Button text="xxlarge" color={value} size="xxlarge" />
-        </Wrapper>
-      ))}
+      <div>Button 컴포넌트 선언 후에 태그 내부에다가 텍스트를 추가합니다.</div>
+      <Button>text button</Button>
     </>
   );
 };
-export const ButtonCase = ButtonCaseTemplate.bind({});
+export const TextButton = TextButtonTemplate.bind({});
+
+// 아이콘과 조합 된 버튼
+const IconButtonTemplate: Story<Props> = () => {
+  return (
+    <>
+      <div>아이콘을 추가하고 싶은 경우 태그 내부에다가 추가합니다.</div>
+      <Button>
+        <AiFillGithub />
+      </Button>
+      <Button>
+        <AiFillGithub />
+        <span>좌측에 아이콘 추가</span>
+      </Button>
+      <Button>
+        <span>우측에 아이콘 추가</span>
+        <AiFillGithub />
+      </Button>
+    </>
+  );
+};
+export const IconButton = IconButtonTemplate.bind({});
+
+// 링크 버튼
+const LinkButtonTempalte: Story<Props> = () => {
+  return (
+    <MemoryRouter>
+      <div>페이지 이동 버튼을 추가하고 싶은 경우, 태그 내부에다가 Link 컴포넌트를 추가합니다.</div>
+      <div>외부 페이지로 이동하는 버튼인 경우, 태그 내부에다가 a태그를 추가합니다.</div>
+      <Button>
+        <Link to="/">내부 링크 버튼</Link>
+      </Button>
+      <Button>
+        <a href="https://www.naver.com/">외부 링크 버튼</a>
+      </Button>
+    </MemoryRouter>
+  );
+};
+export const LinkButton = LinkButtonTempalte.bind({});
+
+// 사이즈
+const ButtonSizeTemplate: Story<Props> = () => {
+  return (
+    <>
+      <div>버튼 사이즈를 변경하고 싶은 경우, size props에다가 값을 추가하여 전달합니다.</div>
+      <Button size="small">small</Button>
+      <Button size="medium">medium</Button>
+      <Button size="large">large</Button>
+      <Button size="xlarge">xlarge</Button>
+      <Button size="xxlarge">xxlarge</Button>
+    </>
+  );
+};
+export const ButtonSize = ButtonSizeTemplate.bind({});
+
+// 색상
+const ButtonColorTemplate: Story<Props> = () => {
+  return (
+    <>
+      <div>버튼 색상을 변경하고 싶은 경우, color props에다가 값을 추가하여 전달합니다.</div>
+      <Button color="main">main</Button>
+      <Button color="main_away">main_away</Button>
+      <Button color="sub1">sub1</Button>
+      <Button color="sub1_away">sub1_away</Button>
+      <Button color="sub2">sub2</Button>
+      <Button color="sub2_away">sub2_away</Button>
+    </>
+  );
+};
+export const ButtonColor = ButtonColorTemplate.bind({});
+
+// disabled
+const DisabledButtonTemplate: Story<Props> = () => {
+  const [disabled, setDisabled] = useState(false);
+  const onClick = () => setDisabled((prev) => !prev);
+
+  return (
+    <>
+      <div>disabled가 true인 경우, 마우스 커서가 default로 변경됩니다.</div>
+      <Button onClick={onClick} disabled={disabled}>
+        text button
+      </Button>
+    </>
+  );
+};
+export const DisabledButton = DisabledButtonTemplate.bind({});

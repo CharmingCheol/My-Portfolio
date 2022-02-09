@@ -83,9 +83,13 @@ const Write = () => {
       </S.TitleWrapper>
       <div id="editor" />
       <S.Footer>
-        <Button text="뒤로가기" onClick={handleGoBackButtonClick} color="main_away" />
+        <Button onClick={handleGoBackButtonClick} color="main_away">
+          뒤로가기
+        </Button>
         <div className="right-buttons">
-          <Button text="출간하기" disabled={disabledSubmitButton} onClick={handleSubmitButtonClick} />
+          <Button disabled={disabledSubmitButton} onClick={handleSubmitButtonClick}>
+            출간하기
+          </Button>
         </div>
       </S.Footer>
     </S.Layout>
