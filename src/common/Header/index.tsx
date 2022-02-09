@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import classNames from "classnames";
 
 import { useAppSelector } from "store";
-import Icon from "components/atoms/Icon";
 import Button from "components/atoms/Button";
 import logo from "static/img/logo.png";
 
@@ -20,11 +20,13 @@ const Header = () => {
   return (
     <S.Header>
       <div className="wrapper">
-        <Icon
-          icon={isShowedMenu ? AiOutlineClose : AiOutlineMenu}
+        <Button
           onClick={handleClickMenuButton}
-          className={["menu-icon", isShowedMenu ? "close" : "hamburger"]}
-        />
+          className={classNames("menu-icon", isShowedMenu ? "close" : "hamburger")}
+          color="sub2_away"
+        >
+          {isShowedMenu ? <AiOutlineClose /> : <AiOutlineMenu />}
+        </Button>
         <S.Logo to="/">
           <img src={logo} alt="logo" />
         </S.Logo>
