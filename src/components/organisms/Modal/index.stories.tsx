@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-import { Meta } from "@storybook/react";
+import React from "react";
+import { Meta, Story } from "@storybook/react";
+
+import Button from "components/atoms/Button";
+import { openModal, closeModal } from "reducers/globalUI";
+import { useAppDispatch } from "store";
+
 import Modal, { Props } from "./index";
 
 export default {
@@ -7,50 +12,50 @@ export default {
   component: Modal,
 } as Meta;
 
-const DefaultModalTemplate = (props: Props) => {
-  const [isOpened, setIsOpened] = useState(false);
+const DefaultModalTemplate: Story<Props> = () => {
+  const dispatch = useAppDispatch();
 
   return (
     <>
-      <button type="button" onClick={() => setIsOpened(true)}>
-        modal open
-      </button>
-      <Modal {...props} isOpened={isOpened}>
-        <div>hello modal</div>
-        <button type="button" onClick={() => setIsOpened(false)}>
-          modal close
-        </button>
+      <p>
+        Modal 컴포넌트에 모달 식별자를 의미하는 modalKey에 값을 전달합니다.
+        <br />
+        모달을 출력하고 싶을 경우, globalUI 액션에서 openModal 함수를 호출, 인자값으로 모달 식별자 값을 전달합니다.
+        <br />
+        모달을 닫고 싶을 경우, globalUI 액션에서 closeModal 함수를 호출합니다.
+      </p>
+      <Button onClick={() => dispatch(openModal("hello modal"))}>open modal</Button>
+      <Modal modalKey="hello modal">
+        <Modal.Header>header</Modal.Header>
+        <Modal.Body>bodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybody</Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => dispatch(closeModal())} color="sub2_away">
+            close modal
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );
 };
 export const DefaultModal = DefaultModalTemplate.bind({});
 
-const MultipleModalTemplate = (props: Props) => {
-  const [isOpenedOuter, setIsOpenedOuter] = useState(false);
-  const [isOpenedInner, setIsOpenedInner] = useState(false);
+const NotAutoCloseModalTemplate: Story<Props> = () => {
+  const dispatch = useAppDispatch();
 
   return (
     <>
-      <button type="button" onClick={() => setIsOpenedOuter(true)}>
-        outer modal open
-      </button>
-      <Modal {...props} isOpened={isOpenedOuter} className="outer-modal">
-        <div>hello outer modal</div>
-        <button type="button" onClick={() => setIsOpenedOuter(false)}>
-          outer modal close
-        </button>
-        <button type="button" onClick={() => setIsOpenedInner(true)}>
-          inner modal open
-        </button>
-        <Modal isOpened={isOpenedInner} className="outer-modal" size="small_wide">
-          <div>hello inner modal</div>
-          <button type="button" onClick={() => setIsOpenedInner(false)}>
-            inner modal close
-          </button>
-        </Modal>
+      <p>autoClose가 false인 경우, 바깥 부분이나 esc를 입력해도 모달이 닫히지 않습니다.</p>
+      <Button onClick={() => dispatch(openModal("hello modal"))}>open modal</Button>
+      <Modal modalKey="hello modal" autoClose={false}>
+        <Modal.Header>header</Modal.Header>
+        <Modal.Body>bodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybody</Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => dispatch(closeModal())} color="sub2_away">
+            close modal
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );
 };
-export const MultipleModal = MultipleModalTemplate.bind({});
+export const NotAutoCloseModal = NotAutoCloseModalTemplate.bind({});
