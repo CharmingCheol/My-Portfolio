@@ -1,46 +1,40 @@
-import React, { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
-import * as S from "./index.style";
+import React, { useRef, ReactNode } from "react";
 
-export interface Props {
-  children: React.ReactNode;
-  className?: string;
-  isOpened: boolean;
-  size?: "small" | "small_wide" | "medium" | "medium_wide" | "large" | "large_wide";
+import Portal from "components/utils/Portal";
+import { useAppSelector } from "store";
+
+import ModalBackground from "./ModalBackground";
+import ModalBody from "./ModalBody";
+import ModalContent, { Props as ModalContentProps } from "./ModalContent";
+import ModalFooter from "./ModalFooter";
+import ModalHeader from "./ModalHeader";
+
+export interface Props extends ModalContentProps {
+  children: ReactNode;
+
+  modalKey: string;
 }
-
-interface Portal {
-  children: React.ReactNode;
-  className?: string;
-}
-
-const Portal = (props: Portal) => {
-  const { children, className, ...other } = props;
-  const [container] = useState(() => {
-    const element = document.createElement("div");
-    if (className) element.classList.add(className);
-    return element;
-  });
-
-  useEffect(() => {
-    document.body.appendChild(container);
-    return () => {
-      document.body.removeChild(container);
-    };
-  }, [container]);
-
-  return createPortal(children, container);
-};
 
 const Modal = (props: Props) => {
-  const { children, className, isOpened, size = "medium", ...other } = props;
-  return isOpened ? (
-    <Portal className={className}>
-      <S.Overlay>
-        <S.Content size={size}>{children}</S.Content>
-      </S.Overlay>
+  const { children, modalKey, autoClose } = props;
+
+  const portalModalRef = useRef(document.getElementById("portal_modal"));
+
+  const modalKeyState = useAppSelector((state) => state.globalUI.modalKey);
+
+  if (modalKeyState !== modalKey) return null;
+
+  return (
+    <Portal container={portalModalRef}>
+      <ModalBackground>
+        <ModalContent autoClose={autoClose}>{children}</ModalContent>
+      </ModalBackground>
     </Portal>
-  ) : null;
+  );
 };
 
-export default Modal;
+export default Object.assign(Modal, {
+  Body: ModalBody,
+  Footer: ModalFooter,
+  Header: ModalHeader,
+});
