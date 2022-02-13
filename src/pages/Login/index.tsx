@@ -45,7 +45,7 @@ const Login = () => {
           value={password}
           onChange={changePasswordInput}
         />
-        <Button text="로그인" onClick={clickLoginButton} />
+        <Button onClick={clickLoginButton}>로그인</Button>
       </div>
     </S.Layout>
   );

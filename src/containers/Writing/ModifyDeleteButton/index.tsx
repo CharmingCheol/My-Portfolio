@@ -1,26 +1,33 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import { Writing } from "types/writing";
 import Button from "components/atoms/Button";
+import { openModal } from "reducers/globalUI";
+import { Writing } from "types/writing";
+
 import DeleteModal from "./DeleteModal";
+
 import * as S from "./index.style";
 
 const ModifyDeleteButton = (props: Partial<Writing>) => {
   const { content, title, id } = props;
-  const [openedModal, setOpenedModal] = useState(false);
+  const dispatch = useDispatch();
 
   // 삭제 버튼 클릭
-  const toggleDeleteModal = useCallback(() => {
-    setOpenedModal((prev) => !prev);
-  }, []);
+  const handleDeleteButtonClick = useCallback(() => {
+    dispatch(openModal("delete writing"));
+  }, [dispatch]);
 
   return (
     <>
       <S.Wrapper>
-        <Button text="수정" to={`${process.env.REACT_APP_WRITE_PAGE}`} linkState={{ title, content, id }} />
-        <Button text="삭제" onClick={toggleDeleteModal} />
+        <Button>
+          <Link to={{ pathname: `${process.env.REACT_APP_WRITE_PAGE}`, state: { title, content, id } }}>수정</Link>
+        </Button>
+        <Button onClick={handleDeleteButtonClick}>삭제</Button>
       </S.Wrapper>
-      {openedModal && <DeleteModal isOpened={openedModal} onHide={toggleDeleteModal} />}
+      <DeleteModal modalKey="delete writing" />
     </>
   );
 };
