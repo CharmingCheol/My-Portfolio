@@ -1,14 +1,21 @@
 import styled, { css } from "styled-components";
-import { Link as RouterLink } from "react-router-dom";
-import { buttonPalette, palette } from "styles/palette";
-import { StyleProps } from "./type";
 
-export const color = {
+import { buttonPalette, palette } from "styles/palette";
+
+export interface StyleProps {
+  color?: keyof typeof colorTemplate;
+
+  size?: keyof typeof sizeTemplate;
+}
+
+export const colorTemplate = {
   main: css`
     background-color: ${buttonPalette.main};
     color: ${palette.white_20};
     border: 1px solid ${palette.white_20};
-    svg {
+    svg,
+    span,
+    a {
       color: ${palette.white_20};
     }
   `,
@@ -16,7 +23,9 @@ export const color = {
     background-color: ${palette.white_20};
     color: ${buttonPalette.main};
     border: 1px solid ${buttonPalette.main};
-    svg {
+    svg,
+    span,
+    a {
       color: ${buttonPalette.main};
     }
   `,
@@ -24,7 +33,9 @@ export const color = {
     background-color: ${buttonPalette.sub1};
     color: ${palette.white_20};
     border: 1px solid ${palette.white_20};
-    svg {
+    svg,
+    span,
+    a {
       color: ${palette.white_20};
     }
   `,
@@ -32,7 +43,9 @@ export const color = {
     background-color: ${palette.white_20};
     color: ${buttonPalette.sub1};
     border: 1px solid ${buttonPalette.sub1};
-    svg {
+    svg,
+    span,
+    a {
       color: ${buttonPalette.sub1};
     }
   `,
@@ -40,7 +53,9 @@ export const color = {
     background-color: ${buttonPalette.sub2};
     color: ${palette.white_20};
     border: 1px solid ${palette.white_20};
-    svg {
+    svg,
+    span,
+    a {
       color: ${palette.white_20};
     }
   `,
@@ -48,85 +63,60 @@ export const color = {
     background-color: ${palette.white_20};
     color: ${buttonPalette.sub2};
     border: 1px solid ${buttonPalette.sub2};
-    svg {
+    svg,
+    span,
+    a {
       color: ${buttonPalette.sub2};
     }
   `,
 };
 
-export const size = {
+export const sizeTemplate = {
   small: css`
     font-size: 12px;
     height: 28px;
     padding: 5px;
-    svg {
-      margin-right: 6px;
-    }
   `,
   medium: css`
     font-size: 12px;
     height: 32px;
     padding: 6px;
-    svg {
-      margin-right: 6px;
-    }
   `,
   large: css`
     font-size: 14px;
     height: 36px;
     padding: 7px;
-    svg {
-      margin-right: 6px;
-    }
   `,
   xlarge: css`
     font-size: 16px;
     height: 44px;
     padding: 8px;
-    svg {
-      margin-right: 6px;
-    }
   `,
   xxlarge: css`
     font-size: 18px;
     height: 50px;
     padding: 9px;
-    svg {
-      margin-right: 6px;
-    }
   `,
 };
 
-const baseStyle = (params: StyleProps) => css`
+export const Button = styled.button<StyleProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: bold;
-  cursor: pointer;
   border-radius: 4px;
-  ${color[params.color || "main"]};
-  ${size[params.size || "medium"]};
+  cursor: pointer;
+
   &:disabled {
     cursor: default;
   }
-  &.with-icon {
-    display: inline-flex;
-    align-items: center;
-    .icon-wrapper {
-      padding: 0;
-    }
+
+  span {
+    margin: 0 8px;
   }
-`;
 
-export const Button = styled.button<StyleProps>`
-  ${(params) => baseStyle(params)}
-`;
-
-export const Anchor = styled.a<StyleProps>`
-  ${(params) => baseStyle(params)}
-  display: inline-flex;
-  align-items: center;
-`;
-
-export const Link = styled(RouterLink)<StyleProps>`
-  ${(params) => baseStyle(params)}
-  display: inline-flex;
-  align-items: center;
+  ${(props) => css`
+    ${colorTemplate[props.color || "main"]};
+    ${sizeTemplate[props.size || "medium"]};
+  `}
 `;
