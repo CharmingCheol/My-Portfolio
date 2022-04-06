@@ -25,8 +25,8 @@ const Login = () => {
   // 로그인 버튼 클릭
   const clickLoginButton = useCallback(() => {
     if (!id.trim() || !password.trim()) return;
-    if (process.env.REACT_APP_ID === id && process.env.REACT_APP_PASSWORD === password) {
-      const encrypted = encrypt(process.env.REACT_APP_LOG_IN_TEXT as string);
+    if (process.env.ID === id && process.env.PASSWORD === password) {
+      const encrypted = encrypt(process.env.LOG_IN_TEXT as string);
       window.sessionStorage.setItem("login", encrypted);
       dispatch(changeIsAdmin(true));
     }

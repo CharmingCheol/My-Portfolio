@@ -23,7 +23,7 @@ const ModifyDeleteButton = (props: Partial<Writing>) => {
     <>
       <S.Wrapper>
         <Button>
-          <Link to={{ pathname: `${process.env.REACT_APP_WRITE_PAGE}`, state: { title, content, id } }}>수정</Link>
+          <Link to={{ pathname: `${process.env.WRITE_PAGE}`, state: { title, content, id } }}>수정</Link>
         </Button>
         <Button onClick={handleDeleteButtonClick}>삭제</Button>
       </S.Wrapper>

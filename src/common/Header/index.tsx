@@ -42,7 +42,7 @@ const Header = () => {
         </S.List>
         {isAdmin && (
           <Button className="write">
-            <Link to={process.env.REACT_APP_WRITE_PAGE as string}>글 작성하기</Link>
+            <Link to={process.env.WRITE_PAGE as string}>글 작성하기</Link>
           </Button>
         )}
       </div>
