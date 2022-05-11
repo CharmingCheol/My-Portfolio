@@ -1,7 +1,4 @@
-import dotenv from "dotenv";
 import fnGetMainLayoutPage from "./index";
-
-dotenv.config();
 
 describe("utils/fnSetEncryptDecrypt", () => {
   it("project 페이지를 전달할 경우, false를 반환한다", () => {
@@ -10,7 +7,7 @@ describe("utils/fnSetEncryptDecrypt", () => {
   });
 
   it("글 작성 페이지를 전달할 경우, false를 반환한다", () => {
-    const write = fnGetMainLayoutPage(process.env.REACT_APP_WRITE_PAGE as string);
+    const write = fnGetMainLayoutPage(process.env.WRITE_PAGE as string);
     expect(write).toBe(false);
   });
 
