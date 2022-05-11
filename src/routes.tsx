@@ -24,10 +24,9 @@ const PrivateRoute = (params: PrivateRouteProps) => {
       path={path}
       render={({ location }) => {
         const login = window.sessionStorage.getItem("login");
-        const notMatchText = !login || decrypt(login) !== process.env.REACT_APP_LOG_IN_TEXT;
-        if (location.pathname === process.env.REACT_APP_LOGIN_PAGE)
-          return notMatchText ? <Component /> : <Redirect to="/" />; // 로그인 페이지(notMatchText가 true면 로그인 페이지로 이동, false면 메인 페이지로 redirect)
-        return notMatchText ? <Redirect to={process.env.REACT_APP_LOGIN_PAGE as string} /> : <Component />; // 그외 페이지(notMatchText가 true면 로그인 페이지로 redirect, fasle면 private page 이동)
+        const notMatchText = !login || decrypt(login) !== process.env.LOG_IN_TEXT;
+        if (location.pathname === process.env.LOGIN_PAGE) return notMatchText ? <Component /> : <Redirect to="/" />; // 로그인 페이지(notMatchText가 true면 로그인 페이지로 이동, false면 메인 페이지로 redirect)
+        return notMatchText ? <Redirect to={process.env.LOGIN_PAGE as string} /> : <Component />; // 그외 페이지(notMatchText가 true면 로그인 페이지로 redirect, fasle면 private page 이동)
       }}
     />
   );
@@ -42,14 +41,14 @@ const Routes = () => {
         <Route path="/writing/:id" component={Writing} />
         <PrivateRoute
           component={Login}
-          path={process.env.REACT_APP_LOGIN_PAGE}
-          encrypted={encrypt(process.env.REACT_APP_LOGIN_PAGE as any)}
+          path={process.env.LOGIN_PAGE}
+          encrypted={encrypt(process.env.LOGIN_PAGE as string)}
           exact
         />
         <PrivateRoute
           component={Write}
-          path={process.env.REACT_APP_WRITE_PAGE}
-          encrypted={encrypt(process.env.REACT_APP_WRITE_PAGE as any)}
+          path={process.env.WRITE_PAGE}
+          encrypted={encrypt(process.env.WRITE_PAGE as string)}
           exact
         />
         <Route component={NotFound} />
