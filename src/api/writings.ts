@@ -6,57 +6,57 @@ class WritingsApi {
 
   constructor(private baseAxios: AxiosInstance) {}
 
-  async findOne(id: string) {
+  async findOne<T extends Writing>(id: string) {
     try {
-      const response = await this.baseAxios.get<Writing>(`${this.BASE_URL}/${id}`);
+      const response = await this.baseAxios.get<T>(`${this.BASE_URL}/${id}`);
       return response.data;
     } catch (error) {
-      const typedError = error as AxiosError<Writing>;
+      const typedError = error as AxiosError<T>;
       return typedError;
     }
   }
 
-  async pagination(page: number) {
+  async pagination<T extends WritingPagination>(page: number) {
     try {
-      const response = await this.baseAxios.get<WritingPagination>(`${this.BASE_URL}`, { params: { page } });
+      const response = await this.baseAxios.get<T>(`${this.BASE_URL}`, { params: { page } });
       return response.data;
     } catch (error) {
-      const typedError = error as AxiosError<Writing>;
+      const typedError = error as AxiosError<T>;
       return typedError;
     }
   }
 
-  async create(body: WritingRequestBody) {
+  async create<T extends Writing>(body: WritingRequestBody) {
     try {
-      const response = await this.baseAxios.post<Writing>(`${this.BASE_URL}`, body);
+      const response = await this.baseAxios.post<T>(`${this.BASE_URL}`, body);
       return response.data;
     } catch (error) {
-      const typedError = error as AxiosError<Writing>;
+      const typedError = error as AxiosError<T>;
       return typedError;
     }
   }
 
-  async update(body: WritingRequestBody, id: string) {
+  async update<T extends Writing>(body: WritingRequestBody, id: string) {
     try {
-      const response = await this.baseAxios.patch<Writing>(`${this.BASE_URL}/${id}`, body);
+      const response = await this.baseAxios.patch<T>(`${this.BASE_URL}/${id}`, body);
       return response.data;
     } catch (error) {
-      const typedError = error as AxiosError<Writing>;
+      const typedError = error as AxiosError<T>;
       return typedError;
     }
   }
 
-  async delete(id: string) {
+  async delete<T extends null>(id: string) {
     try {
-      const response = await this.baseAxios.delete<null>(`${this.BASE_URL}/${id}`);
+      const response = await this.baseAxios.delete<T>(`${this.BASE_URL}/${id}`);
       return response.data;
     } catch (error) {
-      const typedError = error as AxiosError<Writing>;
+      const typedError = error as AxiosError<T>;
       return typedError;
     }
   }
 
-  public isSuccess = <T extends unknown>(response: T | AxiosError<Writing>): response is T => {
+  public isSuccess = <T extends unknown>(response: T | AxiosError<T>): response is T => {
     return (response as AxiosError<T>) === undefined;
   };
 }
