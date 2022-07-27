@@ -1,37 +1,49 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { Writing, WritingPagination, WritingRequestBody } from "types/writing";
 
-class WritingsApi {
-  private BASE_URL = "/writings" as const;
+interface WritingsApi {
+  findOne<T extends Writing>(id: string): Promise<T | AxiosError<T>>;
+
+  pagination<T extends WritingPagination>(page: number): Promise<T | AxiosError<T>>;
+
+  create(body: WritingRequestBody): Promise<Writing | AxiosError<Writing>>;
+
+  update(body: WritingRequestBody, id: string): Promise<Writing | AxiosError<Writing>>;
+
+  delete(id: string): Promise<null | AxiosError<null>>;
+}
+
+class WritingsApiService implements WritingsApi {
+  private readonly BASE_URL = "/writings";
 
   constructor(private baseAxios: AxiosInstance) {}
 
-  async findOne(id: string) {
-    const api = this.baseAxios.get<Writing>(`${this.BASE_URL}/${id}`);
+  async findOne<T extends Writing>(id: string): Promise<T | AxiosError<T>> {
+    const api = this.baseAxios.get<T>(`${this.BASE_URL}/${id}`);
     const response = await this.receiveApiRequest(api);
     return response;
   }
 
-  async pagination(page: number) {
-    const api = this.baseAxios.get<WritingPagination>(`${this.BASE_URL}`, { params: { page } });
+  async pagination<T extends WritingPagination>(page: number): Promise<T | AxiosError<T>> {
+    const api = this.baseAxios.get<T>(`${this.BASE_URL}`, { params: { page } });
     const response = await this.receiveApiRequest(api);
     return response;
   }
 
-  async create(body: WritingRequestBody) {
-    const api = this.baseAxios.post<Writing>(`${this.BASE_URL}`, body);
+  async create<T extends Writing>(body: WritingRequestBody): Promise<T | AxiosError<T>> {
+    const api = this.baseAxios.post<T>(`${this.BASE_URL}`, body);
     const response = await this.receiveApiRequest(api);
     return response;
   }
 
-  async update(body: WritingRequestBody, id: string) {
-    const api = this.baseAxios.patch<Writing>(`${this.BASE_URL}/${id}`, body);
+  async update<T extends Writing>(body: WritingRequestBody, id: string): Promise<T | AxiosError<T>> {
+    const api = this.baseAxios.patch<T>(`${this.BASE_URL}/${id}`, body);
     const response = await this.receiveApiRequest(api);
     return response;
   }
 
-  async delete(id: string) {
-    const api = this.baseAxios.delete<null>(`${this.BASE_URL}/${id}`);
+  async delete<T extends null>(id: string): Promise<AxiosError<T> | T> {
+    const api = this.baseAxios.delete<T>(`${this.BASE_URL}/${id}`);
     const response = await this.receiveApiRequest(api);
     return response;
   }
@@ -51,4 +63,4 @@ class WritingsApi {
   };
 }
 
-export default WritingsApi;
+export default WritingsApiService;
