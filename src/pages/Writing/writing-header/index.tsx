@@ -6,7 +6,7 @@ import Date from "components/atoms/Date";
 import Button from "components/atoms/Button";
 import { WritingDeleteModal } from "common/modals";
 import { useAppSelector } from "store";
-import { openModal } from "reducers/globalUI";
+import { globalUIActions } from "reducers/globalUI";
 import { Writing } from "types/writing";
 
 import * as S from "./index.style";
@@ -23,7 +23,7 @@ const WritingHeader = (props: Props) => {
   const dispatch = useDispatch();
 
   const handleClickDeleteButton = () => {
-    dispatch(openModal("WritingDeleteModal"));
+    dispatch(globalUIActions.openModal("WritingDeleteModal"));
   };
 
   return (

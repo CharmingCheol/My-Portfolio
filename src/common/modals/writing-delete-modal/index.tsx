@@ -4,7 +4,7 @@ import { useLocation, useHistory } from "react-router-dom";
 import Button from "components/atoms/Button";
 import Modal from "components/organisms/Modal";
 import { useAppDispatch } from "store";
-import { closeModal } from "reducers/globalUI";
+import { globalUIActions } from "reducers/globalUI";
 import { deleteWriting } from "fireConfig/writings";
 
 import * as S from "./index.style";
@@ -16,7 +16,7 @@ const WritingDeleteModal = () => {
   const dispatch = useAppDispatch();
 
   const handleClickCancelButton = useCallback(() => {
-    dispatch(closeModal());
+    dispatch(globalUIActions.closeModal());
   }, [dispatch]);
 
   const handleClickConfirmButton = useCallback(async () => {

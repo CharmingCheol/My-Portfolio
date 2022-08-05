@@ -3,7 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import { Meta } from "@storybook/react";
 import styled from "styled-components";
 import { useAppDispatch } from "store";
-import { changeIsAdmin } from "reducers/option";
+import { optionActions } from "reducers/option";
 import Header from "./index";
 
 export default {
@@ -33,9 +33,9 @@ export const DefaultHeader = DefaultHeaderTemplate.bind({});
 const AdminHeaderTemplate = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(changeIsAdmin(true));
+    dispatch(optionActions.changeIsAdmin(true));
     return () => {
-      dispatch(changeIsAdmin(false));
+      dispatch(optionActions.changeIsAdmin(false));
     };
   }, [dispatch]);
   return (

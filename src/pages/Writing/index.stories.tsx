@@ -4,7 +4,7 @@ import { Meta } from "@storybook/react";
 import { rest } from "msw";
 
 import { useAppDispatch } from "store";
-import { changeIsAdmin } from "reducers/option";
+import { optionActions } from "reducers/option";
 import { Header, MainLayout } from "common";
 
 import Writing from "./index";
@@ -51,9 +51,9 @@ export const AdminWritingPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(changeIsAdmin(true));
+    dispatch(optionActions.changeIsAdmin(true));
     return () => {
-      dispatch(changeIsAdmin(false));
+      dispatch(optionActions.changeIsAdmin(false));
     };
   }, [dispatch]);
 

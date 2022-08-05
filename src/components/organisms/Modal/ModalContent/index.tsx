@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, ReactNode } from "react";
 import { useDispatch } from "react-redux";
 
-import { closeModal } from "reducers/globalUI";
+import { globalUIActions } from "reducers/globalUI";
 
 import * as S from "./index.style";
 
@@ -30,13 +30,13 @@ const ModalContent = (props: Props) => {
         const target = event.target as Node;
         const isContains = currentRef.contains(target);
         if (!isContains) {
-          dispatch(closeModal());
+          dispatch(globalUIActions.closeModal());
         }
       };
 
       const handleKeydown = (event: KeyboardEvent) => {
         if (event.key === "Escape") {
-          dispatch(closeModal());
+          dispatch(globalUIActions.closeModal());
         }
       };
 

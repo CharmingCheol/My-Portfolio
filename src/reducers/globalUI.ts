@@ -22,7 +22,6 @@ const globalUI = createSlice({
   },
 });
 
-export const { openModal, closeModal } = globalUI.actions;
 export const globalUIActions = globalUI.actions;
 
 export default globalUI;
