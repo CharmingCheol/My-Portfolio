@@ -2,6 +2,7 @@ import React, { useRef, ReactNode } from "react";
 
 import Portal from "components/utils/Portal";
 import { useAppSelector } from "store";
+import { ModalKey } from "types/globalUI";
 
 import ModalBackground from "./ModalBackground";
 import ModalBody from "./ModalBody";
@@ -12,17 +13,18 @@ import ModalHeader from "./ModalHeader";
 export interface Props extends ModalContentProps {
   children: ReactNode;
 
-  modalKey: string;
+  modalKey: ModalKey;
 }
 
 const Modal = (props: Props) => {
   const { children, modalKey, autoClose } = props;
 
   const portalModalRef = useRef(document.getElementById("portal_modal"));
-
   const modalKeyState = useAppSelector((state) => state.globalUI.modalKey);
 
-  if (modalKeyState !== modalKey) return null;
+  if (modalKeyState !== modalKey) {
+    return null;
+  }
 
   return (
     <Portal container={portalModalRef}>

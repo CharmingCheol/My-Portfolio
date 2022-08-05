@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import Date from "components/atoms/Date";
 import Button from "components/atoms/Button";
+import { WritingDeleteModal } from "common/modals";
 import { useAppSelector } from "store";
 import { openModal } from "reducers/globalUI";
 import { Writing } from "types/writing";
@@ -22,7 +23,7 @@ const WritingHeader = (props: Props) => {
   const dispatch = useDispatch();
 
   const handleClickDeleteButton = () => {
-    dispatch(openModal("delete writing"));
+    dispatch(openModal("WritingDeleteModal"));
   };
 
   return (
@@ -37,6 +38,7 @@ const WritingHeader = (props: Props) => {
           <Button onClick={handleClickDeleteButton}>삭제</Button>
         </S.ButtonWrapper>
       )}
+      <WritingDeleteModal />
     </>
   );
 };

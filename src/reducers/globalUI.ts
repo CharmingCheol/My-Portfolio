@@ -1,18 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ModalKey } from "types/globalUI";
 
-export interface CounterState {
-  modalKey: string;
+export interface GlobalUIState {
+  modalKey: ModalKey;
 }
 
-const initialState: CounterState = {
+const initialState: GlobalUIState = {
   modalKey: "",
 };
 
-export const globalUI = createSlice({
+const globalUI = createSlice({
   name: "globalUI",
   initialState,
   reducers: {
-    openModal: (state, action: PayloadAction<string>) => {
+    openModal: (state, action: PayloadAction<ModalKey>) => {
       state.modalKey = action.payload;
     },
     closeModal: (state) => {
@@ -22,5 +23,6 @@ export const globalUI = createSlice({
 });
 
 export const { openModal, closeModal } = globalUI.actions;
+export const globalUIActions = globalUI.actions;
 
 export default globalUI.reducer;

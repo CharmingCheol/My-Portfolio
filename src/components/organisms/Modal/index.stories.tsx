@@ -24,8 +24,8 @@ const DefaultModalTemplate: Story<Props> = () => {
         <br />
         모달을 닫고 싶을 경우, globalUI 액션에서 closeModal 함수를 호출합니다.
       </p>
-      <Button onClick={() => dispatch(openModal("hello modal"))}>open modal</Button>
-      <Modal modalKey="hello modal">
+      <Button onClick={() => dispatch(openModal("WritingDeleteModal"))}>open modal</Button>
+      <Modal modalKey="WritingDeleteModal">
         <Modal.Header>header</Modal.Header>
         <Modal.Body>bodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybody</Modal.Body>
         <Modal.Footer>
@@ -45,8 +45,8 @@ const NotAutoCloseModalTemplate: Story<Props> = () => {
   return (
     <>
       <p>autoClose가 false인 경우, 바깥 부분이나 esc를 입력해도 모달이 닫히지 않습니다.</p>
-      <Button onClick={() => dispatch(openModal("hello modal"))}>open modal</Button>
-      <Modal modalKey="hello modal" autoClose={false}>
+      <Button onClick={() => dispatch(openModal("WritingDeleteModal"))}>open modal</Button>
+      <Modal modalKey="WritingDeleteModal" autoClose={false}>
         <Modal.Header>header</Modal.Header>
         <Modal.Body>bodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybody</Modal.Body>
         <Modal.Footer>
