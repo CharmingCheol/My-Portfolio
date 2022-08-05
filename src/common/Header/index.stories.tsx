@@ -3,7 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import { Meta } from "@storybook/react";
 import styled from "styled-components";
 import { useAppDispatch } from "store";
-import { changeIsAdmin } from "reducers/optionSlice";
+import { changeIsAdmin } from "reducers/option";
 import Header from "./index";
 
 export default {

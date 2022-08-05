@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
 
 import globalUI from "./globalUI";
-import optionSlice from "./optionSlice";
+import option from "./option";
 
-const reducer = combineReducers({ option: optionSlice, globalUI });
+const reducer = combineReducers({ option, globalUI });
 
 export default reducer;

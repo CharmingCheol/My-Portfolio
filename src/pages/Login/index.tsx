@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAppDispatch } from "store";
-import { changeIsAdmin } from "reducers/optionSlice";
+import { changeIsAdmin } from "reducers/option";
 import Button from "components/atoms/Button";
 import { encrypt } from "utils";
 import * as S from "./index.style";

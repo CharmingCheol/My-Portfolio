@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface CounterState {
+export interface OptionState {
   isAdmin: boolean;
 }
 
-const initialState: CounterState = {
+const initialState: OptionState = {
   isAdmin: false,
 };
 
@@ -19,5 +19,6 @@ export const optionSlice = createSlice({
 });
 
 export const { changeIsAdmin } = optionSlice.actions;
+export const optionActions = optionSlice.actions;
 
 export default optionSlice.reducer;

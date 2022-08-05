@@ -4,7 +4,7 @@ import { Meta } from "@storybook/react";
 import { rest } from "msw";
 
 import { useAppDispatch } from "store";
-import { changeIsAdmin } from "reducers/optionSlice";
+import { changeIsAdmin } from "reducers/option";
 import { Header, MainLayout } from "common";
 
 import Writing from "./index";

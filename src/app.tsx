@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from "react";
 import { Route } from "react-router-dom";
 import { useAppDispatch } from "store";
 
-import { changeIsAdmin } from "reducers/optionSlice";
+import { changeIsAdmin } from "reducers/option";
 import { Header, MainLayout } from "common";
 import { decrypt, fnGetMainLayoutPage } from "utils";
 import StyleReset from "styles/reset";
