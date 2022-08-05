@@ -21,4 +21,4 @@ export const optionSlice = createSlice({
 export const { changeIsAdmin } = optionSlice.actions;
 export const optionActions = optionSlice.actions;
 
-export default optionSlice.reducer;
+export default optionSlice;

@@ -5,11 +5,6 @@ export const Layout = styled.div`
   width: 100%;
   margin: 40px 0;
 
-  h1 {
-    word-break: break-all;
-    margin-bottom: 16px;
-  }
-
   #viewer {
     margin: 32px 0;
   }

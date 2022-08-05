@@ -1,21 +1,32 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { configureStore, createSlice, SliceCaseReducers } from "@reduxjs/toolkit";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { Meta, Story } from "@storybook/react";
 
-import { OptionState } from "reducers/option";
-import WritingHeader, { Props } from "./writing-header";
+import optionSlice, { OptionState } from "reducers/option";
+import globalUISlice, { GlobalUIState } from "reducers/globalUI";
+import WritingHeader, { Props } from "./index";
 import { Layout as PageLayout } from "../index.style";
 
-const MockStore = ({ state, children }: { state: OptionState; children: React.ReactChild }) => (
+interface State {
+  option: OptionState;
+  globalUI: GlobalUIState;
+}
+
+const MockStore = ({ state, children }: { state: State; children: React.ReactChild }) => (
   <Provider
     store={configureStore({
       reducer: {
-        option: createSlice<OptionState, SliceCaseReducers<OptionState>>({
-          name: "option",
+        option: createSlice({
+          name: optionSlice.name,
           reducers: {},
-          initialState: state,
+          initialState: state.option,
+        }).reducer,
+        globalUI: createSlice({
+          name: globalUISlice.name,
+          reducers: {},
+          initialState: state.globalUI,
         }).reducer,
       },
     })}
@@ -43,7 +54,9 @@ BaseTemplate.args = {
 };
 
 export const AdminTemplate = Template.bind({});
-AdminTemplate.decorators = [(story) => <MockStore state={{ isAdmin: true }}>{story()}</MockStore>];
+AdminTemplate.decorators = [
+  (story) => <MockStore state={{ option: { isAdmin: true }, globalUI: { modalKey: "" } }}>{story()}</MockStore>,
+];
 AdminTemplate.args = {
   writing: {
     content: "content",

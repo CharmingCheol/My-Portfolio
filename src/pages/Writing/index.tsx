@@ -9,10 +9,10 @@ import { getWriting } from "fireConfig/writings";
 import { useAppSelector } from "store";
 
 import NotFound from "pages/NotFound";
-import { ModifyDeleteButton } from "containers/Writing";
 import Date from "components/atoms/Date";
-
 import { Writing } from "types/writing";
+
+import WritingHeader from "./writing-header";
 import * as S from "./index.style";
 
 const WritingPage = () => {
@@ -58,7 +58,7 @@ const WritingPage = () => {
           </Helmet>
           <h1>{writing.title}</h1>
           <Date date={writing.createdAt} />
-          {isAdmin && <ModifyDeleteButton content={writing.content} title={writing.title} id={writing.id} />}
+          {isAdmin && <WritingHeader writing={writing} />}
         </>
       )}
       <div id="viewer" />

@@ -9,7 +9,7 @@ import { useAppSelector } from "store";
 import { openModal } from "reducers/globalUI";
 import { Writing } from "types/writing";
 
-import * as S from "./writing-header.style";
+import * as S from "./index.style";
 
 export interface Props {
   writing: Writing;
