@@ -16,7 +16,7 @@ export interface Props {
 }
 
 const ModalContent = (props: Props) => {
-  const { autoClose = true, children } = props;
+  const { autoClose = false, children } = props;
 
   const dispatch = useDispatch();
 
