@@ -8,7 +8,7 @@ const initialState: OptionState = {
   isAdmin: false,
 };
 
-export const option = createSlice({
+const option = createSlice({
   name: "option",
   initialState,
   reducers: {
