@@ -5,10 +5,6 @@ export const Layout = styled.div`
   width: 100%;
   margin: 40px 0;
 
-  #viewer {
-    margin: 32px 0;
-  }
-
   ${media.laptop("min")} {
     width: 768px;
     margin: 40px auto;
