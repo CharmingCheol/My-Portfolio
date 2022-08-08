@@ -1,14 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Writing } from "types/writing";
 
-type Nullable<T> = T | null;
-
 export interface WritingState {
-  writing: Nullable<Writing>;
+  tempWriting: Partial<Writing>;
 }
 
 const initialState: WritingState = {
-  writing: null,
+  tempWriting: {},
 };
 
 const writing = createSlice({
@@ -16,20 +14,16 @@ const writing = createSlice({
   initialState,
   reducers: {
     initWriting: (state, action: PayloadAction<Writing>) => {
-      state.writing = action.payload;
+      state.tempWriting = action.payload;
     },
     setTitle: (state, action: PayloadAction<string>) => {
-      if (state.writing) {
-        state.writing.title = action.payload;
-      }
+      state.tempWriting.title = action.payload;
     },
     setContent: (state, action: PayloadAction<string>) => {
-      if (state.writing) {
-        state.writing.content = action.payload;
-      }
+      state.tempWriting.content = action.payload;
     },
     clearWriting: (state) => {
-      state.writing = null;
+      state.tempWriting = {};
     },
   },
 });
