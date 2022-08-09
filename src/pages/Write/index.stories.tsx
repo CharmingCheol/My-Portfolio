@@ -1,20 +1,20 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { Meta, ComponentStory } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 
-import writingSlice, { WritingState } from "reducers/writing";
+import writingSlice, { initialState, WritingState } from "reducers/writing";
 
 import Write from "./index";
 
-const MockStore = ({ state, children }: { state: WritingState; children: React.ReactChild }) => (
+const MockStore = ({ state, children }: { state: Partial<WritingState>; children: React.ReactChild }) => (
   <Provider
     store={configureStore({
       reducer: {
         writing: createSlice({
           name: writingSlice.name,
           reducers: writingSlice.caseReducers,
-          initialState: state,
+          initialState: { ...initialState, ...state },
         }).reducer,
       },
     })}
@@ -40,4 +40,4 @@ EditedTemplate.decorators = [
 export default {
   title: "pages/Write",
   component: Write,
-} as Meta;
+};
