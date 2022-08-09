@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Writing } from "types/writing";
+import { Writing, WritingPagination } from "types/writing";
 
 export interface WritingState {
   tempWriting: Partial<Writing>;
+  writingPagination: WritingPagination;
 }
 
-const initialState: WritingState = {
+export const initialState: WritingState = {
   tempWriting: {},
+  writingPagination: { list: [], totalCount: 0 },
 };
 
 const writing = createSlice({
@@ -24,6 +26,15 @@ const writing = createSlice({
     },
     clearWriting: (state) => {
       state.tempWriting = {};
+    },
+    initWritingPagination: (state, action: PayloadAction<WritingPagination>) => {
+      state.writingPagination = action.payload;
+    },
+    updateWritingList: (state, action: PayloadAction<Writing[]>) => {
+      state.writingPagination.list = action.payload;
+    },
+    clearWritingPagination: (state) => {
+      state.writingPagination = { list: [], totalCount: 0 };
     },
   },
 });
