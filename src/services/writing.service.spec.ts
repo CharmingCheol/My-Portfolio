@@ -26,5 +26,10 @@ describe("writingService", () => {
       const result = service.createWriting({ title: "   ", content: "content" });
       expect(result).toBeUndefined();
     });
+
+    it("content가 공백으로 되어 있을 경우 바로 리턴한다", () => {
+      const result = service.createWriting({ title: "title", content: "   " });
+      expect(result).toBeUndefined();
+    });
   });
 });

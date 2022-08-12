@@ -10,8 +10,9 @@ class WritingsServiceImpl implements WritingsService {
 
   createWriting = (data: WritingRequestBody) => {
     const title = data.title.trim();
+    const content = data.content.trim();
 
-    if (!title || !data.content) {
+    if (!title || !content) {
       return;
     }
     return {};
