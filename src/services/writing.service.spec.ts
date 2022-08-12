@@ -13,5 +13,14 @@ describe("writingService", () => {
 
       expect(result).toBeUndefined();
     });
+
+    it("content가 빈 문자열인 경우 바로 리턴한다", () => {
+      const mocked = jest.mocked(writingsApi, true);
+      const service = new WritingsServiceImpl(mocked);
+
+      const result = service.createWriting({ title: "title", content: "" });
+
+      expect(result).toBeUndefined();
+    });
   });
 });

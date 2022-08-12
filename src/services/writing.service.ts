@@ -9,9 +9,10 @@ class WritingsServiceImpl implements WritingsService {
   constructor(private writingsApi: WritingsApi) {}
 
   createWriting = (data: WritingRequestBody) => {
-    if (!data.title) {
+    if (!data.title || !data.content) {
       return;
     }
+    return {};
   };
 }
 
