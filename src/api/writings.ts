@@ -1,7 +1,7 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { Writing, WritingPagination, WritingRequestBody } from "types/writing";
 
-interface WritingsApi {
+export interface WritingsApi {
   findOne<T extends Writing>(id: string): Promise<T | AxiosError<T>>;
 
   pagination<T extends WritingPagination>(page: number): Promise<T | AxiosError<T>>;
@@ -13,7 +13,7 @@ interface WritingsApi {
   delete(id: string): Promise<null | AxiosError<null>>;
 }
 
-class WritingsApiService implements WritingsApi {
+class BaseWritingsApi implements WritingsApi {
   private readonly BASE_URL = "/writings";
 
   constructor(private baseAxios: AxiosInstance) {}
@@ -63,4 +63,4 @@ class WritingsApiService implements WritingsApi {
   };
 }
 
-export default WritingsApiService;
+export default BaseWritingsApi;
