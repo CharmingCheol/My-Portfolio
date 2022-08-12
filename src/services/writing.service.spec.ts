@@ -1,6 +1,6 @@
 import { baseWritingsApi } from "api";
 import { WritingsApi } from "api/writings";
-import { WritingRequestBody } from "types/writing";
+import { Writing, WritingRequestBody } from "types/writing";
 
 import BaseWritingsService, { WritingsService } from "./writing.service";
 
@@ -40,6 +40,15 @@ describe("writingService", () => {
       const data: WritingRequestBody = { title: "title", content: "content" };
       service.createWriting(data);
       expect(mockedApi.create).toHaveBeenCalledWith(data);
+    });
+
+    it("게시글 생성 API가 성공할 경우 결과값을 반환한다", async () => {
+      const { title, content }: WritingRequestBody = { title: "title", content: "content" };
+      const writing: Writing = { title, content, createdAt: new Date().toString(), id: "id" };
+      mockedApi.create.mockResolvedValue(writing);
+
+      const response = await service.createWriting({ title, content });
+      expect(response).toStrictEqual(writing);
     });
   });
 });
