@@ -9,14 +9,18 @@ class WritingsServiceImpl implements WritingsService {
   constructor(private writingsApi: WritingsApi) {}
 
   createWriting = (data: WritingRequestBody) => {
-    const title = data.title.trim();
-    const content = data.content.trim();
-
+    const { title, content } = this.trimWritingRequest(data);
     if (!title || !content) {
       return;
     }
     return {};
   };
+
+  private trimWritingRequest(data: WritingRequestBody) {
+    const title = data.title.trim();
+    const content = data.content.trim();
+    return { title, content };
+  }
 }
 
 export default WritingsServiceImpl;
