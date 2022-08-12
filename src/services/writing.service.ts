@@ -5,7 +5,7 @@ export interface WritingsService {
   createWriting(data: WritingRequestBody): void;
 }
 
-class WritingsServiceImpl implements WritingsService {
+class BaseWritingsService implements WritingsService {
   constructor(private writingsApi: WritingsApi) {}
 
   createWriting = (data: WritingRequestBody) => {
@@ -13,6 +13,7 @@ class WritingsServiceImpl implements WritingsService {
     if (!title || !content) {
       return;
     }
+    this.writingsApi.create({ title, content });
     return {};
   };
 
@@ -23,4 +24,4 @@ class WritingsServiceImpl implements WritingsService {
   }
 }
 
-export default WritingsServiceImpl;
+export default BaseWritingsService;

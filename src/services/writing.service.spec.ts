@@ -1,14 +1,18 @@
-import { writingsApi } from "../api";
-import WritingsServiceImpl from "./writing.service";
+import { baseWritingsApi } from "api";
+import { WritingsApi } from "api/writings";
+import { WritingRequestBody } from "types/writing";
 
-jest.mock("../api");
+import BaseWritingsService, { WritingsService } from "./writing.service";
+
+jest.mock("api");
 
 describe("writingService", () => {
-  let service: WritingsServiceImpl;
+  let mockedApi: jest.MockedObjectDeep<WritingsApi>;
+  let service: WritingsService;
 
   beforeEach(() => {
-    const mocked = jest.mocked(writingsApi, true);
-    service = new WritingsServiceImpl(mocked);
+    mockedApi = jest.mocked(baseWritingsApi, true);
+    service = new BaseWritingsService(mockedApi);
   });
 
   describe("createWriting", () => {
@@ -30,6 +34,12 @@ describe("writingService", () => {
     it("content가 공백으로 되어 있을 경우 바로 리턴한다", () => {
       const result = service.createWriting({ title: "title", content: "   " });
       expect(result).toBeUndefined();
+    });
+
+    it("title과 content에 이상이 없을 경우 게시글 생성 API를 호출 한다", () => {
+      const data: WritingRequestBody = { title: "title", content: "content" };
+      service.createWriting(data);
+      expect(mockedApi.create).toHaveBeenCalledWith(data);
     });
   });
 });
