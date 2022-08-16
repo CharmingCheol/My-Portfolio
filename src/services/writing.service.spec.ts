@@ -16,29 +16,29 @@ describe("writingService", () => {
   });
 
   describe("createWriting", () => {
-    it("title이 빈 문자열인 경우 바로 리턴한다", () => {
-      const result = service.createWriting({ title: "", content: "content" });
+    it("title이 빈 문자열인 경우 바로 리턴한다", async () => {
+      const result = await service.createWriting({ title: "", content: "content" });
       expect(result).toBeUndefined();
     });
 
-    it("content가 빈 문자열인 경우 바로 리턴한다", () => {
-      const result = service.createWriting({ title: "title", content: "" });
+    it("content가 빈 문자열인 경우 바로 리턴한다", async () => {
+      const result = await service.createWriting({ title: "title", content: "" });
       expect(result).toBeUndefined();
     });
 
-    it("title이 공백으로 되어 있을 경우 바로 리턴한다", () => {
-      const result = service.createWriting({ title: "   ", content: "content" });
+    it("title이 공백으로 되어 있을 경우 바로 리턴한다", async () => {
+      const result = await service.createWriting({ title: "   ", content: "content" });
       expect(result).toBeUndefined();
     });
 
-    it("content가 공백으로 되어 있을 경우 바로 리턴한다", () => {
-      const result = service.createWriting({ title: "title", content: "   " });
+    it("content가 공백으로 되어 있을 경우 바로 리턴한다", async () => {
+      const result = await service.createWriting({ title: "title", content: "   " });
       expect(result).toBeUndefined();
     });
 
-    it("title과 content에 이상이 없을 경우 게시글 생성 API를 호출 한다", () => {
+    it("title과 content에 이상이 없을 경우 게시글 생성 API를 호출 한다", async () => {
       const data: WritingRequestBody = { title: "title", content: "content" };
-      service.createWriting(data);
+      await service.createWriting(data);
       expect(mockedApi.create).toHaveBeenCalledWith(data);
     });
 
