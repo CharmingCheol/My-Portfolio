@@ -10,12 +10,19 @@ class BaseWritingsService implements WritingsService {
   constructor(private writingsApi: WritingsApi) {}
 
   async createWriting(data: WritingRequestBody) {
-    const { title, content } = this.trimWritingRequest(data);
-    if (!title || !content) {
-      return;
+    try {
+      const { title, content } = this.trimWritingRequest(data);
+      if (!title || !content) {
+        return;
+      }
+      const response = await this.writingsApi.create({ title, content });
+      return response;
+    } catch (error) {
+      const typedError = error as AxiosError<Writing>;
+      if (!typedError.response) {
+        return typedError;
+      }
     }
-    const response = await this.writingsApi.create({ title, content });
-    return response;
   }
 
   private trimWritingRequest(data: WritingRequestBody) {

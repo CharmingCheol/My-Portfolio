@@ -1,5 +1,6 @@
+import { AxiosError } from "axios";
+
 import { baseWritingsApi } from "api";
-import { WritingsApi } from "api/writings";
 import { Writing, WritingRequestBody } from "types/writing";
 
 import BaseWritingsService, { WritingsService } from "./writing.service";
@@ -7,7 +8,7 @@ import BaseWritingsService, { WritingsService } from "./writing.service";
 jest.mock("api");
 
 describe("writingService", () => {
-  let mockedApi: jest.MockedObjectDeep<WritingsApi>;
+  let mockedApi: jest.MockedObjectDeep<typeof baseWritingsApi>;
   let service: WritingsService;
 
   beforeEach(() => {
@@ -49,6 +50,20 @@ describe("writingService", () => {
 
       const response = await service.createWriting({ title, content });
       expect(response).toStrictEqual(writing);
+    });
+
+    it("error response가 없을 경우 에러 그 자체를 반환 한다", async () => {
+      const axiosError: AxiosError = {
+        config: {},
+        isAxiosError: false,
+        toJSON: () => ({}),
+        name: "",
+        message: "",
+      };
+      mockedApi.create.mockRejectedValue(axiosError);
+
+      const response = await service.createWriting({ title: "title", content: "content" });
+      expect(response).toStrictEqual(axiosError);
     });
   });
 });
