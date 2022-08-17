@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+import { BAD_REQUEST, NOT_FOUND, EXPECTATION_FAILED, UNAVAILABLE_FOR_LEGAL_REASONS } from "http-status";
 
 import { baseWritingsApi } from "api";
 import { Writing, WritingRequestBody } from "types/writing";
@@ -53,17 +54,54 @@ describe("writingService", () => {
     });
 
     it("error response가 없을 경우 에러 그 자체를 반환 한다", async () => {
-      const axiosError: AxiosError = {
+      const axiosError: AxiosError = { config: {}, isAxiosError: false, toJSON: () => ({}), name: "", message: "" };
+      mockedApi.create.mockRejectedValue(axiosError);
+
+      const response = await service.createWriting({ title: "title", content: "content" });
+      expect(response).toStrictEqual(axiosError);
+    });
+
+    describe("게시글 생성 API가 실패하고 Client error status를 받은 경우 실패값을 리턴한다", () => {
+      const getAxiosError = (status: number): AxiosError => ({
         config: {},
         isAxiosError: false,
         toJSON: () => ({}),
         name: "",
         message: "",
-      };
-      mockedApi.create.mockRejectedValue(axiosError);
+        response: { status, data: "", statusText: "", headers: "", config: {} },
+      });
 
-      const response = await service.createWriting({ title: "title", content: "content" });
-      expect(response).toStrictEqual(axiosError);
+      it("BAD_REQUEST(400)", async () => {
+        const error = getAxiosError(BAD_REQUEST);
+        mockedApi.create.mockRejectedValue(error);
+
+        const response = await service.createWriting({ title: "title", content: "content" });
+        expect(response).toStrictEqual(error);
+      });
+
+      it("NOT_FOUND(404)", async () => {
+        const error = getAxiosError(NOT_FOUND);
+        mockedApi.create.mockRejectedValue(error);
+
+        const response = await service.createWriting({ title: "title", content: "content" });
+        expect(response).toStrictEqual(error);
+      });
+
+      it("EXPECTATION_FAILED(417)", async () => {
+        const error = getAxiosError(EXPECTATION_FAILED);
+        mockedApi.create.mockRejectedValue(error);
+
+        const response = await service.createWriting({ title: "title", content: "content" });
+        expect(response).toStrictEqual(error);
+      });
+
+      it("UNAVAILABLE_FOR_LEGAL_REASONS(451)", async () => {
+        const error = getAxiosError(UNAVAILABLE_FOR_LEGAL_REASONS);
+        mockedApi.create.mockRejectedValue(error);
+
+        const response = await service.createWriting({ title: "title", content: "content" });
+        expect(response).toStrictEqual(error);
+      });
     });
   });
 });

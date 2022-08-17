@@ -1,4 +1,6 @@
 import { AxiosError } from "axios";
+import { BAD_REQUEST, UNAVAILABLE_FOR_LEGAL_REASONS } from "http-status";
+
 import { WritingsApi } from "api/writings";
 import { Writing, WritingRequestBody } from "types/writing";
 
@@ -18,9 +20,13 @@ class BaseWritingsService implements WritingsService {
       const response = await this.writingsApi.create({ title, content });
       return response;
     } catch (error) {
-      const typedError = error as AxiosError<Writing>;
-      if (!typedError.response) {
-        return typedError;
+      const axiosError = error as AxiosError<Writing>;
+      if (!axiosError.response) {
+        return axiosError;
+      }
+      const status = axiosError.response.status;
+      if (BAD_REQUEST <= status && status <= UNAVAILABLE_FOR_LEGAL_REASONS) {
+        return axiosError;
       }
     }
   }
