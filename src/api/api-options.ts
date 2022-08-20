@@ -9,8 +9,8 @@ export class ApiOptions {
     });
   }
 
-  public retry(tryCount: number) {
-    if (tryCount <= 0) {
+  public retry(tryCount: number, timeout: number) {
+    if (tryCount <= 0 || timeout <= 0) {
       return;
     }
     return true;
