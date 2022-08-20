@@ -18,13 +18,13 @@ describe("ApiOptions", () => {
         expect(minusRetry).toBeUndefined();
       });
     });
-    describe("timeout이 0보다 작을 경우 실행을 중단한다", () => {
-      it("tinmeout = 0", () => {
+    describe("delay가 0보다 작을 경우 실행을 중단한다", () => {
+      it("delay = 0", () => {
         const zeroRetry = apiOptions.retry(1, 0);
         expect(zeroRetry).toBeUndefined();
       });
 
-      it("tinmeout < 0", () => {
+      it("delay < 0", () => {
         const zeroRetry = apiOptions.retry(1, -1);
         expect(zeroRetry).toBeUndefined();
       });
