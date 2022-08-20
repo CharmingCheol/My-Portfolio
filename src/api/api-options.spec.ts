@@ -1,10 +1,21 @@
+import { AxiosInstance } from "axios";
 import ApiOptions from "./api-options";
 
+const apiMock = {
+  interceptors: {
+    response: {
+      use: jest.fn(),
+    },
+  },
+};
+
 describe("ApiOptions", () => {
+  let baseAxios: AxiosInstance;
   let apiOptions: ApiOptions;
 
   beforeEach(() => {
-    apiOptions = new ApiOptions();
+    baseAxios = (apiMock as unknown) as AxiosInstance;
+    apiOptions = new ApiOptions(baseAxios);
   });
 
   describe("retry", () => {
@@ -28,6 +39,10 @@ describe("ApiOptions", () => {
         const response = apiOptions.retry(1, -1);
         expect(response).toBeUndefined();
       });
+    });
+    it("인자값에 이상이 없을 경우 axios interceptor가 호출 된다", () => {
+      apiOptions.retry(1, 1000);
+      expect(baseAxios.interceptors.response.use).toHaveBeenCalled();
     });
   });
 });
