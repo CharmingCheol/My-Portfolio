@@ -10,23 +10,23 @@ describe("ApiOptions", () => {
   describe("retry", () => {
     describe("tryCount가 0보다 작을 경우 실행을 중단한다", () => {
       it("retry = 0", () => {
-        const zeroRetry = apiOptions.retry(0, 0);
-        expect(zeroRetry).toBeUndefined();
+        const response = apiOptions.retry(0, 0);
+        expect(response).toBeUndefined();
       });
       it("retry < 0", () => {
-        const minusRetry = apiOptions.retry(-1, 0);
-        expect(minusRetry).toBeUndefined();
+        const response = apiOptions.retry(-1, 0);
+        expect(response).toBeUndefined();
       });
     });
     describe("delay가 0보다 작을 경우 실행을 중단한다", () => {
       it("delay = 0", () => {
-        const zeroRetry = apiOptions.retry(1, 0);
-        expect(zeroRetry).toBeUndefined();
+        const response = apiOptions.retry(1, 0);
+        expect(response).toBeUndefined();
       });
 
       it("delay < 0", () => {
-        const zeroRetry = apiOptions.retry(1, -1);
-        expect(zeroRetry).toBeUndefined();
+        const response = apiOptions.retry(1, -1);
+        expect(response).toBeUndefined();
       });
     });
   });
