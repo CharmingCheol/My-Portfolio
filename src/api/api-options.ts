@@ -1,0 +1,20 @@
+import axios, { AxiosInstance } from "axios";
+
+export class ApiOptions {
+  private instance: AxiosInstance;
+
+  constructor() {
+    this.instance = axios.create({
+      baseURL: "http://localhost:3001/api",
+    });
+  }
+
+  public retry(tryCount: number) {
+    if (tryCount <= 0) {
+      return;
+    }
+    return true;
+  }
+}
+
+export default ApiOptions;
