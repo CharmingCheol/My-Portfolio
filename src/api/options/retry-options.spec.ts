@@ -17,7 +17,7 @@ describe("RetryOption", () => {
 
   beforeEach(() => {
     baseAxios = (apiMock as unknown) as AxiosInstance;
-    new RetryOption(baseAxios);
+    new RetryOption(baseAxios).run();
   });
 
   it("error 데이터가 없을 경우 rejected interceptor를 중단 한다", async () => {

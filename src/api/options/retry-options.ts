@@ -1,13 +1,17 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { INTERNAL_SERVER_ERROR } from "http-status";
 
+import { ApiOptionRun } from "./index";
+
 const MAX_TRY_COUNT = 3;
 const RETRY_TIME_OUT = 1000;
 
-class RetryOption {
+class RetryOption implements ApiOptionRun {
   private tryCount = MAX_TRY_COUNT;
 
-  constructor(private baseAxios: AxiosInstance) {
+  constructor(private baseAxios: AxiosInstance) {}
+
+  run(): void {
     this.baseAxios.interceptors.response.use(this.onFulfilled, this.onRejected);
   }
 
