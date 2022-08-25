@@ -1,4 +1,6 @@
 import { AxiosInstance, AxiosRequestConfig } from "axios";
+
+import { apiOptions } from "./index";
 import ImagesApiService from "./images";
 
 const mockFactory = {
@@ -10,8 +12,9 @@ describe("ImagesApiService", () => {
   let imagesApiService: ImagesApiService;
 
   beforeEach(() => {
-    const baseAxios = (mockFactory as unknown) as AxiosInstance;
-    imagesApiService = new ImagesApiService(baseAxios);
+    const baseAxiosMock = (mockFactory as unknown) as AxiosInstance;
+    const apiOptionsMock = jest.mocked(apiOptions, true);
+    imagesApiService = new ImagesApiService(baseAxiosMock, apiOptionsMock);
   });
 
   describe("upload", () => {

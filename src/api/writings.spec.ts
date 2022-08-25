@@ -1,6 +1,8 @@
 import { AxiosInstance } from "axios";
 import { Writing, WritingRequestBody } from "types/writing";
+
 import WritingsApi from "./writings";
+import { apiOptions } from "./index";
 
 const mockFactory = {
   get: jest.fn((entity) => entity),
@@ -14,8 +16,9 @@ describe("WritingsApi", () => {
   let writingsApi: WritingsApi;
 
   beforeEach(() => {
+    const apiOptionsMock = jest.mocked(apiOptions, true);
     const baseAxios = (mockFactory as unknown) as AxiosInstance;
-    writingsApi = new WritingsApi(baseAxios);
+    writingsApi = new WritingsApi(baseAxios, apiOptionsMock);
   });
 
   describe("findOne", () => {

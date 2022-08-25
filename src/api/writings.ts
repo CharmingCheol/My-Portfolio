@@ -1,5 +1,6 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { Writing, WritingPagination, WritingRequestBody } from "types/writing";
+import ApiOptions from "./options";
 
 export interface WritingsApi {
   findOne<T extends Writing>(id: string): Promise<T | AxiosError<T>>;
@@ -16,7 +17,7 @@ export interface WritingsApi {
 class BaseWritingsApi implements WritingsApi {
   private readonly BASE_URL = "/writings";
 
-  constructor(private baseAxios: AxiosInstance) {}
+  constructor(private baseAxios: AxiosInstance, public apiOptions: ApiOptions) {}
 
   async findOne<T extends Writing>(id: string): Promise<T | AxiosError<T>> {
     const api = this.baseAxios.get<T>(`${this.BASE_URL}/${id}`);

@@ -1,4 +1,5 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import ApiOptions from "./options";
 
 type UploadPath = "writings";
 
@@ -7,30 +8,30 @@ interface UploadResponse {
 }
 
 interface ImagesApi {
-  upload<T extends UploadResponse>(
+  upload(
     file: File,
     path: UploadPath,
     config?: AxiosRequestConfig,
-  ): Promise<T | AxiosError<T>>;
+  ): Promise<UploadResponse | AxiosError<UploadResponse>>;
 }
 
 class ImagesApiService implements ImagesApi {
   private readonly BASE_URL = "/images";
 
-  constructor(private baseAxios: AxiosInstance) {}
+  constructor(private baseAxios: AxiosInstance, public apiOptions: ApiOptions) {}
 
-  async upload<T extends UploadResponse>(
+  async upload(
     file: File,
     path: UploadPath,
     config: AxiosRequestConfig = {},
-  ): Promise<T | AxiosError<T>> {
+  ): Promise<UploadResponse | AxiosError<UploadResponse>> {
     try {
       const formData = this.getFormData(file, path);
       const uploadConfig = this.getUploadConfig(config);
-      const response = await this.baseAxios.post<T>(`${this.BASE_URL}/${path}`, formData, uploadConfig);
+      const response = await this.baseAxios.post<UploadResponse>(`${this.BASE_URL}/${path}`, formData, uploadConfig);
       return response.data;
     } catch (error) {
-      const typedError = error as AxiosError<T>;
+      const typedError = error as AxiosError<UploadResponse>;
       return typedError;
     }
   }
