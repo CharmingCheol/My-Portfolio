@@ -1,50 +1,38 @@
-import { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import ApiOptions from "./options";
+import { receiveApiRequest } from "./utils";
 
-type UploadPath = "writings";
+interface UploadParams {
+  file: File;
+  path: "writings";
+}
 
 interface UploadResponse {
   path: string;
 }
 
-interface ImagesApi {
-  upload(
-    file: File,
-    path: UploadPath,
-    config?: AxiosRequestConfig,
-  ): Promise<UploadResponse | AxiosError<UploadResponse>>;
-}
-
-class ImagesApiService implements ImagesApi {
+class ImagesApiService {
   private readonly BASE_URL = "/images";
 
   constructor(private baseAxios: AxiosInstance, public apiOptions: ApiOptions) {}
 
-  async upload(
-    file: File,
-    path: UploadPath,
-    config: AxiosRequestConfig = {},
-  ): Promise<UploadResponse | AxiosError<UploadResponse>> {
-    try {
-      const formData = this.getFormData(file, path);
-      const uploadConfig = this.getUploadConfig(config);
-      const response = await this.baseAxios.post<UploadResponse>(`${this.BASE_URL}/${path}`, formData, uploadConfig);
-      return response.data;
-    } catch (error) {
-      const typedError = error as AxiosError<UploadResponse>;
-      return typedError;
-    }
+  public async upload(params: UploadParams, config: AxiosRequestConfig = {}): Promise<AxiosResponse<UploadResponse>> {
+    const formData = this.getFormData(params);
+    const requestConfig = this.getRequestConfig(config);
+    const api = this.baseAxios.post<UploadResponse>(`${this.BASE_URL}/${params.path}`, formData, requestConfig);
+    const response = await receiveApiRequest(api);
+    return response;
   }
 
-  private getFormData = (file: File, path: UploadPath) => {
+  private getFormData = (params: UploadParams): FormData => {
     const formData = new FormData();
-    formData.append(path, file);
+    formData.append(params.path, params.file);
     return formData;
   };
 
-  private getUploadConfig = (config: AxiosRequestConfig = {}): AxiosRequestConfig => {
-    const formDataHeader = { "Content-Type": "multipart/form-data" };
-    return { ...config, headers: { ...config.headers, ...formDataHeader } };
+  private getRequestConfig = (config: AxiosRequestConfig = {}): AxiosRequestConfig => {
+    const baseHeader = { "Content-Type": "multipart/form-data" };
+    return { ...config, headers: { ...config.headers, ...baseHeader } };
   };
 }
 
