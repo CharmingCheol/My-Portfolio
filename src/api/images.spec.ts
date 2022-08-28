@@ -8,12 +8,6 @@ const mockFactory = {
   post: jest.fn((entity) => entity),
 };
 
-type DeepPartial<T> = T extends { [key: string]: any }
-  ? {
-      [P in keyof T]?: DeepPartial<T[P]>;
-    }
-  : T;
-
 describe("ImagesApiService", () => {
   const BASE_URL = "/images";
   let imagesApiService: ImagesApiService;
