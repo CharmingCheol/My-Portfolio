@@ -1,4 +1,5 @@
-import { AxiosInstance } from "axios";
+import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import { BAD_REQUEST, OK } from "http-status";
 import { Writing, WritingRequestBody } from "types/writing";
 
 import WritingsApi from "./writings";
@@ -36,17 +37,18 @@ describe("WritingsApi", () => {
         content: "content",
         title: "title",
       };
-      mockFactory.get.mockReturnValue({ data: writing });
-      const response = await writingsApi.findOne(id);
-      expect(response).toStrictEqual(writing);
+      const apiResponse: DeepPartial<AxiosResponse> = { data: writing, status: OK };
+      mockFactory.get.mockReturnValue(apiResponse);
+      const actual = await writingsApi.findOne(id);
+      expect(actual.data).toStrictEqual(writing);
+      expect(actual.status).toBe(OK);
     });
 
-    it("API 응답이 실패할 경우 에러 데이터를 반환 한다", () => {
-      const error = new Error("에러가 발생했습니다");
-      mockFactory.get.mockRejectedValueOnce(Promise.reject(error));
-      expect(async () => {
-        await writingsApi.findOne(id);
-      }).rejects.toThrowError(error);
+    it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
+      const apiError: DeepPartial<AxiosError> = { isAxiosError: true, response: { status: BAD_REQUEST } };
+      mockFactory.get.mockRejectedValue(apiError);
+      const actual = await writingsApi.findOne(id);
+      expect(actual.status).toBe(BAD_REQUEST);
     });
   });
 

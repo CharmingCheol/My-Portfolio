@@ -1,6 +1,7 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { Writing, WritingPagination, WritingRequestBody } from "types/writing";
 import ApiOptions from "./options";
+import { receiveApiRequest } from "./utils";
 
 export interface WritingsApi {
   findOne<T extends Writing>(id: string): Promise<T | AxiosError<T>>;
@@ -14,14 +15,14 @@ export interface WritingsApi {
   delete(id: string): Promise<null | AxiosError<null>>;
 }
 
-class BaseWritingsApi implements WritingsApi {
+class BaseWritingsApi {
   private readonly BASE_URL = "/writings";
 
   constructor(private baseAxios: AxiosInstance, public apiOptions: ApiOptions) {}
 
-  async findOne<T extends Writing>(id: string): Promise<T | AxiosError<T>> {
+  public async findOne<T extends Writing>(id: string): Promise<AxiosResponse<T>> {
     const api = this.baseAxios.get<T>(`${this.BASE_URL}/${id}`);
-    const response = await this.receiveApiRequest(api);
+    const response = await receiveApiRequest(api);
     return response;
   }
 
@@ -48,10 +49,6 @@ class BaseWritingsApi implements WritingsApi {
     const response = await this.receiveApiRequest(api);
     return response;
   }
-
-  public isSuccess = <T extends unknown>(response: T | AxiosError<T>): response is T => {
-    return (response as AxiosError<T>) === undefined;
-  };
 
   private receiveApiRequest = async <T>(api: Promise<AxiosResponse<T>>) => {
     try {
