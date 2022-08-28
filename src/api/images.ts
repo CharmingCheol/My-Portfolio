@@ -16,7 +16,7 @@ class ImagesApiService {
 
   constructor(private baseAxios: AxiosInstance, public apiOptions: ApiOptions) {}
 
-  public async upload(params: UploadParams, config: AxiosRequestConfig = {}): Promise<AxiosResponse<UploadResponse>> {
+  public async upload(params: UploadParams, config?: AxiosRequestConfig): Promise<AxiosResponse<UploadResponse>> {
     const formData = this.getFormData(params);
     const requestConfig = this.getRequestConfig(config);
     const api = this.baseAxios.post<UploadResponse>(`${this.BASE_URL}/${params.path}`, formData, requestConfig);
@@ -30,9 +30,9 @@ class ImagesApiService {
     return formData;
   };
 
-  private getRequestConfig = (config: AxiosRequestConfig = {}): AxiosRequestConfig => {
+  private getRequestConfig = (config?: AxiosRequestConfig): AxiosRequestConfig => {
     const baseHeader = { "Content-Type": "multipart/form-data" };
-    return { ...config, headers: { ...config.headers, ...baseHeader } };
+    return { ...config, headers: { ...config?.headers, ...baseHeader } };
   };
 }
 
