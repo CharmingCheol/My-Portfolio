@@ -61,8 +61,7 @@ describe("WritingsApi", () => {
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
-      const totalCount = 10;
-      const writings = Array(totalCount)
+      const writings = Array(10)
         .fill(0)
         .map<Writing>(() => ({
           createdAt: new Date().toString(),
@@ -70,17 +69,18 @@ describe("WritingsApi", () => {
           content: "content",
           title: "title",
         }));
-      mockFactory.get.mockReturnValue({ data: { totalCount, writings } });
-      const response = await writingsApi.pagination(page);
-      expect(response).toStrictEqual({ totalCount, writings });
+      const apiResponse: DeepPartial<AxiosResponse> = { data: writings, status: OK };
+      mockFactory.get.mockReturnValue(apiResponse);
+      const actual = await writingsApi.pagination(page);
+      expect(actual.data).toStrictEqual(writings);
+      expect(actual.status).toBe(OK);
     });
 
-    it("API 응답이 실패할 경우 에러 데이터를 반환 한다", () => {
-      const error = new Error("에러가 발생했습니다");
-      mockFactory.get.mockRejectedValueOnce(Promise.reject(error));
-      expect(async () => {
-        await writingsApi.pagination(page);
-      }).rejects.toThrowError(error);
+    it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
+      const apiError: DeepPartial<AxiosError> = { isAxiosError: true, response: { status: BAD_REQUEST } };
+      mockFactory.get.mockRejectedValue(apiError);
+      const actual = await writingsApi.pagination(page);
+      expect(actual.status).toBe(BAD_REQUEST);
     });
   });
 

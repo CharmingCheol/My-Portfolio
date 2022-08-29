@@ -26,9 +26,9 @@ class BaseWritingsApi {
     return response;
   }
 
-  async pagination<T extends WritingPagination>(page: number): Promise<T | AxiosError<T>> {
+  async pagination<T extends WritingPagination>(page: number): Promise<AxiosResponse<T>> {
     const api = this.baseAxios.get<T>(`${this.BASE_URL}`, { params: { page } });
-    const response = await this.receiveApiRequest(api);
+    const response = await receiveApiRequest(api);
     return response;
   }
 
