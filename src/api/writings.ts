@@ -44,9 +44,9 @@ class BaseWritingsApi {
     return response;
   }
 
-  async delete<T extends null>(id: string): Promise<AxiosError<T> | T> {
+  async delete<T extends null>(id: string): Promise<AxiosResponse<T>> {
     const api = this.baseAxios.delete<T>(`${this.BASE_URL}/${id}`);
-    const response = await this.receiveApiRequest(api);
+    const response = await receiveApiRequest(api);
     return response;
   }
 

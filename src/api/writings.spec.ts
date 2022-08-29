@@ -154,17 +154,17 @@ describe("WritingsApi", () => {
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
-      mockFactory.delete.mockReturnValue({ data: null });
-      const response = await writingsApi.delete(id);
-      expect(response).toBeNull();
+      const apiResponse: DeepPartial<AxiosResponse> = { data: null, status: OK };
+      mockFactory.delete.mockReturnValue(apiResponse);
+      const actual = await writingsApi.delete(id);
+      expect(actual).toStrictEqual(apiResponse);
     });
 
-    it("API 응답이 실패할 경우 에러 데이터를 반환 한다", () => {
-      const error = new Error("에러가 발생했습니다");
-      mockFactory.delete.mockRejectedValueOnce(Promise.reject(error));
-      expect(async () => {
-        await writingsApi.delete(id);
-      }).rejects.toThrowError(error);
+    it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
+      const apiError: DeepPartial<AxiosError> = { isAxiosError: true, response: { status: BAD_REQUEST } };
+      mockFactory.delete.mockRejectedValue(apiError);
+      const actual = await writingsApi.delete(id);
+      expect(actual.status).toBe(BAD_REQUEST);
     });
   });
 });
