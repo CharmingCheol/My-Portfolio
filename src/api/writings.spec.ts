@@ -40,8 +40,7 @@ describe("WritingsApi", () => {
       const apiResponse: DeepPartial<AxiosResponse> = { data: writing, status: OK };
       mockFactory.get.mockReturnValue(apiResponse);
       const actual = await writingsApi.findOne(id);
-      expect(actual.data).toStrictEqual(writing);
-      expect(actual.status).toBe(OK);
+      expect(actual).toStrictEqual(apiResponse);
     });
 
     it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
@@ -72,8 +71,7 @@ describe("WritingsApi", () => {
       const apiResponse: DeepPartial<AxiosResponse> = { data: writings, status: OK };
       mockFactory.get.mockReturnValue(apiResponse);
       const actual = await writingsApi.pagination(page);
-      expect(actual.data).toStrictEqual(writings);
-      expect(actual.status).toBe(OK);
+      expect(actual).toStrictEqual(apiResponse);
     });
 
     it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
@@ -102,8 +100,7 @@ describe("WritingsApi", () => {
       const apiResponse: DeepPartial<AxiosResponse> = { data: writing, status: OK };
       mockFactory.post.mockReturnValue(apiResponse);
       const actual = await writingsApi.create(body);
-      expect(actual.data).toStrictEqual(writing);
-      expect(actual.status).toBe(OK);
+      expect(actual).toStrictEqual(apiResponse);
     });
 
     it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
@@ -133,8 +130,7 @@ describe("WritingsApi", () => {
       const apiResponse: DeepPartial<AxiosResponse> = { data: writing, status: OK };
       mockFactory.patch.mockReturnValue(apiResponse);
       const actual = await writingsApi.update(body, id);
-      expect(actual.data).toStrictEqual(writing);
-      expect(actual.status).toBe(OK);
+      expect(actual).toStrictEqual(apiResponse);
     });
 
     it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
