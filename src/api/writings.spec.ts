@@ -108,7 +108,7 @@ describe("WritingsApi", () => {
 
     it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
       const apiError: DeepPartial<AxiosError> = { isAxiosError: true, response: { status: BAD_REQUEST } };
-      mockFactory.post.mockRejectedValueOnce(apiError);
+      mockFactory.post.mockRejectedValue(apiError);
       const actual = await writingsApi.create(body);
       expect(actual.status).toBe(BAD_REQUEST);
     });
@@ -130,17 +130,18 @@ describe("WritingsApi", () => {
         content: "content",
         title: "title",
       };
-      mockFactory.patch.mockReturnValue({ data: writing });
-      const response = await writingsApi.update(body, id);
-      expect(response).toStrictEqual(writing);
+      const apiResponse: DeepPartial<AxiosResponse> = { data: writing, status: OK };
+      mockFactory.patch.mockReturnValue(apiResponse);
+      const actual = await writingsApi.update(body, id);
+      expect(actual.data).toStrictEqual(writing);
+      expect(actual.status).toBe(OK);
     });
 
-    it("API 응답이 실패할 경우 에러 데이터를 반환 한다", () => {
-      const error = new Error("에러가 발생했습니다");
-      mockFactory.patch.mockRejectedValueOnce(Promise.reject(error));
-      expect(async () => {
-        await writingsApi.update(body, id);
-      }).rejects.toThrowError(error);
+    it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
+      const apiError: DeepPartial<AxiosError> = { isAxiosError: true, response: { status: BAD_REQUEST } };
+      mockFactory.patch.mockRejectedValue(apiError);
+      const actual = await writingsApi.update(body, id);
+      expect(actual.status).toBe(BAD_REQUEST);
     });
   });
 

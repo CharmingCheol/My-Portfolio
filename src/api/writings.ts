@@ -38,9 +38,9 @@ class BaseWritingsApi {
     return response;
   }
 
-  async update<T extends Writing>(body: WritingRequestBody, id: string): Promise<T | AxiosError<T>> {
+  async update<T extends Writing>(body: WritingRequestBody, id: string): Promise<AxiosResponse<T>> {
     const api = this.baseAxios.patch<T>(`${this.BASE_URL}/${id}`, body);
-    const response = await this.receiveApiRequest(api);
+    const response = await receiveApiRequest(api);
     return response;
   }
 
