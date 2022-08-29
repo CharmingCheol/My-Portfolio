@@ -1,6 +1,8 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { BAD_REQUEST, OK } from "http-status";
-import { Writing, WritingRequestBody } from "types/writing";
+
+import { WritingFixture } from "fixtures";
+import { WritingRequestBody } from "types/writing";
 
 import WritingsApi from "./writings";
 import { apiOptions } from "./index";
@@ -31,13 +33,7 @@ describe("WritingsApi", () => {
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
-      const writing: Writing = {
-        createdAt: new Date().toString(),
-        id: "id",
-        content: "content",
-        title: "title",
-      };
-      const apiResponse: DeepPartial<AxiosResponse> = { data: writing, status: OK };
+      const apiResponse: DeepPartial<AxiosResponse> = { data: new WritingFixture(), status: OK };
       mockFactory.get.mockReturnValue(apiResponse);
       const actual = await writingsApi.findOne(id);
       expect(actual).toStrictEqual(apiResponse);
@@ -62,12 +58,9 @@ describe("WritingsApi", () => {
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
       const writings = Array(10)
         .fill(0)
-        .map<Writing>(() => ({
-          createdAt: new Date().toString(),
-          id: "id",
-          content: "content",
-          title: "title",
-        }));
+        .map(() => {
+          return new WritingFixture();
+        });
       const apiResponse: DeepPartial<AxiosResponse> = { data: writings, status: OK };
       mockFactory.get.mockReturnValue(apiResponse);
       const actual = await writingsApi.pagination(page);
@@ -91,13 +84,7 @@ describe("WritingsApi", () => {
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
-      const writing: Writing = {
-        createdAt: new Date().toString(),
-        id: "id",
-        content: "content",
-        title: "title",
-      };
-      const apiResponse: DeepPartial<AxiosResponse> = { data: writing, status: OK };
+      const apiResponse: DeepPartial<AxiosResponse> = { data: new WritingFixture(body), status: OK };
       mockFactory.post.mockReturnValue(apiResponse);
       const actual = await writingsApi.create(body);
       expect(actual).toStrictEqual(apiResponse);
@@ -121,13 +108,7 @@ describe("WritingsApi", () => {
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
-      const writing: Writing = {
-        createdAt: new Date().toString(),
-        id: "id",
-        content: "content",
-        title: "title",
-      };
-      const apiResponse: DeepPartial<AxiosResponse> = { data: writing, status: OK };
+      const apiResponse: DeepPartial<AxiosResponse> = { data: new WritingFixture(body), status: OK };
       mockFactory.patch.mockReturnValue(apiResponse);
       const actual = await writingsApi.update(body, id);
       expect(actual).toStrictEqual(apiResponse);
