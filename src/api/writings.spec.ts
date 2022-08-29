@@ -56,11 +56,7 @@ describe("WritingsApi", () => {
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
-      const writings = Array(10)
-        .fill(0)
-        .map(() => {
-          return new WritingFixture();
-        });
+      const writings = WritingFixture.generateList(10);
       const apiResponse: DeepPartial<AxiosResponse> = { data: writings, status: OK };
       mockFactory.get.mockReturnValue(apiResponse);
       const actual = await writingsApi.pagination(page);

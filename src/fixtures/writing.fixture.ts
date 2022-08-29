@@ -16,6 +16,15 @@ class WritingFixture implements Writing {
       }
     });
   }
+
+  static generateList(count: number): WritingFixture[] {
+    return Array(count)
+      .fill(0)
+      .map(() => {
+        const writing = new WritingFixture();
+        return writing;
+      });
+  }
 }
 
 export default WritingFixture;
