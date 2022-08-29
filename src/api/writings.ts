@@ -32,9 +32,9 @@ class BaseWritingsApi {
     return response;
   }
 
-  async create<T extends Writing>(body: WritingRequestBody): Promise<T | AxiosError<T>> {
+  async create<T extends Writing>(body: WritingRequestBody): Promise<AxiosResponse<T>> {
     const api = this.baseAxios.post<T>(`${this.BASE_URL}`, body);
-    const response = await this.receiveApiRequest(api);
+    const response = await receiveApiRequest(api);
     return response;
   }
 

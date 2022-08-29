@@ -88,7 +88,7 @@ describe("WritingsApi", () => {
     const body: WritingRequestBody = { title: "title", content: "content" };
 
     it("API 호출 시 body로 전달 할 데이터도 같이 전달 된다", async () => {
-      await writingsApi.create({ title: "title", content: "content" });
+      await writingsApi.create(body);
       expect(mockFactory.post).toHaveBeenCalledWith(`${BASE_URL}`, body);
     });
 
@@ -99,17 +99,18 @@ describe("WritingsApi", () => {
         content: "content",
         title: "title",
       };
-      mockFactory.post.mockReturnValue({ data: writing });
-      const response = await writingsApi.create(writing);
-      expect(response).toStrictEqual(writing);
+      const apiResponse: DeepPartial<AxiosResponse> = { data: writing, status: OK };
+      mockFactory.post.mockReturnValue(apiResponse);
+      const actual = await writingsApi.create(body);
+      expect(actual.data).toStrictEqual(writing);
+      expect(actual.status).toBe(OK);
     });
 
-    it("API 응답이 실패할 경우 에러 데이터를 반환 한다", () => {
-      const error = new Error("에러가 발생했습니다");
-      mockFactory.post.mockRejectedValueOnce(Promise.reject(error));
-      expect(async () => {
-        await writingsApi.create(body);
-      }).rejects.toThrowError(error);
+    it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
+      const apiError: DeepPartial<AxiosError> = { isAxiosError: true, response: { status: BAD_REQUEST } };
+      mockFactory.post.mockRejectedValueOnce(apiError);
+      const actual = await writingsApi.create(body);
+      expect(actual.status).toBe(BAD_REQUEST);
     });
   });
 
