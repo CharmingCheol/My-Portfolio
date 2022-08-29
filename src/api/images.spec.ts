@@ -1,4 +1,4 @@
-import { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { BAD_REQUEST, OK } from "http-status";
 
 import { apiOptions } from "./index";
@@ -22,20 +22,13 @@ describe("ImagesApiService", () => {
     const path = "writings";
     const baseHeader = { "Content-Type": "multipart/form-data" };
 
-    async function setup(config?: AxiosRequestConfig) {
-      const file = new File([""], "file");
-      const response = await imagesApiService.upload({ file, path }, { headers: baseHeader, ...config });
-      return response;
-    }
-
     it("headers config를 추가할 경우 multipart/form-data와 합쳐진다", async () => {
       const config: AxiosRequestConfig = { headers: { foo: "bar" } };
-      const headers = { headers: { ...baseHeader, ...config.headers } };
       await setup(config);
       expect(mockFactory.post).toHaveBeenCalledWith(
         `${BASE_URL}/${path}`,
         expect.any(FormData),
-        expect.objectContaining(headers),
+        expect.objectContaining({ headers: { ...baseHeader, ...config.headers } }),
       );
     });
 
@@ -50,11 +43,10 @@ describe("ImagesApiService", () => {
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
-      const apiData = { path: "path" };
-      mockFactory.post.mockReturnValue({ data: apiData, status: OK });
+      const apiResponse: DeepPartial<AxiosResponse> = { data: { path: "path" }, status: OK };
+      mockFactory.post.mockReturnValue(apiResponse);
       const response = await setup();
-      expect(response.data).toStrictEqual(apiData);
-      expect(response.status).toBe(OK);
+      expect(response).toStrictEqual(apiResponse);
     });
 
     it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
@@ -63,5 +55,11 @@ describe("ImagesApiService", () => {
       const response = await setup();
       expect(response.status).toBe(BAD_REQUEST);
     });
+
+    async function setup(config?: AxiosRequestConfig) {
+      const file = new File([""], "file");
+      const response = await imagesApiService.upload({ file, path }, { headers: baseHeader, ...config });
+      return response;
+    }
   });
 });
