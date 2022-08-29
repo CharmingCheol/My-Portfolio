@@ -26,39 +26,29 @@ class BaseWritingsApi {
     return response;
   }
 
-  async pagination<T extends WritingPagination>(page: number): Promise<AxiosResponse<T>> {
+  public async pagination<T extends WritingPagination>(page: number): Promise<AxiosResponse<T>> {
     const api = this.baseAxios.get<T>(`${this.BASE_URL}`, { params: { page } });
     const response = await receiveApiRequest(api);
     return response;
   }
 
-  async create<T extends Writing>(body: WritingRequestBody): Promise<AxiosResponse<T>> {
+  public async create<T extends Writing>(body: WritingRequestBody): Promise<AxiosResponse<T>> {
     const api = this.baseAxios.post<T>(`${this.BASE_URL}`, body);
     const response = await receiveApiRequest(api);
     return response;
   }
 
-  async update<T extends Writing>(body: WritingRequestBody, id: string): Promise<AxiosResponse<T>> {
+  public async update<T extends Writing>(body: WritingRequestBody, id: string): Promise<AxiosResponse<T>> {
     const api = this.baseAxios.patch<T>(`${this.BASE_URL}/${id}`, body);
     const response = await receiveApiRequest(api);
     return response;
   }
 
-  async delete<T extends null>(id: string): Promise<AxiosResponse<T>> {
+  public async delete<T extends null>(id: string): Promise<AxiosResponse<T>> {
     const api = this.baseAxios.delete<T>(`${this.BASE_URL}/${id}`);
     const response = await receiveApiRequest(api);
     return response;
   }
-
-  private receiveApiRequest = async <T>(api: Promise<AxiosResponse<T>>) => {
-    try {
-      const response = await api;
-      return response.data;
-    } catch (error) {
-      const typedError = error as AxiosError<T>;
-      return typedError;
-    }
-  };
 }
 
 export default BaseWritingsApi;
