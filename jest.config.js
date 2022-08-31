@@ -5,6 +5,7 @@ module.exports = {
     "api/(.*)$": "<rootDir>/src/api/$1",
     "common/(.*)$": "<rootDir>/src/common/$1",
     "components/(.*)$": "<rootDir>/src/components/$1",
+    "^constants/(.*)$": "<rootDir>/src/constants/$1",
     "containers/(.*)$": "<rootDir>/src/containers/$1",
     "fireConfig/(.*)$": "<rootDir>/src/fireConfig/$1",
     fixtures: "<rootDir>/src/fixtures/index",
