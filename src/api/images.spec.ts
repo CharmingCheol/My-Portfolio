@@ -1,21 +1,22 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { BAD_REQUEST, OK } from "http-status";
 
+import { API_URL } from "constants/api";
+
 import { apiOptions } from "./index";
-import ImagesApiService from "./images";
+import ImagesApi from "./images";
 
 const mockFactory = {
   post: jest.fn((entity) => entity),
 };
 
-describe("ImagesApiService", () => {
-  const BASE_URL = "/images";
-  let imagesApiService: ImagesApiService;
+describe("ImagesApi", () => {
+  let imagesApi: ImagesApi;
 
   beforeEach(() => {
     const axiosMock = (mockFactory as unknown) as AxiosInstance;
     const apiOptionsMock = jest.mocked(apiOptions, true);
-    imagesApiService = new ImagesApiService(axiosMock, apiOptionsMock);
+    imagesApi = new ImagesApi(axiosMock, apiOptionsMock);
   });
 
   describe("upload", () => {
@@ -26,7 +27,7 @@ describe("ImagesApiService", () => {
       const config: AxiosRequestConfig = { headers: { foo: "bar" } };
       await setup(config);
       expect(mockFactory.post).toHaveBeenCalledWith(
-        `${BASE_URL}/${path}`,
+        `${API_URL.IMAGES}/${path}`,
         expect.any(FormData),
         expect.objectContaining({ headers: { ...baseHeader, ...config.headers } }),
       );
@@ -36,7 +37,7 @@ describe("ImagesApiService", () => {
       const config: AxiosRequestConfig = { maxRedirects: 1000 };
       await setup(config);
       expect(mockFactory.post).toHaveBeenCalledWith(
-        `${BASE_URL}/${path}`,
+        `${API_URL.IMAGES}/${path}`,
         expect.any(FormData),
         expect.objectContaining(config),
       );
@@ -58,7 +59,7 @@ describe("ImagesApiService", () => {
 
     async function setup(config?: AxiosRequestConfig) {
       const file = new File([""], "file");
-      const response = await imagesApiService.upload({ file, path }, { headers: baseHeader, ...config });
+      const response = await imagesApi.upload({ file, path }, { headers: baseHeader, ...config });
       return response;
     }
   });

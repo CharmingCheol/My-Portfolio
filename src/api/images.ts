@@ -1,4 +1,7 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+
+import { API_URL } from "constants/api";
+
 import ApiOptions from "./options";
 import { receiveApiRequest } from "./utils";
 
@@ -7,19 +10,13 @@ interface UploadParams {
   path: "writings";
 }
 
-interface UploadResponse {
-  path: string;
-}
-
-class ImagesApiService {
-  private readonly BASE_URL = "/images";
-
+class ImagesApi {
   constructor(private baseAxios: AxiosInstance, public apiOptions: ApiOptions) {}
 
-  public async upload(params: UploadParams, config?: AxiosRequestConfig): Promise<AxiosResponse<UploadResponse>> {
+  public async upload(params: UploadParams, config?: AxiosRequestConfig): Promise<AxiosResponse<{ path: string }>> {
     const formData = this.getFormData(params);
     const requestConfig = this.getRequestConfig(config);
-    const api = this.baseAxios.post<UploadResponse>(`${this.BASE_URL}/${params.path}`, formData, requestConfig);
+    const api = this.baseAxios.post(`${API_URL.IMAGES}/${params.path}`, formData, requestConfig);
     const response = await receiveApiRequest(api);
     return response;
   }
@@ -36,4 +33,4 @@ class ImagesApiService {
   };
 }
 
-export default ImagesApiService;
+export default ImagesApi;

@@ -1,5 +1,8 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+
+import { API_URL } from "constants/api";
 import { Writing, WritingPagination, WritingRequestBody } from "types/writing";
+
 import ApiOptions from "./options";
 import { receiveApiRequest } from "./utils";
 
@@ -16,36 +19,34 @@ export interface WritingsApi {
 }
 
 class BaseWritingsApi {
-  private readonly BASE_URL = "/writings";
-
   constructor(private baseAxios: AxiosInstance, public apiOptions: ApiOptions) {}
 
-  public async findOne<T extends Writing>(id: string): Promise<AxiosResponse<T>> {
-    const api = this.baseAxios.get<T>(`${this.BASE_URL}/${id}`);
+  public async findOne(id: string): Promise<AxiosResponse<Writing>> {
+    const api = this.baseAxios.get(`${API_URL.WRITINGS}/${id}`);
     const response = await receiveApiRequest(api);
     return response;
   }
 
-  public async pagination<T extends WritingPagination>(page: number): Promise<AxiosResponse<T>> {
-    const api = this.baseAxios.get<T>(`${this.BASE_URL}`, { params: { page } });
+  public async pagination(page: number): Promise<AxiosResponse<WritingPagination>> {
+    const api = this.baseAxios.get(`${API_URL.WRITINGS}`, { params: { page } });
     const response = await receiveApiRequest(api);
     return response;
   }
 
-  public async create<T extends Writing>(body: WritingRequestBody): Promise<AxiosResponse<T>> {
-    const api = this.baseAxios.post<T>(`${this.BASE_URL}`, body);
+  public async create(body: WritingRequestBody): Promise<AxiosResponse<Writing>> {
+    const api = this.baseAxios.post(`${API_URL.WRITINGS}`, body);
     const response = await receiveApiRequest(api);
     return response;
   }
 
-  public async update<T extends Writing>(body: WritingRequestBody, id: string): Promise<AxiosResponse<T>> {
-    const api = this.baseAxios.patch<T>(`${this.BASE_URL}/${id}`, body);
+  public async update(body: WritingRequestBody, id: string): Promise<AxiosResponse<Writing>> {
+    const api = this.baseAxios.patch(`${API_URL.WRITINGS}/${id}`, body);
     const response = await receiveApiRequest(api);
     return response;
   }
 
-  public async delete<T extends null>(id: string): Promise<AxiosResponse<T>> {
-    const api = this.baseAxios.delete<T>(`${this.BASE_URL}/${id}`);
+  public async delete(id: string): Promise<AxiosResponse<null>> {
+    const api = this.baseAxios.delete(`${API_URL.WRITINGS}/${id}`);
     const response = await receiveApiRequest(api);
     return response;
   }

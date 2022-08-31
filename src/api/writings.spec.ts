@@ -1,6 +1,7 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { BAD_REQUEST, OK } from "http-status";
 
+import { API_URL } from "constants/api";
 import { WritingFixture } from "fixtures";
 import { WritingRequestBody } from "types/writing";
 
@@ -15,7 +16,6 @@ const mockFactory = {
 };
 
 describe("WritingsApi", () => {
-  const BASE_URL = "/writings";
   let writingsApi: WritingsApi;
 
   beforeEach(() => {
@@ -29,7 +29,7 @@ describe("WritingsApi", () => {
 
     it("전달 된 id가 API 주소에 포함 된다", async () => {
       await writingsApi.findOne(id);
-      expect(mockFactory.get).toHaveBeenCalledWith(`${BASE_URL}/${id}`);
+      expect(mockFactory.get).toHaveBeenCalledWith(`${API_URL.WRITINGS}/${id}`);
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
@@ -52,7 +52,7 @@ describe("WritingsApi", () => {
 
     it("API 호출 시 page 파라미터가 쿼리스트링으로 추가 된다", async () => {
       await writingsApi.pagination(page);
-      expect(mockFactory.get).toHaveBeenCalledWith(`${BASE_URL}`, { params: { page } });
+      expect(mockFactory.get).toHaveBeenCalledWith(`${API_URL.WRITINGS}`, { params: { page } });
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
@@ -76,7 +76,7 @@ describe("WritingsApi", () => {
 
     it("API 호출 시 body로 전달 할 데이터도 같이 전달 된다", async () => {
       await writingsApi.create(body);
-      expect(mockFactory.post).toHaveBeenCalledWith(`${BASE_URL}`, body);
+      expect(mockFactory.post).toHaveBeenCalledWith(`${API_URL.WRITINGS}`, body);
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
@@ -100,7 +100,7 @@ describe("WritingsApi", () => {
 
     it("API 호출 시 body와 id도 같이 전달 된다", async () => {
       await writingsApi.update(body, id);
-      expect(mockFactory.patch).toHaveBeenCalledWith(`${BASE_URL}/${id}`, body);
+      expect(mockFactory.patch).toHaveBeenCalledWith(`${API_URL.WRITINGS}/${id}`, body);
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
@@ -123,7 +123,7 @@ describe("WritingsApi", () => {
 
     it("API 호출 시 id가 URL에 포함 된다", async () => {
       await writingsApi.delete(id);
-      expect(mockFactory.delete).toHaveBeenCalledWith(`${BASE_URL}/${id}`);
+      expect(mockFactory.delete).toHaveBeenCalledWith(`${API_URL.WRITINGS}/${id}`);
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
