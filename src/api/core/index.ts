@@ -1,7 +1,26 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
+import Retry from "./retry.interceptor";
 
-const baseAxios = axios.create({
-  baseURL: "http://localhost:3001/api",
-});
+export interface Interceptor {
+  intercept(): void;
+}
 
-export default baseAxios;
+class ApiCore {
+  protected axiosInstance: AxiosInstance;
+
+  constructor() {
+    this.axiosInstance = axios.create({
+      baseURL: "http://localhost:3001/api",
+    });
+    this.initInterceptors();
+  }
+
+  private initInterceptors(): void {
+    [Retry].map((Interceptor) => {
+      const interceptor = new Interceptor(this.axiosInstance);
+      interceptor.intercept();
+    });
+  }
+}
+
+export default ApiCore;
