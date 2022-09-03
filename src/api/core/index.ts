@@ -1,10 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import Retry from "./retry.interceptor";
 
-export interface Interceptor {
-  intercept(): void;
-}
-
 class ApiCore {
   protected axiosInstance: AxiosInstance;
 

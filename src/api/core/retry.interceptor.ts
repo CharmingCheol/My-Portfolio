@@ -1,12 +1,12 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { INTERNAL_SERVER_ERROR } from "http-status";
 
-import { Interceptor } from "./index";
+import { ApiInterceptor } from "types/api.types";
 
 const MAX_TRY_COUNT = 3;
 const RETRY_TIME_OUT = 1000;
 
-class Retry implements Interceptor {
+class Retry implements ApiInterceptor {
   private tryCount = MAX_TRY_COUNT;
 
   constructor(private axiosInstance: AxiosInstance) {}
