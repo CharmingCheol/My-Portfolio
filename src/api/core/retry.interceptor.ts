@@ -1,7 +1,7 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { INTERNAL_SERVER_ERROR } from "http-status";
 
-import { ApiInterceptor } from "types/api.types";
+import { ApiInterceptor } from "types/api";
 
 const MAX_TRY_COUNT = 3;
 const RETRY_TIME_OUT = 1000;
