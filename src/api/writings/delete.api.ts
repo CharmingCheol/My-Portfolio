@@ -4,7 +4,7 @@ import { receiveApiRequest } from "api/utils";
 import { API_URL } from "constants/api";
 import { ApiRequest, HttpMethod } from "types/api";
 
-class DeleteApi implements ApiRequest {
+class DeleteWritingsApi implements ApiRequest {
   constructor(private httpMethod: HttpMethod) {}
 
   public async request(id: string): Promise<AxiosResponse<null>> {
@@ -14,4 +14,4 @@ class DeleteApi implements ApiRequest {
   }
 }
 
-export default DeleteApi;
+export default DeleteWritingsApi;

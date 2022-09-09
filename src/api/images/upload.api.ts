@@ -9,7 +9,7 @@ interface UploadParams {
   path: "writings";
 }
 
-class UploadApi implements ApiRequest {
+class UploadImagesApi implements ApiRequest {
   constructor(private httpMethod: HttpMethod) {}
 
   public async request(params: UploadParams, config?: AxiosRequestConfig): Promise<AxiosResponse<{ path: string }>> {
@@ -32,4 +32,4 @@ class UploadApi implements ApiRequest {
   };
 }
 
-export default UploadApi;
+export default UploadImagesApi;

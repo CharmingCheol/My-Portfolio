@@ -6,7 +6,7 @@ import { WritingFixture } from "fixtures";
 import { HttpMethod } from "types/api";
 import { WritingRequestBody } from "types/writing";
 
-import CreateWriting from "./create.api";
+import CreateWritingApi from "./create.api";
 
 const mockHttpMethod = {
   get: jest.fn((entity) => entity),
@@ -17,29 +17,29 @@ const mockHttpMethod = {
 
 describe("CreateWritingApi", () => {
   const body: WritingRequestBody = { title: "title", content: "content" };
-  let createWriting: CreateWriting;
+  let createWritingApi: CreateWritingApi;
 
   beforeEach(() => {
     const httpMethod = (mockHttpMethod as unknown) as HttpMethod;
-    createWriting = new CreateWriting(httpMethod);
+    createWritingApi = new CreateWritingApi(httpMethod);
   });
 
   it("API 호출 시 body로 전달 할 데이터도 같이 전달 된다", async () => {
-    await createWriting.request(body);
+    await createWritingApi.request(body);
     expect(mockHttpMethod.post).toHaveBeenCalledWith(`${API_URL.WRITINGS}`, body);
   });
 
   it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
     const apiSuccess: DeepPartial<AxiosResponse> = { data: new WritingFixture(body), status: OK };
     mockHttpMethod.post.mockReturnValue(apiSuccess);
-    const actual = await createWriting.request(body);
+    const actual = await createWritingApi.request(body);
     expect(actual).toStrictEqual(apiSuccess);
   });
 
   it("API 응답이 실패할 경우 에러 데이터를 반환 한다", async () => {
     const apiError: DeepPartial<AxiosError> = { isAxiosError: true, response: { status: BAD_REQUEST } };
     mockHttpMethod.post.mockRejectedValue(apiError);
-    const actual = await createWriting.request(body);
+    const actual = await createWritingApi.request(body);
     expect(actual.status).toBe(BAD_REQUEST);
   });
 });

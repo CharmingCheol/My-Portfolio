@@ -5,7 +5,7 @@ import { API_URL } from "constants/api";
 import { ApiRequest, HttpMethod } from "types/api";
 import { Writing, WritingRequestBody } from "types/writing";
 
-class UpdateApi implements ApiRequest {
+class UpdateWritingsApi implements ApiRequest {
   constructor(private httpMethod: HttpMethod) {}
 
   public async request(body: WritingRequestBody, id: string): Promise<AxiosResponse<Writing>> {
@@ -15,4 +15,4 @@ class UpdateApi implements ApiRequest {
   }
 }
 
-export default UpdateApi;
+export default UpdateWritingsApi;

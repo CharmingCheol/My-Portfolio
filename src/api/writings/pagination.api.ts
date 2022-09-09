@@ -5,7 +5,7 @@ import { API_URL } from "constants/api";
 import { ApiRequest, HttpMethod } from "types/api";
 import { WritingPagination } from "types/writing";
 
-class PaginationApi implements ApiRequest {
+class PaginationWritingsApi implements ApiRequest {
   constructor(private httpMethod: HttpMethod) {}
 
   public async request(page: number): Promise<AxiosResponse<WritingPagination>> {
@@ -15,4 +15,4 @@ class PaginationApi implements ApiRequest {
   }
 }
 
-export default PaginationApi;
+export default PaginationWritingsApi;
