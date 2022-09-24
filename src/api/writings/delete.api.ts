@@ -1,17 +1,47 @@
-import { AxiosResponse } from "axios";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NO_CONTENT } from "http-status";
 
 import { receiveApiRequest } from "api/utils";
 import { API_URL } from "constants/api";
-import { ApiRequest, HttpMethod } from "types/api";
+import { globalUIActions } from "reducers/globalUI";
+import { StrictApiManager } from "types/api";
 
-class DeleteWritingsApi implements ApiRequest {
-  constructor(private httpMethod: HttpMethod) {}
+type DeleteWritingApi = StrictApiManager<string, null>;
 
-  public async request(id: string): Promise<AxiosResponse<null>> {
-    const api = this.httpMethod.delete(`${API_URL.WRITINGS}/${id}`);
+const deleteWritingApi: DeleteWritingApi = (httpMethod) => ({
+  validate(id) {
+    if (!id) {
+      return false;
+    }
+    return id.trim().length !== 0;
+  },
+
+  async dispatch(id) {
+    const api = httpMethod.delete(`${API_URL.WRITINGS}/${id}`);
     const response = await receiveApiRequest(api);
     return response;
-  }
-}
+  },
 
-export default DeleteWritingsApi;
+  receive(response) {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    switch (response.status) {
+      case NO_CONTENT: {
+        history.replace("/");
+        break;
+      }
+      case BAD_REQUEST:
+      case INTERNAL_SERVER_ERROR: {
+        dispatch(globalUIActions.addToast({ message: response.statusText }));
+        break;
+      }
+      default: {
+        dispatch(globalUIActions.addToast({ message: "알 수 없는 API 결과 입니다" }));
+        break;
+      }
+    }
+  },
+});
+
+export default deleteWritingApi;
