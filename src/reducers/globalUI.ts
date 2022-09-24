@@ -3,10 +3,12 @@ import { ModalKey } from "types/globalUI";
 
 export interface GlobalUIState {
   modalKey: ModalKey;
+  toastList: string[];
 }
 
 const initialState: GlobalUIState = {
   modalKey: "",
+  toastList: [],
 };
 
 const globalUI = createSlice({
@@ -18,6 +20,12 @@ const globalUI = createSlice({
     },
     closeModal: (state) => {
       state.modalKey = "";
+    },
+    addToast: (state, action: PayloadAction<{ message: string }>) => {
+      state.toastList.push(action.payload.message);
+    },
+    clearToast: (state) => {
+      state.toastList = [];
     },
   },
 });
