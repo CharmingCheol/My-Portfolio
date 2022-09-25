@@ -34,7 +34,7 @@ describe("DeleteWritingApi", () => {
   });
 
   describe("validate", () => {
-    it("content가 빈 문자열인 경우 false를 반환 한다", () => {
+    it("id가 빈 문자열인 경우 false를 반환 한다", () => {
       const case1 = deleteWritingApi.validate("");
       const case2 = deleteWritingApi.validate("  ");
       expect(case1).toBeFalsy();
