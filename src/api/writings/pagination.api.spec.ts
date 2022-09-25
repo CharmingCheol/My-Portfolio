@@ -3,9 +3,9 @@ import { BAD_REQUEST, OK } from "http-status";
 
 import { API_URL } from "constants/api";
 import { WritingFixture } from "fixtures";
+import { writingActions } from "reducers/writing";
 
 import PaginationWritingApi from "./pagination.api";
-import { writingActions } from "reducers/writing";
 
 const mockHttpMethod = {
   get: jest.fn((entity) => entity),
@@ -68,7 +68,7 @@ describe("PaginationWritingApi", () => {
   });
 
   describe("receive", () => {
-    it("status가 200인 경우 게시글 상세 페이지로 이동 한다", () => {
+    it("status가 200인 경우 pagination 데이터 추가 액션이 호출 된다", () => {
       const mockAction = jest.spyOn(writingActions, "initWritingPagination");
       const apiSuccess: DeepPartial<AxiosResponse> = { data: WritingFixture.generateList(10), status: OK };
 
