@@ -1,13 +1,13 @@
 import ApiCore from "../core";
 
 import CreateWritingApi from "./create.api";
-import DeleteWritingsApi from "./delete.api";
-import FindOneWritingsApi from "./findOne.api";
-import PaginationWritingsApi from "./pagination.api";
-import UpdateWritingsApi from "./update.api";
+import DeleteWritingApi from "./delete.api";
+import FindOneWritingApi from "./findOne.api";
+import PaginationWritingApi from "./pagination.api";
+import UpdateWritingApi from "./update.api";
 
-export const createWritingApi = new CreateWritingApi(new ApiCore());
-export const deleteWritingsApi = new DeleteWritingsApi(new ApiCore());
-export const findOneWritingsApi = new FindOneWritingsApi(new ApiCore());
-export const paginationWritingsApi = new PaginationWritingsApi(new ApiCore());
-export const ipdateWritingsApi = new UpdateWritingsApi(new ApiCore());
+export const createWritingApi = CreateWritingApi(new ApiCore());
+export const deleteWritingApi = DeleteWritingApi(new ApiCore());
+export const findOneWritingApi = FindOneWritingApi(new ApiCore());
+export const paginationWritingApi = PaginationWritingApi(new ApiCore());
+export const updateWritingApi = UpdateWritingApi(new ApiCore());
