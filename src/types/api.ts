@@ -12,7 +12,7 @@ interface ApiReceiver<R> {
   receive(response: AxiosResponse<R>): void;
 }
 
-type ApiResponse = Promise<AxiosResponse<any>>;
+type ApiResponse = Promise<AxiosResponse>;
 
 export interface HttpMethod {
   get(url: string, config?: AxiosRequestConfig): ApiResponse;
@@ -32,10 +32,6 @@ export interface ApiRequest {
   request(...args: any[]): ApiResponse;
 }
 
-export interface LooseApiManager<A, R> {
-  (httpMethod: HttpMethod): ApiDispatcher<A, R> & ApiReceiver<R>;
-}
-
-export interface StrictApiManager<A, R> {
+export interface ApiManager<A, R> {
   (httpMethod: HttpMethod): ApiValidator<A> & ApiDispatcher<A, R> & ApiReceiver<R>;
 }

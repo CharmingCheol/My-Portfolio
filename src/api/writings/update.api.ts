@@ -3,10 +3,10 @@ import { OK } from "http-status";
 
 import { receiveApiRequest } from "api/utils";
 import { API_URL } from "constants/api";
-import { StrictApiManager } from "types/api";
+import { ApiManager } from "types/api";
 import { Writing, WritingRequestBody } from "types/writing";
 
-type UpdateWritingApi = StrictApiManager<{ body: WritingRequestBody; id: string }, Writing>;
+type UpdateWritingApi = ApiManager<{ body: WritingRequestBody; id: string }, Writing>;
 
 const isNotEmptyString = (str: string) => {
   if (!str || str.trim().length === 0) {

@@ -4,10 +4,10 @@ import { OK } from "http-status";
 import { receiveApiRequest } from "api/utils";
 import { API_URL } from "constants/api";
 import { writingActions } from "reducers/writing";
-import { StrictApiManager } from "types/api";
+import { ApiManager } from "types/api";
 import { Writing } from "types/writing";
 
-type FindOneWritingApi = StrictApiManager<string, Writing>;
+type FindOneWritingApi = ApiManager<string, Writing>;
 
 const findOneWritingApi: FindOneWritingApi = (httpMethod) => ({
   validate(id) {

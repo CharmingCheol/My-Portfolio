@@ -4,10 +4,10 @@ import { OK } from "http-status";
 import { receiveApiRequest } from "api/utils";
 import { API_URL } from "constants/api";
 import { writingActions } from "reducers/writing";
-import { StrictApiManager } from "types/api";
+import { ApiManager } from "types/api";
 import { WritingPagination } from "types/writing";
 
-type PaginationWritingApi = StrictApiManager<number, WritingPagination>;
+type PaginationWritingApi = ApiManager<number, WritingPagination>;
 
 const paginationWritingApi: PaginationWritingApi = (httpMethod) => ({
   validate(page) {

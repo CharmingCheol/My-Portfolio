@@ -5,10 +5,10 @@ import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from "http-status";
 import { receiveApiRequest } from "api/utils";
 import { API_URL } from "constants/api";
 import { globalUIActions } from "reducers/globalUI";
-import { StrictApiManager } from "types/api";
+import { ApiManager } from "types/api";
 import { Writing, WritingRequestBody } from "types/writing";
 
-type CreateWritingApi = StrictApiManager<WritingRequestBody, Writing>;
+type CreateWritingApi = ApiManager<WritingRequestBody, Writing>;
 
 const createWritingApi: CreateWritingApi = (httpMethod) => ({
   validate(body) {

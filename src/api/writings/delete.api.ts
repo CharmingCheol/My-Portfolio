@@ -5,9 +5,9 @@ import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NO_CONTENT } from "http-status";
 import { receiveApiRequest } from "api/utils";
 import { API_URL } from "constants/api";
 import { globalUIActions } from "reducers/globalUI";
-import { StrictApiManager } from "types/api";
+import { ApiManager } from "types/api";
 
-type DeleteWritingApi = StrictApiManager<string, null>;
+type DeleteWritingApi = ApiManager<string, null>;
 
 const deleteWritingApi: DeleteWritingApi = (httpMethod) => ({
   validate(id) {
