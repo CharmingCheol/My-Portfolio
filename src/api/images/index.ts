@@ -1,5 +1,5 @@
 import ApiCore from "../core";
 
-import UploadImagesApi from "./upload.api";
+import WritingContentImageApi from "./writing-content.api";
 
-export const uploadImagesApi = new UploadImagesApi(new ApiCore());
+export const writingContentImageApi = WritingContentImageApi(new ApiCore());
