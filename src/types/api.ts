@@ -9,7 +9,7 @@ interface ApiDispatcher<A, R> {
 }
 
 interface ApiReceiver<R> {
-  receive(response: AxiosResponse<R>): void;
+  receive(response: AxiosResponse<R>, ...rest: any[]): void;
 }
 
 type ApiResponse = Promise<AxiosResponse>;
@@ -33,5 +33,5 @@ export interface ApiRequest {
 }
 
 export interface ApiManager<A, R> {
-  (httpMethod: HttpMethod): ApiValidator<A> & ApiDispatcher<A, R> & ApiReceiver<R>;
+  (httpMethod: HttpMethod, ...rest: any[]): ApiValidator<A> & ApiDispatcher<A, R> & ApiReceiver<R>;
 }
