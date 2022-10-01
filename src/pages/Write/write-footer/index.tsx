@@ -7,12 +7,12 @@ import UpdateButton from "./udpate-button/udpate-button";
 import CreateButton from "./create-button/create-button";
 
 const WriteFooter = () => {
-  const tempWriting = useAppSelector((state) => state.writing.tempWriting);
+  const writingId = useAppSelector((state) => state.writing.tempWriting.id);
 
   return (
     <S.Footer>
       <BackButton />
-      {tempWriting.id ? <UpdateButton /> : <CreateButton />}
+      {writingId ? <UpdateButton /> : <CreateButton />}
     </S.Footer>
   );
 };
