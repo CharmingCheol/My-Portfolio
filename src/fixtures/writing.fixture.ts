@@ -27,4 +27,9 @@ class WritingFixture implements Writing {
   }
 }
 
+export const createWritingFixture = (args: Partial<Writing> = {}): Writing => {
+  const defaultWriting: Writing = { createdAt: new Date().toString(), id: "", content: "", title: "" };
+  return { ...defaultWriting, ...args };
+};
+
 export default WritingFixture;

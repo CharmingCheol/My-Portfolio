@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createWritingFixture } from "fixtures/writing.fixture";
 import { Writing, WritingPagination } from "types/writing";
 
 export interface WritingState {
-  tempWriting: Partial<Writing>;
+  tempWriting: Writing;
+  writingDetail: Writing;
   writingPagination: WritingPagination;
 }
 
 export const initialState: WritingState = {
-  tempWriting: {},
+  tempWriting: createWritingFixture(),
+  writingDetail: createWritingFixture(),
   writingPagination: { list: [], totalCount: 0 },
 };
 
@@ -25,7 +28,7 @@ const writing = createSlice({
       state.tempWriting.content = action.payload;
     },
     clearWriting: (state) => {
-      state.tempWriting = {};
+      state.tempWriting = createWritingFixture();
     },
     initWritingPagination: (state, action: PayloadAction<WritingPagination>) => {
       state.writingPagination = action.payload;
