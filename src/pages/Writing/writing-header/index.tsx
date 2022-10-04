@@ -1,14 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import Date from "components/atoms/Date";
-import Button from "components/atoms/Button";
 import { WritingDeleteModal } from "common/modals";
-import { useAppDispatch, useAppSelector } from "store";
-import { globalUIActions } from "reducers/globalUI";
-import { writingActions } from "reducers/writing";
+import { useAppSelector } from "store";
 import { Writing } from "types/writing";
 
+import WriteLinkButton from "./write-link-button/write-link-button";
+import DeleteButton from "./delete-button/delete-button";
 import * as S from "./index.style";
 
 export interface Props {
@@ -19,28 +17,14 @@ const WritingHeader = (props: Props) => {
   const { writing } = props;
   const isAdmin = useAppSelector((state) => state.option.isAdmin);
 
-  const dispatch = useAppDispatch();
-
-  const handleClickEditButton = () => {
-    dispatch(writingActions.initWriting(writing));
-  };
-
-  const handleClickDeleteButton = () => {
-    dispatch(globalUIActions.openModal("WritingDeleteModal"));
-  };
-
   return (
     <>
       <S.Header>{writing.title}</S.Header>
       <Date date={writing.createdAt} />
       {isAdmin && (
         <S.ButtonWrapper>
-          <Button>
-            <Link to={{ pathname: `${process.env.WRITE_PAGE}` }} onClick={handleClickEditButton}>
-              수정
-            </Link>
-          </Button>
-          <Button onClick={handleClickDeleteButton}>삭제</Button>
+          <WriteLinkButton />
+          <DeleteButton />
         </S.ButtonWrapper>
       )}
       <WritingDeleteModal />
