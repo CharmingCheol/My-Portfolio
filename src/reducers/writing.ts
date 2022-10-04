@@ -18,8 +18,9 @@ const writing = createSlice({
   name: "writing",
   initialState,
   reducers: {
-    initWriting: (state, action: PayloadAction<Writing>) => {
-      state.tempWriting = action.payload;
+    initTempWriting: (state) => {
+      state.tempWriting = state.writingDetail;
+      writingActions.clearWritingDetail();
     },
     setTitle: (state, action: PayloadAction<string>) => {
       state.tempWriting.title = action.payload;
@@ -27,8 +28,14 @@ const writing = createSlice({
     setContent: (state, action: PayloadAction<string>) => {
       state.tempWriting.content = action.payload;
     },
-    clearWriting: (state) => {
+    clearTempWriting: (state) => {
       state.tempWriting = createWritingFixture();
+    },
+    initWritingDetail: (state, action: PayloadAction<Writing>) => {
+      state.writingDetail = action.payload;
+    },
+    clearWritingDetail: (state) => {
+      state.writingDetail = createWritingFixture();
     },
     initWritingPagination: (state, action: PayloadAction<WritingPagination>) => {
       state.writingPagination = action.payload;

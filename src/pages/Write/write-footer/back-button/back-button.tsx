@@ -10,7 +10,7 @@ const BackButton = () => {
   const dispatch = useAppDispatch();
 
   const handleClickGoBackButton = () => {
-    dispatch(writingActions.clearWriting());
+    dispatch(writingActions.clearTempWriting());
     history.goBack();
   };
 

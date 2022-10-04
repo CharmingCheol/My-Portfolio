@@ -27,7 +27,7 @@ const findOneWritingApi: FindOneWritingApi = (httpMethod) => ({
     const dispatch = useDispatch();
     switch (response.status) {
       case OK: {
-        dispatch(writingActions.initWriting(response.data));
+        dispatch(writingActions.initWritingDetail(response.data));
         break;
       }
     }
