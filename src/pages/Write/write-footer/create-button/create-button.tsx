@@ -17,9 +17,9 @@ const CreateButton = () => {
   };
 
   useEffect(() => {
-    const target = [tempWriting.content, tempWriting.title];
-    const hasAllValue = target.every((value) => stringValidator.hasValue(value));
-    setDisabledButton(() => !hasAllValue);
+    const validateTarget = [tempWriting.content, tempWriting.title];
+    const hasAllValue = validateTarget.every((value) => stringValidator.hasValue(value));
+    setDisabledButton(!hasAllValue);
   }, [tempWriting]);
 
   return (
