@@ -1,4 +1,3 @@
-import { HookCallback } from "@toast-ui/editor/types/editor";
 import { CREATED } from "http-status";
 
 import { receiveApiRequest } from "api/utils";
@@ -28,10 +27,10 @@ const writingContentImageApi: WritingContentImageApi = (httpMethod) => ({
     return response;
   },
 
-  receive(response, callback: HookCallback) {
+  receive({ response, success }) {
     switch (response.status) {
       case CREATED: {
-        callback(response.data.path);
+        success && success(response.data);
         break;
       }
     }

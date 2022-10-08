@@ -72,16 +72,16 @@ describe("DeleteWritingApi", () => {
 
   describe("receive", () => {
     it("status가 204인 경우 게시글 상세 페이지로 이동 한다", () => {
-      const apiSuccess: DeepPartial<AxiosResponse> = { data: null, status: NO_CONTENT };
-      deleteWritingApi.receive(apiSuccess as AxiosResponse);
+      const response: DeepPartial<AxiosResponse> = { data: null, status: NO_CONTENT };
+      deleteWritingApi.receive({ response: response as AxiosResponse });
       expect(mockUseHistory.replace).toHaveBeenCalledWith(`/`);
     });
 
     it("status가 400인 경우 토스트 추가 액션을 호출 한다", () => {
       const addToastAction = jest.spyOn(globalUIActions, "addToast");
-      const apiFailure: DeepPartial<AxiosResponse> = { status: BAD_REQUEST, statusText: "400 error" };
+      const response: DeepPartial<AxiosResponse> = { status: BAD_REQUEST, statusText: "400 error" };
 
-      deleteWritingApi.receive(apiFailure as AxiosResponse);
+      deleteWritingApi.receive({ response: response as AxiosResponse });
 
       expect(mockUseDispatch).toHaveBeenCalled();
       expect(addToastAction).toHaveBeenCalledWith({ message: "400 error" });
@@ -89,9 +89,9 @@ describe("DeleteWritingApi", () => {
 
     it("status가 500인 경우 토스트 추가 액션을 호출 한다", () => {
       const addToastAction = jest.spyOn(globalUIActions, "addToast");
-      const apiFailure: DeepPartial<AxiosResponse> = { status: INTERNAL_SERVER_ERROR, statusText: "500 error" };
+      const response: DeepPartial<AxiosResponse> = { status: INTERNAL_SERVER_ERROR, statusText: "500 error" };
 
-      deleteWritingApi.receive(apiFailure as AxiosResponse);
+      deleteWritingApi.receive({ response: response as AxiosResponse });
 
       expect(mockUseDispatch).toHaveBeenCalled();
       expect(addToastAction).toHaveBeenCalledWith({ message: "500 error" });
@@ -99,9 +99,9 @@ describe("DeleteWritingApi", () => {
 
     it("알 수 없는 status인 경우 토스트 추가 액션을 호출 한다", () => {
       const addToastAction = jest.spyOn(globalUIActions, "addToast");
-      const apiFailure: DeepPartial<AxiosResponse> = { status: 426, statusText: "426 error" };
+      const response: DeepPartial<AxiosResponse> = { status: 426, statusText: "426 error" };
 
-      deleteWritingApi.receive(apiFailure as AxiosResponse);
+      deleteWritingApi.receive({ response: response as AxiosResponse });
 
       expect(mockUseDispatch).toHaveBeenCalled();
       expect(addToastAction).toHaveBeenCalledWith({ message: "알 수 없는 API 결과 입니다" });

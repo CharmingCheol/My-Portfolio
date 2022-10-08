@@ -85,9 +85,9 @@ describe("UpdateWritingApi", () => {
 
   describe("receive", () => {
     it("status가 200인 경우 게시글 상세 페이지로 이동 한다", () => {
-      const apiSuccess: DeepPartial<AxiosResponse> = { data: new WritingFixture({ ...body, id }), status: OK };
-      updateWritingApi.receive(apiSuccess as AxiosResponse);
-      expect(mockUseHistory.replace).toHaveBeenCalledWith(`/writing/${apiSuccess.data.id}`);
+      const response: DeepPartial<AxiosResponse> = { data: new WritingFixture({ ...body, id }), status: OK };
+      updateWritingApi.receive({ response: response as AxiosResponse });
+      expect(mockUseHistory.replace).toHaveBeenCalledWith(`/writing/${response.data.id}`);
     });
   });
 });

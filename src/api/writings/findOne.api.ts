@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { OK } from "http-status";
+import { INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from "http-status";
 
 import { receiveApiRequest } from "api/utils";
 import { API_URL } from "constants/api";
@@ -23,11 +23,17 @@ const findOneWritingApi: FindOneWritingApi = (httpMethod) => ({
     return response;
   },
 
-  receive(response) {
+  receive({ response, success, error }) {
     const dispatch = useDispatch();
     switch (response.status) {
       case OK: {
         dispatch(writingActions.initWritingDetail(response.data));
+        success && success();
+        break;
+      }
+      case NOT_FOUND:
+      case INTERNAL_SERVER_ERROR: {
+        error && error();
         break;
       }
     }

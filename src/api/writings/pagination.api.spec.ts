@@ -70,12 +70,12 @@ describe("PaginationWritingApi", () => {
   describe("receive", () => {
     it("status가 200인 경우 pagination 데이터 추가 액션이 호출 된다", () => {
       const mockAction = jest.spyOn(writingActions, "initWritingPagination");
-      const apiSuccess: DeepPartial<AxiosResponse> = { data: WritingFixture.generateList(10), status: OK };
+      const response: DeepPartial<AxiosResponse> = { data: WritingFixture.generateList(10), status: OK };
 
-      paginationWritingApi.receive(apiSuccess as AxiosResponse);
+      paginationWritingApi.receive({ response: response as AxiosResponse });
 
       expect(mockUseDispatch).toHaveBeenCalled();
-      expect(mockAction).toHaveBeenCalledWith(apiSuccess.data);
+      expect(mockAction).toHaveBeenCalledWith(response.data);
     });
   });
 });

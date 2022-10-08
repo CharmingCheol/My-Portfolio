@@ -8,8 +8,14 @@ interface ApiDispatcher<A, R> {
   dispatch(args: A): Promise<AxiosResponse<R>>;
 }
 
+interface ApiReceiverCallback<R> {
+  response: AxiosResponse<R>;
+  success?: (response?: R) => void;
+  error?: () => void;
+}
+
 interface ApiReceiver<R> {
-  receive(response: AxiosResponse<R>, ...rest: any[]): void;
+  receive(args: ApiReceiverCallback<R>): void;
 }
 
 type ApiResponse = Promise<AxiosResponse>;

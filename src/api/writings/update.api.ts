@@ -28,7 +28,7 @@ const updateWritingApi: UpdateWritingApi = (httpMethod) => ({
     return response;
   },
 
-  receive(response) {
+  receive({ response }) {
     const history = useHistory();
     switch (response.status) {
       case OK: {

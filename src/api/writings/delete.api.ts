@@ -23,7 +23,7 @@ const deleteWritingApi: DeleteWritingApi = (httpMethod) => ({
     return response;
   },
 
-  receive(response) {
+  receive({ response }) {
     const dispatch = useDispatch();
     const history = useHistory();
     switch (response.status) {

@@ -68,13 +68,13 @@ describe("FindOneWritingApi", () => {
 
   describe("receive", () => {
     it("status가 200인 경우 게시글 상세 페이지로 이동 한다", () => {
-      const initWritingAction = jest.spyOn(writingActions, "initWriting");
-      const apiSuccess: DeepPartial<AxiosResponse> = { data: new WritingFixture(), status: OK };
+      const initWritingAction = jest.spyOn(writingActions, "initWritingDetail");
+      const response: DeepPartial<AxiosResponse> = { data: new WritingFixture(), status: OK };
 
-      findOneWritingApi.receive(apiSuccess as AxiosResponse);
+      findOneWritingApi.receive({ response: response as AxiosResponse });
 
       expect(mockUseDispatch).toHaveBeenCalled();
-      expect(initWritingAction).toHaveBeenCalledWith(apiSuccess.data);
+      expect(initWritingAction).toHaveBeenCalledWith(response.data);
     });
   });
 });

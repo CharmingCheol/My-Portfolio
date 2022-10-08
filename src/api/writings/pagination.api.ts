@@ -20,7 +20,7 @@ const paginationWritingApi: PaginationWritingApi = (httpMethod) => ({
     return response;
   },
 
-  receive(response) {
+  receive({ response }) {
     const dispatch = useDispatch();
     switch (response.status) {
       case OK: {
