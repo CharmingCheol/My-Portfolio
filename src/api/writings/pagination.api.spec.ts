@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { BAD_REQUEST, OK } from "http-status";
 
 import { API_URL } from "constants/api";
-import { createWritingFixtureList } from "fixtures/writing.fixture";
+import { createWritingFixtureList } from "fixtures/writing";
 import { writingActions } from "reducers/writing";
 
 import PaginationWritingApi from "./pagination.api";

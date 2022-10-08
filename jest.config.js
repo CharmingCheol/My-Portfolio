@@ -8,7 +8,6 @@ module.exports = {
     "^constants/(.*)$": "<rootDir>/src/constants/$1",
     "^containers/(.*)$": "<rootDir>/src/containers/$1",
     "^fireConfig/(.*)$": "<rootDir>/src/fireConfig/$1",
-    "^fixtures$": "<rootDir>/src/fixtures/index",
     "^fixtures/(.*)$": "<rootDir>/src/fixtures/$1",
     "^hooks/(.*)$": "<rootDir>/src/hooks/$1",
     "^services/(.*)$": "<rootDir>/src/services/$1",

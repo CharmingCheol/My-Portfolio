@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createWritingFixture } from "fixtures/writing.fixture";
+import { createWritingFixture } from "fixtures/writing";
 import { Writing, WritingPagination } from "types/writing";
 
 export interface WritingState {
