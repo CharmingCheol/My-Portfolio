@@ -12,7 +12,7 @@ const UpdateButton = () => {
   const handleClickUpdateButton = async () => {
     if (updateWritingApi.validate({ body: tempWriting, id: tempWriting.id })) {
       const response = await updateWritingApi.dispatch({ body: tempWriting, id: tempWriting.id });
-      updateWritingApi.receive(response);
+      updateWritingApi.receive({ response });
     }
   };
 

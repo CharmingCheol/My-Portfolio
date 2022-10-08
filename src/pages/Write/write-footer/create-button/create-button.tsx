@@ -12,7 +12,7 @@ const CreateButton = () => {
   const handleClickCreateButton = async () => {
     if (createWritingApi.validate(tempWriting)) {
       const response = await createWritingApi.dispatch(tempWriting);
-      createWritingApi.receive(response);
+      createWritingApi.receive({ response });
     }
   };
 
