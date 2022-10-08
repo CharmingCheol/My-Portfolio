@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { BAD_REQUEST, OK } from "http-status";
 
 import { API_URL } from "constants/api";
-import { WritingFixture } from "fixtures";
+import { createWritingFixtureList } from "fixtures/writing.fixture";
 import { writingActions } from "reducers/writing";
 
 import PaginationWritingApi from "./pagination.api";
@@ -37,7 +37,7 @@ describe("PaginationWritingApi", () => {
       expect(minus).toBeFalsy();
     });
 
-    it("page가 1이상인 숫장니 경우 true를 반환 한다", () => {
+    it("page가 1이상인 숫자인 경우 true를 반환 한다", () => {
       const actual = paginationWritingApi.validate(1);
       expect(actual).toBeTruthy();
     });
@@ -50,7 +50,7 @@ describe("PaginationWritingApi", () => {
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
-      const writingList = WritingFixture.generateList(10);
+      const writingList = createWritingFixtureList(10);
       const apiSuccess: DeepPartial<AxiosResponse> = { data: writingList, status: OK };
       mockHttpMethod.get.mockReturnValue(apiSuccess);
 
@@ -70,7 +70,7 @@ describe("PaginationWritingApi", () => {
   describe("receive", () => {
     it("status가 200인 경우 pagination 데이터 추가 액션이 호출 된다", () => {
       const mockAction = jest.spyOn(writingActions, "initWritingPagination");
-      const response: DeepPartial<AxiosResponse> = { data: WritingFixture.generateList(10), status: OK };
+      const response: DeepPartial<AxiosResponse> = { data: createWritingFixtureList(10), status: OK };
 
       paginationWritingApi.receive({ response: response as AxiosResponse });
 

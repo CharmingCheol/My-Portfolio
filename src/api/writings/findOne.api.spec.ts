@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { BAD_REQUEST, OK } from "http-status";
 
 import { API_URL } from "constants/api";
-import { WritingFixture } from "fixtures";
+import { createWritingFixture } from "fixtures/writing.fixture";
 import { writingActions } from "reducers/writing";
 
 import FindOneWritingApi from "./findOne.api";
@@ -50,7 +50,7 @@ describe("FindOneWritingApi", () => {
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
-      const apiSuccess: DeepPartial<AxiosResponse> = { data: new WritingFixture(), status: OK };
+      const apiSuccess: DeepPartial<AxiosResponse> = { data: createWritingFixture(), status: OK };
       mockHttpMethod.get.mockReturnValue(apiSuccess);
 
       const actual = await findOneWritingApi.dispatch(id);
@@ -69,7 +69,7 @@ describe("FindOneWritingApi", () => {
   describe("receive", () => {
     it("status가 200인 경우 게시글 상세 페이지로 이동 한다", () => {
       const initWritingAction = jest.spyOn(writingActions, "initWritingDetail");
-      const response: DeepPartial<AxiosResponse> = { data: new WritingFixture(), status: OK };
+      const response: DeepPartial<AxiosResponse> = { data: createWritingFixture(), status: OK };
 
       findOneWritingApi.receive({ response: response as AxiosResponse });
 

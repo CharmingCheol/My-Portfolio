@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from "http-status";
 
 import { API_URL } from "constants/api";
-import { WritingFixture } from "fixtures";
+import { createWritingFixture } from "fixtures/writing.fixture";
 import { globalUIActions } from "reducers/globalUI";
 import { WritingRequestBody } from "types/writing";
 
@@ -63,7 +63,7 @@ describe("CreateWritingApi", () => {
     });
 
     it("API 응답이 성공할 경우 전달 받은 데이터를 반환 한다", async () => {
-      const apiSuccess: DeepPartial<AxiosResponse> = { data: new WritingFixture(body), status: OK };
+      const apiSuccess: DeepPartial<AxiosResponse> = { data: createWritingFixture(body), status: OK };
       mockHttpMethod.post.mockReturnValue(apiSuccess);
 
       const actual = await createWritingApi.dispatch(body);
@@ -81,7 +81,7 @@ describe("CreateWritingApi", () => {
 
   describe("receive", () => {
     it("status가 200인 경우 게시글 상세 페이지로 이동 한다", () => {
-      const response: DeepPartial<AxiosResponse> = { data: new WritingFixture(body), status: OK };
+      const response: DeepPartial<AxiosResponse> = { data: createWritingFixture(body), status: OK };
       createWritingApi.receive({ response: response as AxiosResponse });
       expect(mockUseHistory.replace).toHaveBeenCalledWith(`/writing/${response.data.id}`);
     });
