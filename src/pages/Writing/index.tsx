@@ -15,9 +15,9 @@ import * as S from "./index.style";
 const WritingPage = () => {
   const { id } = useParams<{ id: string }>();
   const isNotFound = useWritingSelector((state) => state.isNotFound);
-  const writingDetailId = useWritingSelector((state) => state.writingDetail.id);
+  const writingId = useWritingSelector((state) => state.writingDetail.id);
+  const receiveApi = WritingsApiReceive();
   const writingDispatch = useWritingDispatch();
-  const apiReceive = WritingsApiReceive();
 
   useLayoutEffect(() => {
     if (!stringValidator.isNotEmptyString(id)) {
@@ -26,7 +26,7 @@ const WritingPage = () => {
     }
     (async () => {
       const response = await WritingsApiSend.findOne(id);
-      apiReceive.findOne(response);
+      receiveApi.findOne(response);
     })();
   }, []);
 
@@ -36,7 +36,7 @@ const WritingPage = () => {
 
   return (
     <S.Layout>
-      {writingDetailId && (
+      {writingId && (
         <>
           <WritingHelmet />
           <WritingHeader />
