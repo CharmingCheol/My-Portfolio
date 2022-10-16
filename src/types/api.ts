@@ -8,36 +8,26 @@ interface ApiDispatcher<A, R> {
   dispatch(args: A): Promise<AxiosResponse<R>>;
 }
 
-interface ApiReceiverCallback<R> {
-  response: AxiosResponse<R>;
-  success?: (response?: R) => void;
-  error?: () => void;
-}
-
-interface ApiReceiver<R> {
-  receive(args: ApiReceiverCallback<R>): void;
-}
-
-type ApiResponse = Promise<AxiosResponse>;
+type HttpMethodResponse = Promise<AxiosResponse>;
 
 export interface HttpMethod {
-  get(url: string, config?: AxiosRequestConfig): ApiResponse;
+  get(url: string, config?: AxiosRequestConfig): HttpMethodResponse;
 
-  post(url: string, data: any, config?: AxiosRequestConfig): ApiResponse;
+  post(url: string, data: any, config?: AxiosRequestConfig): HttpMethodResponse;
 
-  patch(url: string, data: any, config?: AxiosRequestConfig): ApiResponse;
+  patch(url: string, data: any, config?: AxiosRequestConfig): HttpMethodResponse;
 
-  delete(url: string, config?: AxiosRequestConfig): ApiResponse;
+  delete(url: string, config?: AxiosRequestConfig): HttpMethodResponse;
 }
 
 export interface ApiInterceptor {
   intercept(): void;
 }
 
-export interface ApiRequest {
-  request(...args: any[]): ApiResponse;
+export interface ApiManager<A = any, R = any> {
+  (httpMethod: HttpMethod, ...rest: any[]): ApiValidator<A> & ApiDispatcher<A, R>;
 }
 
-export interface ApiManager<A, R> {
-  (httpMethod: HttpMethod, ...rest: any[]): ApiValidator<A> & ApiDispatcher<A, R> & ApiReceiver<R>;
-}
+export type ApiReceiver<T extends ReturnType<ApiManager>> = () => {
+  receive: (params: Awaited<ReturnType<T["dispatch"]>>) => void;
+};
