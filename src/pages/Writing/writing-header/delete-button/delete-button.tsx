@@ -2,7 +2,7 @@ import React from "react";
 
 import Button from "components/atoms/Button";
 import { globalUIActions } from "reducers/globalUI";
-import { useAppDispatch } from "store";
+import { useAppDispatch } from "reducers";
 
 const DeleteButton = () => {
   const dispatch = useAppDispatch();
