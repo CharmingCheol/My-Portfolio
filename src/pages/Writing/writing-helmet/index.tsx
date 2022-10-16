@@ -2,21 +2,15 @@ import React, { useMemo } from "react";
 import { Helmet } from "react-helmet";
 import removeMd from "remove-markdown";
 
-import { Writing } from "types/writing";
+import { useWritingSelector } from "pages/Writing/index.reducer";
 
-interface Props {
-  writing: Writing;
-}
+const WritingHelmet = () => {
+  const writing = useWritingSelector((state) => state.writingDetail);
 
-const WritingHelmet = (props: Props) => {
-  const { writing } = props;
-
-  const descriptionMeta = useMemo(() => {
-    const removedMd = removeMd(
-      writing?.content.replace(/```([\s\S]*?)```/g, "").replace(/~~~([\s\S]*?)~~~/g, "") || "",
-    );
-    return removedMd;
-  }, [writing?.content]);
+  const descriptionMeta = useMemo(
+    () => removeMd(writing.content.replace(/```([\s\S]*?)```/g, "").replace(/~~~([\s\S]*?)~~~/g, "") || ""),
+    [writing.content],
+  );
 
   return (
     <Helmet>
