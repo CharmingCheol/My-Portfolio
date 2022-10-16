@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ModalKey } from "types/globalUI";
 
-export interface GlobalUIState {
+interface GlobalUIState {
   modalKey: ModalKey;
   toastList: string[];
 }
 
-const initialState: GlobalUIState = {
+export const initialState: GlobalUIState = {
   modalKey: "",
   toastList: [],
 };

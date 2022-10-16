@@ -7,10 +7,9 @@ import { INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from "http-status";
 import { rest } from "msw";
 
 import { createWritingFixture } from "fixtures/writing";
-import rootReducer from "reducers";
+import { GlobalContext, rootReducer } from "reducers";
 import globalUISlice from "reducers/globalUI";
 import optionSlice from "reducers/option";
-import { GlobalContext } from "store";
 
 import WritingPage from "./index";
 
