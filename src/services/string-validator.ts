@@ -1,5 +1,5 @@
 class StringValidator {
-  public hasValue(str: string): boolean {
+  public isNotEmptyString(str: string): boolean {
     if (!str || str.trim().length === 0) {
       return false;
     }
