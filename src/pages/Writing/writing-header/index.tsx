@@ -5,9 +5,8 @@ import { WritingDeleteModal } from "common/modals";
 import { useWritingSelector } from "pages/Writing/index.reducer";
 import { useAppSelector } from "reducers";
 
-import WriteLinkButton from "./write-link-button/write-link-button";
-import DeleteButton from "./delete-button/delete-button";
 import * as S from "./index.style";
+import AdminButtonWrapper from "./admin-button-wrapper";
 
 const WritingHeader = () => {
   const writing = useWritingSelector((state) => state.writingDetail);
@@ -17,12 +16,7 @@ const WritingHeader = () => {
     <>
       <S.Header>{writing.title}</S.Header>
       <Date date={writing.createdAt} />
-      {isAdmin && (
-        <S.ButtonWrapper>
-          <WriteLinkButton />
-          <DeleteButton />
-        </S.ButtonWrapper>
-      )}
+      {isAdmin && <AdminButtonWrapper />}
       <WritingDeleteModal />
     </>
   );

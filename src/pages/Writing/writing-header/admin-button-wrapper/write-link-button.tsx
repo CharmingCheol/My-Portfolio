@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Button from "components/atoms/Button";
-import { writingActions } from "reducers/writing";
-import { useAppDispatch } from "store";
+// import { writingActions } from "reducers/writing";
+// import { useAppDispatch } from "store";
 
 const WriteLinkButton = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const handleClickEditButton = () => {
-    dispatch(writingActions.initTempWriting());
+    // dispatch(writingActions.initTempWriting());
   };
 
   return (
