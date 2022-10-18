@@ -1,4 +1,4 @@
-import { Writing } from "types/writing";
+import { Writing, WritingRequestBody } from "types/writing";
 
 export const createWritingFixture = (args: Partial<Writing> = {}): Writing => {
   const defaultWriting: Writing = { createdAt: new Date().toString(), id: "", content: "", title: "" };
@@ -9,3 +9,8 @@ export const createWritingFixtureList = (count: number, args: Partial<Writing> =
   Array(count)
     .fill(null)
     .map(() => createWritingFixture(args));
+
+export const createWritingBody = (args: Partial<Writing>): WritingRequestBody => {
+  const defaultData: WritingRequestBody = { content: args.content || "", title: args.title || "" };
+  return { ...defaultData };
+};
