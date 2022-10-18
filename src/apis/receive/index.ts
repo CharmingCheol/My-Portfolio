@@ -1,2 +1,1 @@
-// export { default as ImagesApiReceive } from "./images";
-export { default as WritingsApiReceive } from "./writings";
+export { default as useWritingsApiReceive } from "./writings";

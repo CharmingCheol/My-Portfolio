@@ -1,10 +1,12 @@
+import { useHistory } from "react-router-dom";
 import { AxiosResponse } from "axios";
-import { INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from "http-status";
+import { CREATED, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from "http-status";
 
 import { useWritingDispatch, writingActions } from "pages/Writing/index.reducer";
 import { Writing } from "types/writing";
 
-const WritingsApi = () => {
+const WritingsApiReceive = () => {
+  const history = useHistory();
   const writingDispatch = useWritingDispatch();
 
   return {
@@ -21,7 +23,25 @@ const WritingsApi = () => {
         }
       }
     },
+
+    create: (response: AxiosResponse<Writing>) => {
+      switch (response.status) {
+        case CREATED: {
+          history.replace(`/writing/${response.data.id}`);
+          break;
+        }
+      }
+    },
+
+    update: (response: AxiosResponse<Writing>) => {
+      switch (response.status) {
+        case CREATED: {
+          history.replace(`/writing/${response.data.id}`);
+          break;
+        }
+      }
+    },
   };
 };
 
-export default WritingsApi;
+export default WritingsApiReceive;
