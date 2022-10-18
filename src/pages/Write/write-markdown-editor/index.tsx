@@ -1,43 +1,42 @@
-import React, { useLayoutEffect } from "react";
-import Editor from "@toast-ui/editor";
+import React, { useRef } from "react";
+import { Editor } from "@toast-ui/react-editor";
+import { HookCallback } from "@toast-ui/editor/types/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
-import { postContentImages } from "fireConfig/images";
-import { writingActions } from "reducers/writing";
-import { useAppDispatch, useAppSelector } from "store";
+import { ImagesApiSend } from "apis/send";
+import { useWriteDispatch, useWriteSelector, writeActions } from "pages/Write/index.reducer";
+import { fileValidator } from "services";
 
 const WriteMarkdownEditor = () => {
-  const tempWriting = useAppSelector((state) => state.writing.tempWriting);
-  const dispatch = useAppDispatch();
+  const editorRef = useRef<Editor>(null);
+  const content = useWriteSelector((state) => state.writing.content);
+  const writeDispatch = useWriteDispatch();
 
-  useLayoutEffect(() => {
-    const editorSelector = document.querySelector("#editor") as HTMLElement;
-    if (editorSelector) {
-      const editor = new Editor({
-        el: editorSelector,
-        initialEditType: "markdown",
-        initialValue: tempWriting?.content,
-        height: "100%",
-        previewStyle: "vertical",
-        hooks: {
-          addImageBlobHook: async (blob, callback) => {
-            try {
-              const iamgeUrl = await postContentImages(blob as File);
-              callback(iamgeUrl);
-            } catch (error) {
-              callback("");
-            }
-          },
-        },
-      });
-      editor.on("change", () => {
-        const markdownText = editor.getMarkdown();
-        dispatch(writingActions.setContent(markdownText));
-      });
+  const handleChangeEditorText = () => {
+    const markdownText = editorRef.current?.getInstance().getMarkdown();
+    if (markdownText) {
+      writeDispatch(writeActions.changeContent(markdownText));
     }
-  }, []);
+  };
 
-  return <div id="editor" />;
+  const addImageBlobHook = async (file: File, callback: HookCallback) => {
+    if (fileValidator.isImageFile(file.name)) {
+      const response = await ImagesApiSend.uploadWritingContent(file);
+      callback(response.data.path);
+    }
+  };
+
+  return (
+    <Editor
+      initialEditType="markdown"
+      initialValue={content}
+      height="100%"
+      previewStyle="vertical"
+      ref={editorRef}
+      onChange={handleChangeEditorText}
+      hooks={{ addImageBlobHook: addImageBlobHook as any }}
+    />
+  );
 };
 
 export default WriteMarkdownEditor;

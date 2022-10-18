@@ -2,15 +2,11 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 import Button from "components/atoms/Button";
-import { writingActions } from "reducers/writing";
-import { useAppDispatch } from "store";
 
 const BackButton = () => {
   const history = useHistory();
-  const dispatch = useAppDispatch();
 
   const handleClickGoBackButton = () => {
-    dispatch(writingActions.clearTempWriting());
     history.goBack();
   };
 

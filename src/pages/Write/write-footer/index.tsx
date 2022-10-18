@@ -1,13 +1,13 @@
 import React from "react";
-import { useAppSelector } from "store";
+import { useWriteSelector } from "pages/Write/index.reducer";
 
 import * as S from "./index.style";
-import BackButton from "./back-button/back-button";
-import UpdateButton from "./udpate-button/udpate-button";
-import CreateButton from "./create-button/create-button";
+import BackButton from "./back-button";
+import UpdateButton from "./udpate-button";
+import CreateButton from "./create-button";
 
 const WriteFooter = () => {
-  const writingId = useAppSelector((state) => state.writing.tempWriting.id);
+  const writingId = useWriteSelector((state) => state.writing.id);
 
   return (
     <S.Footer>
