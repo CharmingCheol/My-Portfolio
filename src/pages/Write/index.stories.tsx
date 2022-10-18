@@ -1,43 +1,31 @@
 import React from "react";
-import { Provider } from "react-redux";
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { ComponentStory } from "@storybook/react";
+import { MemoryRouter, Route } from "react-router-dom";
+import { createMemoryHistory } from "history";
+import { ComponentMeta } from "@storybook/react";
 
-import writingSlice, { initialState, WritingState } from "reducers/writing";
+import WritePage from "./index";
+import { Writing } from "types/writing";
+import { createWritingFixture } from "fixtures/writing";
 
-import Write from "./index";
+const Template = ({ state }: DeepPartial<{ state: Writing }>) => {
+  const history = createMemoryHistory<DeepPartial<Writing>>();
+  if (state) {
+    history.location.state = state;
+  }
+  return (
+    <MemoryRouter>
+      <Route location={history.location} component={WritePage} />
+    </MemoryRouter>
+  );
+};
 
-const MockStore = ({ state, children }: { state: Partial<WritingState>; children: React.ReactChild }) => (
-  <Provider
-    store={configureStore({
-      reducer: {
-        writing: createSlice({
-          name: writingSlice.name,
-          reducers: writingSlice.caseReducers,
-          initialState: { ...initialState, ...state },
-        }).reducer,
-      },
-    })}
-  >
-    {children}
-  </Provider>
+export const BaseTemplate = () => <Template />;
+
+export const NavigatedTemplate = () => (
+  <Template state={createWritingFixture({ id: "1234", content: "content", title: "title" })} />
 );
-
-export const BaseTemplate: ComponentStory<typeof Write> = () => <Write />;
-BaseTemplate.decorators = [(story) => <MockStore state={{ tempWriting: {} }}>{story()}</MockStore>];
-
-export const EditedTemplate: ComponentStory<typeof Write> = () => <Write />;
-EditedTemplate.decorators = [
-  (story) => (
-    <MockStore
-      state={{ tempWriting: { content: "content", title: "title", id: "id", createdAt: new Date().toString() } }}
-    >
-      {story()}
-    </MockStore>
-  ),
-];
 
 export default {
   title: "pages/Write",
-  component: Write,
-};
+  component: WritePage,
+} as ComponentMeta<typeof WritePage>;

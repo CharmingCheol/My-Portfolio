@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
+import { useLocation } from "react-router-dom";
 
+import { Writing } from "types/writing";
+
+import WriteProvider, { writeActions, useWriteDispatch } from "./index.reducer";
 import WriteHeader from "./write-header";
 import WriteMarkdownEditor from "./write-markdown-editor";
 import WriteFooter from "./write-footer";
 import * as S from "./index.style";
 
-const Write = () => {
+const WritePage = () => {
+  const location = useLocation<Writing>();
+  const writeDispatch = useWriteDispatch();
+
+  useLayoutEffect(() => {
+    writeDispatch(writeActions.initWriting(location.state));
+  }, []);
+
   return (
     <S.Layout>
       <WriteHeader />
@@ -15,4 +26,10 @@ const Write = () => {
   );
 };
 
-export default Write;
+const WritePageWrapper = () => (
+  <WriteProvider>
+    <WritePage />
+  </WriteProvider>
+);
+
+export default WritePageWrapper;
