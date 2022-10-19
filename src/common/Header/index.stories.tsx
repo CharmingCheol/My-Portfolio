@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { MemoryRouter } from "react-router-dom";
 import { Meta } from "@storybook/react";
 import styled from "styled-components";
-import { useAppDispatch } from "store";
+import { useAppDispatch } from "reducers";
 import { optionActions } from "reducers/option";
 import Header from "./index";
 

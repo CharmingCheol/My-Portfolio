@@ -14,6 +14,7 @@ module.exports = ({ config }) => {
     services: path.resolve(__dirname, "../src", "services"),
     pages: path.resolve(__dirname, "../src", "pages"),
     reducers: path.resolve(__dirname, "../src", "reducers"),
+    services: path.resolve(__dirname, "../src", "services"),
     static: path.resolve(__dirname, "../src", "static"),
     store: path.resolve(__dirname, "../src", "store"),
     styles: path.resolve(__dirname, "../src", "styles"),

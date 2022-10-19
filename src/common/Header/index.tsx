@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import classNames from "classnames";
 
-import { useAppSelector } from "store";
+import { useAppSelector } from "reducers";
 import Button from "components/atoms/Button";
 import logo from "static/img/logo.png";
 

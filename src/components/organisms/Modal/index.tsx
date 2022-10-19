@@ -1,7 +1,7 @@
 import React, { useRef, ReactNode } from "react";
 
 import Portal from "components/utils/Portal";
-import { useAppSelector } from "store";
+import { useAppSelector } from "reducers";
 import { ModalKey } from "types/globalUI";
 
 import ModalBackground from "./ModalBackground";

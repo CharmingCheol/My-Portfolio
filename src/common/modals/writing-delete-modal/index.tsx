@@ -3,7 +3,7 @@ import { useLocation, useHistory } from "react-router-dom";
 
 import Button from "components/atoms/Button";
 import Modal from "components/organisms/Modal";
-import { useAppDispatch } from "store";
+import { useAppDispatch } from "reducers";
 import { globalUIActions } from "reducers/globalUI";
 import { deleteWriting } from "fireConfig/writings";
 

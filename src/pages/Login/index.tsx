@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useAppDispatch } from "store";
+import { useAppDispatch } from "reducers";
 import { optionActions } from "reducers/option";
 import Button from "components/atoms/Button";
 import { encrypt } from "utils";

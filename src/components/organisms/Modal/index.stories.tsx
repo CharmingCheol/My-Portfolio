@@ -3,7 +3,7 @@ import { Meta, Story } from "@storybook/react";
 
 import Button from "components/atoms/Button";
 import { globalUIActions } from "reducers/globalUI";
-import { useAppDispatch } from "store";
+import { useAppDispatch } from "reducers";
 
 import Modal, { Props } from "./index";
 
