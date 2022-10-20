@@ -8,10 +8,7 @@ import { Writing } from "types/writing";
 import { createWritingFixture } from "fixtures/writing";
 
 const Template = ({ state }: DeepPartial<{ state: Writing }>) => {
-  const history = createMemoryHistory<DeepPartial<Writing>>();
-  if (state) {
-    history.location.state = state;
-  }
+  const history = createMemoryHistory({ initialEntries: [{ state }] });
   return (
     <MemoryRouter>
       <Route location={history.location} component={WritePage} />

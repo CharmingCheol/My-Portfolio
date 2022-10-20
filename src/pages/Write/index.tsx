@@ -14,7 +14,9 @@ const WritePage = () => {
   const writeDispatch = useWriteDispatch();
 
   useLayoutEffect(() => {
-    writeDispatch(writeActions.initWriting(location.state));
+    if (location.state) {
+      writeDispatch(writeActions.initWriting(location.state));
+    }
   }, []);
 
   return (
