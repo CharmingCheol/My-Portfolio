@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { WritingsApiReceive } from "apis/receive";
+import { useWritingsApiReceive } from "apis/receive";
 import { WritingsApiSend } from "apis/send";
 import NotFound from "pages/NotFound";
 import { stringValidator } from "services";
@@ -16,7 +16,7 @@ const WritingPage = () => {
   const { id } = useParams<{ id: string }>();
   const isNotFound = useWritingSelector((state) => state.isNotFound);
   const writingId = useWritingSelector((state) => state.writingDetail.id);
-  const receiveApi = WritingsApiReceive();
+  const WritingsApiReceive = useWritingsApiReceive();
   const writingDispatch = useWritingDispatch();
 
   useLayoutEffect(() => {
@@ -26,7 +26,7 @@ const WritingPage = () => {
     }
     (async () => {
       const response = await WritingsApiSend.findOne(id);
-      receiveApi.findOne(response);
+      WritingsApiReceive.findOne(response);
     })();
   }, []);
 
