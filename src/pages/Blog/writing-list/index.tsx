@@ -1,31 +1,23 @@
 import React, { useCallback, useState } from "react";
 
+import { useWritingsApiReceive } from "apis/receive";
+import { WritingsApiSend } from "apis/send";
 import ContentCard from "components/molecules/Card/ContentCard";
 import Pagination from "components/molecules/Pagination";
-import { getWritingList } from "fireConfig/writings";
-import { writingActions } from "reducers/writing";
-import { useAppDispatch, useAppSelector } from "store";
+import { useBlogSelector } from "pages/Blog/index.reducer";
 
 import * as S from "./index.style";
 
 const WritingList = () => {
-  const writingPagination = useAppSelector((state) => state.writing.writingPagination);
-  const [paginationNumber, setPaginationNumber] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const writingPagination = useBlogSelector((state) => state.writingPagination);
+  const WritingsApiReceive = useWritingsApiReceive();
 
-  const dispatch = useAppDispatch();
-
-  const handleClickPaginationItem = useCallback(
-    async (now: number) => {
-      try {
-        const response = await getWritingList({ now, size: 10 });
-        dispatch(writingActions.updateWritingList(response.list));
-        setPaginationNumber(now);
-      } catch {
-        dispatch(writingActions.updateWritingList([]));
-      }
-    },
-    [dispatch],
-  );
+  const handleClickPageButton = useCallback(async (page: number) => {
+    const response = await WritingsApiSend.pagination(page);
+    WritingsApiReceive.nextPagination(response);
+    setCurrentPage(page);
+  }, []);
 
   return (
     <>
@@ -35,10 +27,10 @@ const WritingList = () => {
         ))}
       </S.WritingList>
       <Pagination
-        now={paginationNumber}
+        now={currentPage}
         totalCount={writingPagination.totalCount}
         size={10}
-        onClick={handleClickPaginationItem}
+        onClick={handleClickPageButton}
       />
     </>
   );

@@ -1,27 +1,29 @@
 import React, { useLayoutEffect } from "react";
 
-import { getWritingList } from "fireConfig/writings";
-import { writingActions } from "reducers/writing";
-import { useAppDispatch } from "store";
+import { useWritingsApiReceive } from "apis/receive";
+import { WritingsApiSend } from "apis/send";
 
+import BlogProvider from "./index.reducer";
 import WritingList from "./writing-list";
 
-const Blog = () => {
-  const dispatch = useAppDispatch();
+const BlogPage = () => {
+  const WritingsApiReceive = useWritingsApiReceive();
 
   useLayoutEffect(() => {
-    const callGetWritingList = async () => {
-      try {
-        const response = await getWritingList({ now: 1, size: 10 });
-        dispatch(writingActions.initWritingPagination(response));
-      } catch {
-        dispatch(writingActions.clearWritingPagination());
-      }
-    };
-    callGetWritingList();
-  }, [dispatch]);
+    (async () => {
+      const dafaultPage = 1;
+      const response = await WritingsApiSend.pagination(dafaultPage);
+      WritingsApiReceive.initPagination(response);
+    })();
+  }, []);
 
   return <WritingList />;
 };
 
-export default Blog;
+const BlogPageWrapper = () => (
+  <BlogProvider>
+    <BlogPage />
+  </BlogProvider>
+);
+
+export default BlogPageWrapper;
