@@ -8,8 +8,8 @@ import { rest } from "msw";
 
 import { createWritingFixture } from "fixtures/writing";
 import { GlobalContext, rootReducer } from "reducers";
-import globalUISlice from "reducers/globalUI";
-import optionSlice from "reducers/option";
+import globalUISlice, { initialState as globalUIState } from "reducers/globalUI";
+import optionSlice, { initialState as optionState } from "reducers/option";
 
 import WritingPage from "./index";
 
@@ -20,29 +20,27 @@ interface Props {
 
 const API_PATH = "http://localhost:3001/api/writings/1234";
 
-const MockGlobalStore = ({ reducer, children }: DeepPartial<Props>) => {
-  return (
-    <Provider
-      context={GlobalContext}
-      store={configureStore({
-        reducer: {
-          globalUI: createSlice({
-            name: globalUISlice.name,
-            reducers: {},
-            initialState: reducer?.globalUI || globalUISlice.reducer,
-          }).reducer,
-          option: createSlice({
-            name: optionSlice.name,
-            reducers: {},
-            initialState: reducer?.option || optionSlice.reducer,
-          }).reducer,
-        },
-      })}
-    >
-      {children}
-    </Provider>
-  );
-};
+const MockGlobalStore = ({ reducer, children }: DeepPartial<Props>) => (
+  <Provider
+    context={GlobalContext}
+    store={configureStore({
+      reducer: {
+        globalUI: createSlice({
+          name: globalUISlice.name,
+          reducers: globalUISlice.caseReducers as any,
+          initialState: reducer?.globalUI || globalUIState,
+        }).reducer,
+        option: createSlice({
+          name: optionSlice.name,
+          reducers: optionSlice.caseReducers as any,
+          initialState: reducer?.option || optionState,
+        }).reducer,
+      },
+    })}
+  >
+    {children}
+  </Provider>
+);
 
 const Template = ({ reducer }: DeepPartial<Props>) => (
   <MemoryRouter initialEntries={["/writing/1234"]}>
