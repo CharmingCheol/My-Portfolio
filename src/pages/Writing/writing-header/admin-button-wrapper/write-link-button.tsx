@@ -2,21 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Button from "components/atoms/Button";
-// import { writingActions } from "reducers/writing";
-// import { useAppDispatch } from "store";
+import { useWritingSelector } from "pages/Writing/index.reducer";
 
 const WriteLinkButton = () => {
-  // const dispatch = useAppDispatch();
-
-  const handleClickEditButton = () => {
-    // dispatch(writingActions.initTempWriting());
-  };
+  const writing = useWritingSelector((state) => state.writingDetail);
 
   return (
     <Button>
-      <Link to={`${process.env.WRITE_PAGE}`} onClick={handleClickEditButton}>
-        수정
-      </Link>
+      <Link to={{ pathname: `${process.env.WRITE_PAGE}`, state: writing }}>수정</Link>
     </Button>
   );
 };
