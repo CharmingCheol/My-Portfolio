@@ -1,36 +1,10 @@
 {
-  "extends": [
-    "airbnb",
-    "airbnb/hooks",
-    "prettier",
-    "prettier/react",
-    "prettier/@typescript-eslint",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "env": {
     "browser": true,
-    "node": true
+    "es6": true
   },
-  "rules": {
-    "consistent-return": "off",
-    "import/extensions": "off",
-    "import/no-extraneous-dependencies": "off",
-    "import/no-unresolved": "off",
-    "import/prefer-default-export": "off",
-    "no-param-reassign": "off",
-    "no-use-before-define": "off",
-    "no-underscore-dangle": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx", ".ts", ".json"] }],
-    "react/jsx-props-no-spreading": "off",
-    "react/prop-types": "off",
-    "react-hooks/exhaustive-deps": "warn",
-    "react/require-default-props": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "no-useless-constructor": "off"
-  }
+  "rules": {}
 }
