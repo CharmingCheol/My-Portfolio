@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { AxiosResponse } from "axios";
-import { CREATED, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from "http-status";
+import { CREATED, INTERNAL_SERVER_ERROR, NOT_FOUND, NO_CONTENT, OK } from "http-status";
 
 import { blogActions, useBlogDispatch } from "pages/Blog/index.reducer";
 import { useWritingDispatch, writingActions } from "pages/Writing/index.reducer";
@@ -67,6 +67,15 @@ const WritingsApiReceive = () => {
       switch (response.status) {
         case CREATED: {
           history.replace(`/writing/${response.data.id}`);
+          break;
+        }
+      }
+    },
+
+    delete: (response: AxiosResponse<null>) => {
+      switch (response.status) {
+        case NO_CONTENT: {
+          history.replace("/");
           break;
         }
       }
