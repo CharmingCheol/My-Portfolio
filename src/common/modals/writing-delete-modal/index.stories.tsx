@@ -4,15 +4,11 @@ import { Provider } from "react-redux";
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
+import WritingProvider from "pages/Writing/index.reducer";
 import { GlobalContext, rootReducer } from "reducers";
-import globalUISlice from "reducers/globalUI";
+import globalUISlice, { initialState as globalUIState } from "reducers/globalUI";
 
 import WritingDeleteModal from "./index";
-
-export default {
-  title: "common/modals/writing-delete-modal",
-  component: WritingDeleteModal,
-} as ComponentMeta<typeof WritingDeleteModal>;
 
 interface Props {
   reducer: ReturnType<typeof rootReducer>;
@@ -26,8 +22,8 @@ const MockStore = ({ reducer, children }: DeepPartial<Props>) => (
       reducer: {
         globalUI: createSlice({
           name: globalUISlice.name,
-          reducers: {},
-          initialState: reducer?.globalUI || globalUISlice.reducer,
+          reducers: globalUISlice.caseReducers as any,
+          initialState: reducer?.globalUI || globalUIState,
         }).reducer,
       },
     })}
@@ -39,7 +35,14 @@ const MockStore = ({ reducer, children }: DeepPartial<Props>) => (
 export const BaseTemplate: ComponentStory<typeof WritingDeleteModal> = () => (
   <MemoryRouter>
     <MockStore reducer={{ globalUI: { modalKey: "WritingDeleteModal" } }}>
-      <WritingDeleteModal />
+      <WritingProvider>
+        <WritingDeleteModal />
+      </WritingProvider>
     </MockStore>
   </MemoryRouter>
 );
+
+export default {
+  title: "common/modals/writing-delete-modal",
+  component: WritingDeleteModal,
+} as ComponentMeta<typeof WritingDeleteModal>;

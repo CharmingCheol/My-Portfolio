@@ -1,34 +1,28 @@
-import React, { useCallback } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import React from "react";
 
+import { useWritingsApiReceive } from "apis/receive";
+import { WritingsApiSend } from "apis/send";
 import Button from "components/atoms/Button";
 import Modal from "components/organisms/Modal";
+import { useWritingSelector } from "pages/Writing/index.reducer";
 import { useAppDispatch } from "reducers";
 import { globalUIActions } from "reducers/globalUI";
-import { deleteWriting } from "fireConfig/writings";
 
 import * as S from "./index.style";
 
 const WritingDeleteModal = () => {
-  const location = useLocation();
-  const history = useHistory();
-
+  const writingId = useWritingSelector((state) => state.writingDetail.id);
+  const WritingsApiReceive = useWritingsApiReceive();
   const dispatch = useAppDispatch();
 
-  const handleClickCancelButton = useCallback(() => {
+  const handleClickCancelButton = () => {
     dispatch(globalUIActions.closeModal());
-  }, [dispatch]);
+  };
 
-  const handleClickConfirmButton = useCallback(async () => {
-    try {
-      const id = location.pathname.split("/")[2];
-      await deleteWriting(id);
-      history.replace("/");
-      handleClickCancelButton();
-    } catch {
-      handleClickCancelButton();
-    }
-  }, [history, location.pathname, handleClickCancelButton]);
+  const handleClickConfirmButton = async () => {
+    const resposne = await WritingsApiSend.delete(writingId);
+    WritingsApiReceive.delete(resposne);
+  };
 
   return (
     <Modal modalKey="WritingDeleteModal">
