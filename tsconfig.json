@@ -20,6 +20,14 @@
       "module": "CommonJS"
     }
   },
-  "exclude": ["node_modules", "cypress/**/*"],
+  "exclude": [
+    "node_modules",
+    "cypress.config.ts",
+    "cypress/**/*",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ],
   "include": ["**/*.ts", "**/*.tsx"]
 }
