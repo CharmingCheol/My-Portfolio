@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 beforeEach(() => {
   cy.window().then((win) => {
     win.sessionStorage.removeItem("login");

@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 beforeEach(() => {
   cy.visit("/writing/1");
   cy.visit("/dfdf/asd");
