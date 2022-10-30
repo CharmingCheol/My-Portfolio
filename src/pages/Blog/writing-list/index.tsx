@@ -21,7 +21,7 @@ const WritingList = () => {
 
   return (
     <>
-      <S.WritingList>
+      <S.WritingList data-cy="writing-list">
         {writingPagination.list.map((writing) => (
           <ContentCard key={writing.id} {...writing} />
         ))}

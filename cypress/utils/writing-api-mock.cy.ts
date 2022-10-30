@@ -2,7 +2,7 @@ import { RouteHandler } from "cypress/types/net-stubbing";
 import { WritingsApiSend } from "apis/send";
 
 type WritingApi = {
-  [key in keyof typeof WritingsApiSend]: (response: RouteHandler, alias?: string) => void;
+  [key in keyof typeof WritingsApiSend]: (response: RouteHandler, ...rest: any[]) => void;
 };
 
 class WritingApiMock implements WritingApi {
@@ -28,8 +28,14 @@ class WritingApiMock implements WritingApi {
     ).as(alias);
   }
 
-  public pagination(response: RouteHandler, alias = "pagination"): void {
-    throw new Error("Method not implemented.");
+  public pagination(response: RouteHandler, page: number, alias = "pagination"): void {
+    cy.intercept(
+      {
+        method: "GET",
+        url: `${Cypress.env("serverUrl")}/writings?page=${page}`,
+      },
+      response,
+    ).as(alias);
   }
 
   public update(response: RouteHandler, alias = "update"): void {
