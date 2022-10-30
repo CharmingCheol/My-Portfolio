@@ -9,7 +9,13 @@ class WritingApiMock implements WritingApi {
   private WRITING_ID = "1234qwer";
 
   public create(response: RouteHandler, alias = "create"): void {
-    throw new Error("Method not implemented.");
+    cy.intercept(
+      {
+        method: "POST",
+        url: `${Cypress.env("serverUrl")}/writings`,
+      },
+      response,
+    ).as(alias);
   }
 
   public delete(response: RouteHandler, alias = "delete"): void {
