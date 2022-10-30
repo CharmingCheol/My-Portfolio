@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { Route } from "react-router-dom";
-import { useAppDispatch } from "store";
 
+import { useAppDispatch } from "reducers";
 import { optionActions } from "reducers/option";
 import { Header, MainLayout } from "common";
 import { decrypt, fnGetMainLayoutPage } from "utils";

@@ -34,6 +34,8 @@ const WritingPage = () => {
     return <NotFound />;
   }
 
+  console.log("writingId", writingId);
+
   return (
     <S.Layout>
       {writingId && (
