@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, ReactNode } from "react";
-import { useDispatch } from "react-redux";
 
+import { useAppDispatch } from "reducers";
 import { globalUIActions } from "reducers/globalUI";
 
 import * as S from "./index.style";
@@ -18,9 +18,8 @@ export interface Props {
 const ModalContent = (props: Props) => {
   const { autoClose = false, children } = props;
 
-  const dispatch = useDispatch();
-
   const modalContentRef = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
 
   // 모달 바깥 클릭 / esc 입력 시, 모달이 닫히도록 설정
   useEffect(() => {
