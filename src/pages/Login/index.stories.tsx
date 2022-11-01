@@ -25,7 +25,7 @@ const Template = () => (
   </MockGlobalStore>
 );
 
-export const BaseTempalte: ComponentStory<typeof Login> = () => <Template />;
+export const BaseTemplate: ComponentStory<typeof Login> = () => <Template />;
 
 export default {
   title: "pages/Login",
