@@ -11,7 +11,7 @@ const Date = (props: Props) => {
   const { className = [], date } = props;
 
   const formattedDate = useMemo(() => {
-    const [yyyymmdd] = date.split(" ");
+    const [yyyymmdd] = date.split("T");
     return yyyymmdd;
   }, [date]);
 
