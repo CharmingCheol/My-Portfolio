@@ -4,12 +4,11 @@ import { Auth, WritingApiMock } from "../utils";
 
 describe("Writing 페이지", () => {
   const WRITING_ID = "1234qwer";
-  const createdAt = new Date();
   const writingFixture = createWritingFixture({
     id: WRITING_ID,
     title: "title",
     content: "content",
-    createdAt: createdAt.toString(),
+    createdAt: "2022-07-10T16:37:52.492500",
   });
 
   let writingApiMock: WritingApiMock;
@@ -28,7 +27,7 @@ describe("Writing 페이지", () => {
     cy.wait("@findOne");
 
     cy.contains("title");
-    cy.contains(`${createdAt.getFullYear()}.${createdAt.getMonth() + 1}.${createdAt.getDate()}`);
+    cy.contains("2022-07-10");
     cy.contains("content");
   });
 

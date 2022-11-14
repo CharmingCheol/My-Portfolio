@@ -10,7 +10,7 @@ import { Writing, WritingPagination } from "types/writing";
 import BlogPage from "./index";
 
 const API_PATH = "http://localhost:3001/api/writings?page=1";
-const writing: Writing = { content: "content", title: "title", id: "id", createdAt: new Date().toString() };
+const writing: Writing = { content: "content", title: "title", id: "id", createdAt: "2022-07-10T16:37:52.492500" };
 
 const Template = () => (
   <MemoryRouter>

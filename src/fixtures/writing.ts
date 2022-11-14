@@ -1,7 +1,7 @@
 import { Writing, WritingRequestBody } from "types/writing";
 
 export const createWritingFixture = (args: Partial<Writing> = {}): Writing => {
-  const defaultWriting: Writing = { createdAt: new Date().toString(), id: "", content: "", title: "" };
+  const defaultWriting: Writing = { createdAt: "2022-07-10T16:37:52.492500", id: "", content: "", title: "" };
   return { ...defaultWriting, ...args };
 };
 
