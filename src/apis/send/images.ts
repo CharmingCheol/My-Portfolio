@@ -16,7 +16,7 @@ class ImagesApi {
 
   private getFormData(file: File): FormData {
     const formData = new FormData();
-    formData.append("writings", file);
+    formData.append("writing", file);
     return formData;
   }
 }
