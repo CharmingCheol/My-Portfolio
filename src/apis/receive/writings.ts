@@ -4,10 +4,13 @@ import { CREATED, INTERNAL_SERVER_ERROR, NOT_FOUND, NO_CONTENT, OK } from "http-
 
 import { blogActions, useBlogDispatch } from "pages/Blog/index.reducer";
 import { useWritingDispatch, writingActions } from "pages/Writing/index.reducer";
+import { useAppDispatch } from "reducers";
+import { globalUIActions } from "reducers/globalUI";
 import { Writing, WritingPagination } from "types/writing";
 
 const WritingsApiReceive = () => {
   const history = useHistory();
+  const globalDispatch = useAppDispatch();
   const blogDispatch = useBlogDispatch();
   const writingDispatch = useWritingDispatch();
 
@@ -65,7 +68,7 @@ const WritingsApiReceive = () => {
 
     update: (response: AxiosResponse<Writing>) => {
       switch (response.status) {
-        case CREATED: {
+        case OK: {
           history.replace(`/writing/${response.data.id}`);
           break;
         }
@@ -75,6 +78,7 @@ const WritingsApiReceive = () => {
     delete: (response: AxiosResponse<null>) => {
       switch (response.status) {
         case NO_CONTENT: {
+          globalDispatch(globalUIActions.closeModal());
           history.replace("/");
           break;
         }
