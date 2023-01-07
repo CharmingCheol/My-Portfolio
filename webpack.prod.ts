@@ -7,7 +7,7 @@ import commonConfig from "./webpack.config";
 const prodConfig: webpack.Configuration = merge(commonConfig, {
   mode: "production",
   devtool: "hidden-source-map",
-  plugins: [new Dotenv({ path: "./env.prod", systemvars: true })],
+  plugins: [new Dotenv({ path: "./.env.prod", systemvars: true })],
 });
 
 export default prodConfig;
