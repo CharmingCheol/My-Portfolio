@@ -1,22 +1,33 @@
 import React from "react";
+import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
-import { Meta } from "@storybook/react";
-import { Header, MainLayout } from "common";
+import { configureStore } from "@reduxjs/toolkit";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+
+import { MainLayout } from "common";
+import { GlobalContext } from "reducers";
+
 import Login from "./index";
 
-export default {
-  title: "pages/Login",
-  component: Login,
-} as Meta;
+const MockGlobalStore: React.FunctionComponent = ({ children }) => (
+  <Provider context={GlobalContext} store={configureStore({ reducer: {} })}>
+    {children}
+  </Provider>
+);
 
-const LoginPageTemplate = () => {
-  return (
+const Template = () => (
+  <MockGlobalStore>
     <MemoryRouter>
-      <Header />
       <MainLayout>
         <Login />
       </MainLayout>
     </MemoryRouter>
-  );
-};
-export const LoginPage = LoginPageTemplate.bind({});
+  </MockGlobalStore>
+);
+
+export const BaseTemplate: ComponentStory<typeof Login> = () => <Template />;
+
+export default {
+  title: "pages/Login",
+  component: Login,
+} as ComponentMeta<typeof Login>;

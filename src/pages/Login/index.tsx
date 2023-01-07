@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useAppDispatch } from "store";
-import { changeIsAdmin } from "reducers/optionSlice";
+
 import Button from "components/atoms/Button";
+import { useAppDispatch } from "reducers";
+import { optionActions } from "reducers/option";
 import { encrypt } from "utils";
+
 import * as S from "./index.style";
 
 const Login = () => {
@@ -28,7 +30,7 @@ const Login = () => {
     if (process.env.ID === id && process.env.PASSWORD === password) {
       const encrypted = encrypt(process.env.LOG_IN_TEXT as string);
       window.sessionStorage.setItem("login", encrypted);
-      dispatch(changeIsAdmin(true));
+      dispatch(optionActions.changeIsAdmin(true));
     }
     history.replace("/");
   }, [dispatch, history, id, password]);

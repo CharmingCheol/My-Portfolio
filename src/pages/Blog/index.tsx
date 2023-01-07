@@ -1,59 +1,29 @@
-import React, { useCallback, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect } from "react";
 
-import { getWritingList } from "fireConfig/writings";
-import { WritingPagination } from "types/writing";
+import { useWritingsApiReceive } from "apis/receive";
+import { WritingsApiSend } from "apis/send";
 
-import ContentCard from "components/molecules/Card/ContentCard";
-import Pagination from "components/molecules/Pagination";
+import BlogProvider from "./index.reducer";
+import WritingList from "./writing-list";
 
-import * as S from "./index.style";
+const BlogPage = () => {
+  const WritingsApiReceive = useWritingsApiReceive();
 
-const Blog = () => {
-  const [writingPagination, setWritingPagination] = useState<WritingPagination | null>(null);
-  const [paginationNumber, setPaginationNumber] = useState(1);
-
-  const clickPaginationItem = useCallback(async (now: number) => {
-    try {
-      const response = await getWritingList({ now, size: 10 });
-      setWritingPagination(response);
-      setPaginationNumber(now);
-    } catch {
-      setWritingPagination(null);
-    }
-  }, []);
-
-  // 최초 게시글 리스트 api
   useLayoutEffect(() => {
-    const callGetWritingList = async () => {
-      try {
-        const response = await getWritingList({ now: 1, size: 10 });
-        setWritingPagination(response);
-      } catch {
-        setWritingPagination(null);
-      }
-    };
-    callGetWritingList();
+    (async () => {
+      const dafaultPage = 1;
+      const response = await WritingsApiSend.pagination(dafaultPage);
+      WritingsApiReceive.initPagination(response);
+    })();
   }, []);
 
-  return (
-    <div>
-      {writingPagination && (
-        <>
-          <S.CardList className="card-list">
-            {writingPagination.list.map(({ title, content, createdAt, id }) => (
-              <ContentCard key={id} title={title} createdAt={createdAt} content={content} id={id} />
-            ))}
-          </S.CardList>
-          <Pagination
-            now={paginationNumber}
-            totalCount={writingPagination.totalCount}
-            size={10}
-            onClick={clickPaginationItem}
-          />
-        </>
-      )}
-    </div>
-  );
+  return <WritingList />;
 };
 
-export default Blog;
+const BlogPageWrapper = () => (
+  <BlogProvider>
+    <BlogPage />
+  </BlogProvider>
+);
+
+export default BlogPageWrapper;

@@ -6,9 +6,7 @@ import Date from "components/atoms/Date";
 import { Writing } from "types/writing";
 import * as S from "./index.style";
 
-export type Props = Pick<Writing, "content" | "createdAt" | "id" | "title">;
-
-const ContentCard = (props: Props) => {
+const ContentCard = (props: Writing) => {
   const { content, createdAt, id, title } = props;
 
   const shortenContent = useMemo(() => {

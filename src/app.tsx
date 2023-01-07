@@ -1,8 +1,8 @@
 import React, { useLayoutEffect } from "react";
 import { Route } from "react-router-dom";
-import { useAppDispatch } from "store";
 
-import { changeIsAdmin } from "reducers/optionSlice";
+import { useAppDispatch } from "reducers";
+import { optionActions } from "reducers/option";
 import { Header, MainLayout } from "common";
 import { decrypt, fnGetMainLayoutPage } from "utils";
 import StyleReset from "styles/reset";
@@ -18,7 +18,7 @@ const App = () => {
     if (login) {
       const decrypted = decrypt(login);
       if (decrypted === process.env.LOG_IN_TEXT) {
-        dispatch(changeIsAdmin(true));
+        dispatch(optionActions.changeIsAdmin(true));
       } else {
         window.sessionStorage.removeItem("login");
       }

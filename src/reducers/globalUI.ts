@@ -1,26 +1,35 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ModalKey } from "types/globalUI";
 
-export interface CounterState {
-  modalKey: string;
+interface GlobalUIState {
+  modalKey: ModalKey;
+  toastList: string[];
 }
 
-const initialState: CounterState = {
+export const initialState: GlobalUIState = {
   modalKey: "",
+  toastList: [],
 };
 
-export const globalUI = createSlice({
+const globalUI = createSlice({
   name: "globalUI",
   initialState,
   reducers: {
-    openModal: (state, action: PayloadAction<string>) => {
+    openModal: (state, action: PayloadAction<ModalKey>) => {
       state.modalKey = action.payload;
     },
     closeModal: (state) => {
       state.modalKey = "";
     },
+    addToast: (state, action: PayloadAction<{ message: string }>) => {
+      state.toastList.push(action.payload.message);
+    },
+    clearToast: (state) => {
+      state.toastList = [];
+    },
   },
 });
 
-export const { openModal, closeModal } = globalUI.actions;
+export const globalUIActions = globalUI.actions;
 
-export default globalUI.reducer;
+export default globalUI;

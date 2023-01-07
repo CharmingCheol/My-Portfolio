@@ -2,10 +2,8 @@
   "compilerOptions": {
     "lib": ["dom", "esnext"], // 컴파일 때 포함시킬 타입 정의 라이브러리
     "target": "es5", // 어떤 자바스크립트 버전으로 컴파일 할지 지정
-    // "types": ["jest", "@testing-library/jest-dom", "cypress", "cypress-file-upload"],
 
     "module": "esnext",
-    // "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true, // CommonJs 기반 모듈 import/export를 ES6 기반으로 읽을 수 있도록 설정
     "resolveJsonModule": true, // .json 파일도 import 가능
@@ -22,6 +20,14 @@
       "module": "CommonJS"
     }
   },
-  "exclude": ["node_modules", "cypress/**/*"],
+  "exclude": [
+    "node_modules",
+    "cypress.config.ts",
+    "cypress/**/*",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ],
   "include": ["**/*.ts", "**/*.tsx"]
 }
