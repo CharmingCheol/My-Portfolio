@@ -1,69 +1,58 @@
-import React, { useLayoutEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import removeMd from "remove-markdown";
-import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
-import "@toast-ui/editor/dist/toastui-editor.css";
+import React, { useLayoutEffect } from "react";
+import { useParams } from "react-router-dom";
 
-import { getWriting } from "fireConfig/writings";
-import { useAppSelector } from "store";
-
+import { useWritingsApiReceive } from "apis/receive";
+import { WritingsApiSend } from "apis/send";
 import NotFound from "pages/NotFound";
-import { ModifyDeleteButton } from "containers/Writing";
-import Date from "components/atoms/Date";
+import { stringValidator } from "services";
 
-import { Writing } from "types/writing";
+import WritingProvider, { writingActions, useWritingDispatch, useWritingSelector } from "./index.reducer";
+import WritingHelmet from "./writing-helmet";
+import WritingHeader from "./writing-header";
+import WritingViewer from "./writing-viewer";
 import * as S from "./index.style";
 
 const WritingPage = () => {
-  const location = useLocation();
-  const isAdmin = useAppSelector((state) => state.option.isAdmin);
-  const [writing, setWriting] = useState<Writing | null>(null);
-  const [isNotFound, setIsNotFound] = useState(false);
+  const { id } = useParams<{ id: string }>();
+  const isNotFound = useWritingSelector((state) => state.isNotFound);
+  const writingId = useWritingSelector((state) => state.writingDetail.id);
+  const WritingsApiReceive = useWritingsApiReceive();
+  const writingDispatch = useWritingDispatch();
 
-  const shortenContent = useMemo(() => {
-    const removedMd = removeMd(
-      writing?.content.replace(/```([\s\S]*?)```/g, "").replace(/~~~([\s\S]*?)~~~/g, "") || "",
-    );
-    return removedMd;
-  }, [writing?.content]);
-
-  // 마크다운 viewer 적용
   useLayoutEffect(() => {
-    const callGetWriting = async () => {
-      try {
-        const id = location.pathname.split("/")[2];
-        const response = await getWriting(id);
-        const editor = new Viewer({
-          el: document.querySelector("#viewer") as HTMLDivElement,
-          initialValue: response.content,
-        });
-        setWriting(response);
-      } catch {
-        setIsNotFound(true);
-      }
-    };
-    callGetWriting();
-  }, [location.pathname]);
+    if (!stringValidator.isNotEmptyString(id)) {
+      writingDispatch(writingActions.setIsNotFound(true));
+      return;
+    }
+    (async () => {
+      const response = await WritingsApiSend.findOne(id);
+      WritingsApiReceive.findOne(response);
+    })();
+  }, []);
 
-  if (isNotFound) return <NotFound />;
+  if (isNotFound) {
+    return <NotFound />;
+  }
+
+  console.log("writingId", writingId);
 
   return (
     <S.Layout>
-      {writing && (
+      {writingId && (
         <>
-          <Helmet>
-            <title>{writing.title}</title>
-            <meta name="description" content={shortenContent} />
-          </Helmet>
-          <h1>{writing.title}</h1>
-          <Date date={writing.createdAt} />
-          {isAdmin && <ModifyDeleteButton content={writing.content} title={writing.title} id={writing.id} />}
+          <WritingHelmet />
+          <WritingHeader />
+          <WritingViewer />
         </>
       )}
-      <div id="viewer" />
     </S.Layout>
   );
 };
 
-export default WritingPage;
+const WritingPageWrapper = () => (
+  <WritingProvider>
+    <WritingPage />
+  </WritingProvider>
+);
+
+export default WritingPageWrapper;

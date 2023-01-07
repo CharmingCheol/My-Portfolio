@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, ReactNode } from "react";
-import { useDispatch } from "react-redux";
 
-import { closeModal } from "reducers/globalUI";
+import { useAppDispatch } from "reducers";
+import { globalUIActions } from "reducers/globalUI";
 
 import * as S from "./index.style";
 
@@ -16,11 +16,10 @@ export interface Props {
 }
 
 const ModalContent = (props: Props) => {
-  const { autoClose = true, children } = props;
-
-  const dispatch = useDispatch();
+  const { autoClose = false, children } = props;
 
   const modalContentRef = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
 
   // 모달 바깥 클릭 / esc 입력 시, 모달이 닫히도록 설정
   useEffect(() => {
@@ -30,13 +29,13 @@ const ModalContent = (props: Props) => {
         const target = event.target as Node;
         const isContains = currentRef.contains(target);
         if (!isContains) {
-          dispatch(closeModal());
+          dispatch(globalUIActions.closeModal());
         }
       };
 
       const handleKeydown = (event: KeyboardEvent) => {
         if (event.key === "Escape") {
-          dispatch(closeModal());
+          dispatch(globalUIActions.closeModal());
         }
       };
 

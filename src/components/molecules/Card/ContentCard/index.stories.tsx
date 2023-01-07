@@ -1,53 +1,47 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import styled from "styled-components";
-import { Meta, Story } from "@storybook/react";
-import ContentCard, { Props } from "./index";
+import { ComponentMeta } from "@storybook/react";
 
-export default {
-  title: "molecules/Card/ContentCard",
-  component: ContentCard,
-} as Meta;
+import ContentCard from "./index";
 
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
 
-const DefaultContentCardTemplate: Story<Props> = (props) => {
-  return (
-    <MemoryRouter>
-      <Wrapper>
-        <ContentCard {...props} />
-        <ContentCard {...props} />
-        <ContentCard {...props} />
-        <ContentCard {...props} />
-      </Wrapper>
-    </MemoryRouter>
-  );
-};
-export const DefaultContentCard = DefaultContentCardTemplate.bind({});
-DefaultContentCard.args = {
-  content: "contentcontentcontentcontent",
-  createdAt: "Wed Jan 12 2022 23:50:58 GM",
-  id: "1",
-  title: "titletitletitle",
-};
+const Template: React.FunctionComponent = ({ children }) => (
+  <MemoryRouter>
+    <Wrapper>{children}</Wrapper>
+  </MemoryRouter>
+);
 
-const FlexibleContentCardTemplate: Story<Props> = (props) => {
-  return (
-    <MemoryRouter>
-      <Wrapper>
-        <ContentCard {...props} />
-        <ContentCard createdAt="2021-08-08T" title="title" content="content" id="1" />
-      </Wrapper>
-    </MemoryRouter>
-  );
-};
-export const FlexibleContentCard = FlexibleContentCardTemplate.bind({});
-FlexibleContentCard.args = {
-  content: "contentcontentcontentcontent",
-  createdAt: "2021-08-02T10:55:51.603Z",
-  id: "1",
-  title: "titletitletitle",
-};
+export const DefaultTemplate = () => (
+  <Template>
+    {Array(4)
+      .fill(0)
+      .map((_, index) => (
+        <ContentCard id={`${index}`} title="title" content="content" createdAt="2022-07-10T16:37:52.492500" />
+      ))}
+  </Template>
+);
+
+export const TextOverflowTemplate = () => (
+  <Template>
+    {Array(4)
+      .fill(0)
+      .map((_, index) => (
+        <ContentCard
+          id={`${index}`}
+          title={Array(100).fill("title").join("")}
+          content={Array(100).fill("content").join("")}
+          createdAt="2022-07-10T16:37:52.492500"
+        />
+      ))}
+  </Template>
+);
+
+export default {
+  title: "molecules/Card/ContentCard",
+  component: ContentCard,
+} as ComponentMeta<typeof ContentCard>;

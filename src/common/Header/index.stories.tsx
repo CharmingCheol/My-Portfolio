@@ -1,15 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { MemoryRouter } from "react-router-dom";
-import { Meta } from "@storybook/react";
+import { Provider } from "react-redux";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import styled from "styled-components";
-import { useAppDispatch } from "store";
-import { changeIsAdmin } from "reducers/optionSlice";
+
+import { GlobalContext, rootReducer } from "reducers";
+import globalUISlice, { initialState as globalUIState } from "reducers/globalUI";
+import optionSlice, { initialState as optionState } from "reducers/option";
+
 import Header from "./index";
 
-export default {
-  title: "common/Header",
-  component: Header,
-} as Meta;
+interface Props {
+  reducer: ReturnType<typeof rootReducer>;
+  children: React.ReactChild;
+}
 
 const Wrapper = styled.div`
   height: 150vh;
@@ -18,33 +23,43 @@ const Wrapper = styled.div`
   }
 `;
 
-const DefaultHeaderTemplate = () => (
-  <MemoryRouter>
-    <Wrapper>
-      <Header />
-      <main>
-        <span>hello</span>
-      </main>
-    </Wrapper>
-  </MemoryRouter>
+const MockGlobalStore = ({ reducer, children }: DeepPartial<Props>) => (
+  <Provider
+    context={GlobalContext}
+    store={configureStore({
+      reducer: {
+        globalUI: createSlice({
+          name: globalUISlice.name,
+          reducers: globalUISlice.caseReducers as any,
+          initialState: reducer?.globalUI || globalUIState,
+        }).reducer,
+        option: createSlice({
+          name: optionSlice.name,
+          reducers: optionSlice.caseReducers as any,
+          initialState: reducer?.option || optionState,
+        }).reducer,
+      },
+    })}
+  >
+    {children}
+  </Provider>
 );
-export const DefaultHeader = DefaultHeaderTemplate.bind({});
 
-const AdminHeaderTemplate = () => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(changeIsAdmin(true));
-    return () => {
-      dispatch(changeIsAdmin(false));
-    };
-  }, [dispatch]);
-  return (
+const Template = ({ reducer }: DeepPartial<Props>) => (
+  <MockGlobalStore reducer={reducer}>
     <MemoryRouter>
       <Wrapper>
         <Header />
-        <main />
       </Wrapper>
     </MemoryRouter>
-  );
-};
-export const AdminHeader = AdminHeaderTemplate.bind({});
+  </MockGlobalStore>
+);
+
+export const DefaultHeader: ComponentStory<typeof Header> = () => <Template />;
+
+export const AdminHeader: ComponentStory<typeof Header> = () => <Template reducer={{ option: { isAdmin: true } }} />;
+
+export default {
+  title: "common/Header",
+  component: Header,
+} as ComponentMeta<typeof Header>;

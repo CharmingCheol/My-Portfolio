@@ -9,3 +9,5 @@ export interface WritingPagination {
   list: Writing[];
   totalCount: number;
 }
+
+export type WritingRequestBody = Pick<Writing, "content" | "title">;
