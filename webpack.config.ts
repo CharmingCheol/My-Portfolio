@@ -1,6 +1,5 @@
 import path from "path";
 import webpack from "webpack";
-import Dotenv from "dotenv-webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import FaviconsWebpackPlugin from "favicons-webpack-plugin";
 
@@ -47,11 +46,7 @@ const config: webpack.Configuration = {
       },
     ],
   },
-  plugins: [
-    new Dotenv({ systemvars: true }),
-    new HtmlWebpackPlugin({ template: "./public/index.html" }),
-    new FaviconsWebpackPlugin("./public/logo.png"),
-  ],
+  plugins: [new HtmlWebpackPlugin({ template: "./public/index.html" }), new FaviconsWebpackPlugin("./public/logo.png")],
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].js",

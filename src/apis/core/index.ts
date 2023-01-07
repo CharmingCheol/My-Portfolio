@@ -7,24 +7,24 @@ class ApiCore implements HttpMethod {
 
   constructor() {
     this._axiosInstance = axios.create({
-      baseURL: "http://localhost:3001/api",
+      baseURL: process.env.API_URL,
     });
     this.initInterceptors();
   }
 
-  public async get(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<any>> {
+  public async get(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return await this._axiosInstance.get(url, config);
   }
 
-  public async post(url: string, data: any, config?: AxiosRequestConfig): Promise<AxiosResponse<any>> {
+  public async post(url: string, data: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return await this._axiosInstance.post(url, data, config);
   }
 
-  public async patch(url: string, data: any, config?: AxiosRequestConfig): Promise<AxiosResponse<any>> {
+  public async patch(url: string, data: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return await this._axiosInstance.patch(url, data, config);
   }
 
-  public async delete(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<any>> {
+  public async delete(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return await this._axiosInstance.delete(url, config);
   }
 
